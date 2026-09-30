@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found — SkyVista. The page you're looking for doesn't exist or has been moved.">
+    <title>404 — Page Not Found | SkyVista Helicopter Tours</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="fullscreen-page">
+
+<!-- Top Bar -->
+<div class="fullscreen-topbar">
+    <a href="index.html" class="nav-logo" aria-label="SkyVista Home">
+        <img src="assets/images/logo.jpg" alt="SkyVista Logo" width="38" height="38" style="width:38px;height:38px;object-fit:contain;display:block;border-radius:50%;background:#ffffff;padding:2px;box-shadow:0 2px 8px rgba(0,0,0,0.15);" />
+        <div class="nav-logo-text">
+            <span class="brand-name">SkyVista</span>
+            <span class="brand-tagline">Helicopter Tours</span>
+        </div>
+    </a>
+    <div style="display:flex;gap:0.5rem;">
+        <button onclick="toggleDir()" class="auth-toggle-btn" title="Toggle Direction" aria-label="Toggle text direction">
+            <span class="dir-label" style="font-size:0.625rem;font-weight:700;">LTR</span>
+        </button>
+        <button onclick="toggleTheme()" class="auth-toggle-btn" title="Toggle Theme" aria-label="Toggle dark mode">
+            <i class="fas fa-moon theme-icon"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="fullscreen-content">
+    <div style="position:relative;max-width:540px;width:100%;margin:0 auto;">
+        <!-- Decorative Glow -->
+        <div style="position:absolute;top:20%;left:50%;transform:translate(-50%,-50%);width:min(420px, 90vw);height:min(420px, 90vw);background:radial-gradient(circle,rgba(201,151,58,0.12),transparent 65%);border-radius:50%;pointer-events:none;"></div>
+
+        <div style="position:relative;z-index:2;">
+            <div class="error-illustration">
+                <!-- Spinning radar / rotor behind -->
+                <svg class="propeller-spin" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="80" cy="80" r="72" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="8 8" opacity="0.45"/>
+                    <circle cx="80" cy="80" r="46" stroke="var(--secondary)" stroke-width="1.5" opacity="0.35"/>
+                    <line x1="80" y1="8" x2="80" y2="152" stroke="var(--secondary)" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="8" y1="80" x2="152" y2="80" stroke="var(--secondary)" stroke-width="1.5" opacity="0.4"/>
+                </svg>
+                <div class="error-code">404</div>
+            </div>
+
+            <div class="heli-float" style="margin-bottom:1rem;">
+                <i class="fas fa-helicopter" style="font-size:2.25rem;color:var(--secondary);"></i>
+            </div>
+
+            <h1 class="error-subtitle">Flight Path Not Found</h1>
+            <p class="error-desc">Looks like this helicopter flight went off course! The aerial route you're looking for has landed elsewhere, was moved, or never existed in our flight logs.</p>
+
+            <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem;">
+                <a href="index.html" class="btn btn-primary btn-lg"><i class="fas fa-house"></i> Back to Home</a>
+                <a href="contact.html" class="btn btn-secondary btn-lg"><i class="fas fa-headset"></i> Contact Support</a>
+            </div>
+
+            <div style="padding:1.25rem;background:var(--bg-card);border:1px solid var(--border-default);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);">
+                <p style="font-family:var(--font-heading);font-weight:600;font-size:0.875rem;color:var(--text-heading);margin-bottom:0.75rem;">You might be looking for:</p>
+                <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
+                    <a href="tours.html" class="badge badge-outline" style="padding:0.4rem 0.875rem;text-decoration:none;">Tours & Packages</a>
+                    <a href="safety.html" class="badge badge-outline" style="padding:0.4rem 0.875rem;text-decoration:none;">Safety & Pilots</a>
+                    <a href="gallery.html" class="badge badge-outline" style="padding:0.4rem 0.875rem;text-decoration:none;">Gallery</a>
+                    <a href="contact.html" class="badge badge-outline" style="padding:0.4rem 0.875rem;text-decoration:none;">Contact Us</a>
+                    <a href="login.html" class="badge badge-outline" style="padding:0.4rem 0.875rem;text-decoration:none;">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initAuthPage();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore SkyVista's complete range of helicopter tours and scenic flight packages. Grand Canyon, coastal cliffs, city lights, volcanic adventures, sunset flights and more.">
+    <title>Tours & Packages | SkyVista Helicopter Tours</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── TOURS PAGE STYLES ── */
+        .page-hero {
+            min-height: 55vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--primary-dark);
+            padding: calc(var(--navbar-height) + 2rem) 0 3.5rem;
+            box-sizing: border-box;
+        }
+        .page-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .page-hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(8,15,26,0.75) 0%, rgba(8,15,26,0.45) 60%, rgba(8,15,26,0.85) 100%);
+        }
+        .page-hero-content { position: relative; z-index: 2; width: 100%; color: #fff; }
+        .breadcrumb {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8125rem; margin-bottom: 1.25rem;
+            color: rgba(255,255,255,0.6);
+        }
+        .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition-fast); }
+        .breadcrumb a:hover { color: var(--secondary); }
+        .breadcrumb span { color: rgba(255,255,255,0.4); }
+        .page-hero-title { font-family: var(--font-heading); font-size: clamp(2rem,5vw,3.25rem); font-weight: 600; color: #fff; margin-bottom: 0.875rem; }
+        .page-hero-sub { font-size: 1.0625rem; color: rgba(255,255,255,0.72); max-width: 560px; line-height: 1.75; }
+
+        /* Booking form section */
+        .booking-bar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-default);
+            box-shadow: var(--shadow-md);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: var(--navbar-height);
+            z-index: 100;
+        }
+        .booking-bar-inner {
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        }
+        .booking-bar-field {
+            display: flex; flex-direction: column; gap: 0.25rem; flex: 1; min-width: 140px;
+        }
+        .booking-bar-field label {
+            font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.07em; color: var(--text-muted);
+        }
+        .booking-bar-field select, .booking-bar-field input {
+            border: 1.5px solid var(--border-default); border-radius: var(--radius-md);
+            padding: 0.6875rem 0.875rem; font-size: 0.9rem; background: var(--bg-body);
+            color: var(--text-body); font-family: var(--font-body); cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .booking-bar-field select:focus, .booking-bar-field input:focus {
+            border-color: var(--secondary); outline: none;
+        }
+        .dark .booking-bar-field select, .dark .booking-bar-field input {
+            background: var(--bg-surface); color: var(--text-body); border-color: var(--border-default);
+        }
+
+        /* Tours layout with sidebar */
+        .tours-layout {
+            display: grid; grid-template-columns: 260px 1fr; gap: 2.5rem; align-items: start;
+        }
+
+        /* Sidebar filters */
+        .filter-sidebar {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl); padding: 1.5rem; position: sticky; top: calc(var(--navbar-height) + 80px);
+        }
+        .filter-group { margin-bottom: 1.75rem; }
+        .filter-group:last-child { margin-bottom: 0; }
+        .filter-group-title {
+            font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .filter-option {
+            display: flex; align-items: center; gap: 0.625rem;
+            padding: 0.5rem 0; cursor: pointer; font-size: 0.9rem; color: var(--text-body);
+            transition: var(--transition-fast);
+        }
+        .filter-option:hover { color: var(--secondary); }
+        .filter-option input[type="checkbox"] { accent-color: var(--secondary); width: 16px; height: 16px; cursor: pointer; }
+        .filter-range { width: 100%; accent-color: var(--secondary); cursor: pointer; }
+        .price-display {
+            display: flex; justify-content: space-between; font-size: 0.8125rem;
+            color: var(--text-muted); margin-top: 0.5rem;
+        }
+
+        /* Tours grid */
+        .tours-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+        /* Tour detail card (larger) */
+        .tour-detail-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl); overflow: hidden;
+            transition: var(--transition-smooth); box-shadow: var(--shadow-card);
+        }
+        .tour-detail-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); border-color: transparent; }
+        .tour-detail-img-wrap { position: relative; overflow: hidden; aspect-ratio: 16/9; }
+        .tour-detail-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .tour-detail-card:hover .tour-detail-img { transform: scale(1.05); }
+        .tour-detail-badges { position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tour-detail-duration { position: absolute; bottom: 1rem; right: 1rem; display: flex; align-items: center; gap: 0.375rem; font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600; color: #fff; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); padding: 0.375rem 0.875rem; border-radius: var(--radius-full); }
+        .tour-detail-body { padding: 1.5rem; }
+        .tour-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem; }
+        .tour-detail-title { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600; color: var(--text-heading); line-height: 1.3; }
+        .tour-detail-rating { display: flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: var(--text-muted); flex-shrink: 0; }
+        .tour-detail-rating i { color: var(--secondary); }
+        .tour-detail-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
+        .tour-detail-specs { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem; }
+        .tour-spec { display: flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: var(--text-muted); }
+        .tour-spec i { color: var(--secondary); font-size: 0.75rem; }
+        .tour-detail-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1.25rem; border-top: 1px solid var(--border-light); gap: 1rem; }
+
+        /* What's included section */
+        .includes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .include-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-xl); padding: 1.5rem; text-align: center;
+            transition: var(--transition-smooth);
+        }
+        .include-card:hover { border-color: var(--secondary); box-shadow: 0 8px 24px rgba(201,151,58,0.12); }
+        .include-icon { font-size: 1.75rem; color: var(--secondary); margin-bottom: 1rem; display: block; }
+        .include-title { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.375rem; }
+        .include-desc { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.65; }
+
+        @media (max-width: 1024px) {
+            .tours-layout { grid-template-columns: 1fr; }
+            .filter-sidebar { position: static; }
+            .tours-grid { grid-template-columns: 1fr; }
+            .includes-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .booking-bar { position: static; }
+            .booking-bar-inner { flex-direction: column; align-items: stretch; }
+            .includes-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon helicopter tour" class="page-hero-bg">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content container">
+        <div class="breadcrumb animate-on-scroll">
+            <a href="index.html">Home</a>
+            <span><i class="fas fa-chevron-right" style="font-size:0.6rem;"></i></span>
+            <span>Tours & Packages</span>
+        </div>
+        <h1 class="page-hero-title animate-on-scroll">Tours & Packages</h1>
+        <p class="page-hero-sub animate-on-scroll delay-1">48 curated aerial experiences across 6 stunning locations. Find the perfect flight for every occasion and budget.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;" class="animate-on-scroll delay-2">
+            <span style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:0.375rem 0.875rem;font-size:0.8125rem;color:rgba(255,255,255,0.85);"><i class="fas fa-helicopter" style="font-size:0.7rem;color:var(--secondary);"></i> 48 Routes</span>
+            <span style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:0.375rem 0.875rem;font-size:0.8125rem;color:rgba(255,255,255,0.85);"><i class="fas fa-map-marker-alt" style="font-size:0.7rem;color:var(--secondary);"></i> 6 Locations</span>
+            <span style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:0.375rem 0.875rem;font-size:0.8125rem;color:rgba(255,255,255,0.85);"><i class="fas fa-clock" style="font-size:0.7rem;color:var(--secondary);"></i> 30–180 min flights</span>
+        </div>
+    </div>
+</section>
+
+<!-- BOOKING BAR -->
+<div class="booking-bar">
+    <div class="container">
+        <div class="booking-bar-inner">
+            <div class="booking-bar-field">
+                <label><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Location</label>
+                <select id="filter-location">
+                    <option value="">All Locations</option>
+                    <option>Grand Canyon, AZ</option>
+                    <option>Hawaii, HI</option>
+                    <option>New York, NY</option>
+                    <option>Las Vegas, NV</option>
+                    <option>Alaska</option>
+                    <option>San Francisco, CA</option>
+                </select>
+            </div>
+            <div class="booking-bar-field">
+                <label><i class="fas fa-calendar" style="font-size:0.6rem;"></i> Date</label>
+                <input type="date" id="filter-date">
+            </div>
+            <div class="booking-bar-field">
+                <label><i class="fas fa-users" style="font-size:0.6rem;"></i> Passengers</label>
+                <select id="filter-passengers">
+                    <option value="">Any Group Size</option>
+                    <option>1 Person</option>
+                    <option>2 Persons</option>
+                    <option>3–4 Persons</option>
+                    <option>5–6 Persons</option>
+                </select>
+            </div>
+            <div class="booking-bar-field">
+                <label><i class="fas fa-clock" style="font-size:0.6rem;"></i> Duration</label>
+                <select id="filter-duration">
+                    <option value="">Any Duration</option>
+                    <option>Under 45 min</option>
+                    <option>45–90 min</option>
+                    <option>90–120 min</option>
+                    <option>Over 2 hours</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Searching available tours...')">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN TOURS SECTION -->
+<section class="section">
+    <div class="container">
+        <div class="tours-layout">
+            <!-- Sidebar Filters -->
+            <aside class="filter-sidebar animate-on-scroll">
+                <h3 style="font-family:var(--font-heading);font-size:1rem;font-weight:600;color:var(--text-heading);margin-bottom:1.5rem;">Refine Results</h3>
+                
+                <div class="filter-group">
+                    <div class="filter-group-title">Tour Category</div>
+                    <label class="filter-option"><input type="checkbox" checked> Mountain & Canyon</label>
+                    <label class="filter-option"><input type="checkbox" checked> Coastal & Ocean</label>
+                    <label class="filter-option"><input type="checkbox" checked> City & Urban</label>
+                    <label class="filter-option"><input type="checkbox"> Volcano & Lava</label>
+                    <label class="filter-option"><input type="checkbox"> Arctic & Glacier</label>
+                    <label class="filter-option"><input type="checkbox"> Sunset & Romance</label>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Price Range</div>
+                    <input type="range" class="filter-range" min="99" max="1299" value="800" oninput="document.getElementById('price-val').textContent='Up to $'+this.value">
+                    <div class="price-display">
+                        <span>$99</span>
+                        <span id="price-val">Up to $800</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Rating</div>
+                    <label class="filter-option"><input type="checkbox" checked> <i class="fas fa-star" style="color:var(--secondary);font-size:0.75rem;"></i> 4.5+ Stars</label>
+                    <label class="filter-option"><input type="checkbox"> <i class="fas fa-star" style="color:var(--secondary);font-size:0.75rem;"></i> 4.0+ Stars</label>
+                    <label class="filter-option"><input type="checkbox"> Any Rating</label>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-group-title">Special Features</div>
+                    <label class="filter-option"><input type="checkbox"> Private Charter Only</label>
+                    <label class="filter-option"><input type="checkbox"> Photo Package Included</label>
+                    <label class="filter-option"><input type="checkbox"> Champagne Welcome</label>
+                    <label class="filter-option"><input type="checkbox"> Sunrise / Sunset</label>
+                </div>
+
+                <button class="btn btn-outline btn-sm btn-full" onclick="alert('Filters reset')">Reset Filters</button>
+            </aside>
+
+            <!-- Tours Grid -->
+            <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+                    <p style="font-size:0.9rem;color:var(--text-muted);">Showing <strong style="color:var(--text-heading);">6</strong> tours</p>
+                    <select style="padding:0.5rem 0.75rem;border:1.5px solid var(--border-default);border-radius:var(--radius-md);font-size:0.875rem;background:var(--bg-card);color:var(--text-body);cursor:pointer;">
+                        <option>Sort: Most Popular</option>
+                        <option>Sort: Price Low–High</option>
+                        <option>Sort: Price High–Low</option>
+                        <option>Sort: Highest Rated</option>
+                        <option>Sort: Shortest First</option>
+                    </select>
+                </div>
+                <div class="tours-grid">
+                    <!-- Tour 1 -->
+                    <div class="tour-detail-card animate-on-scroll delay-1 filterable-card" data-category="mountain">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon Rim Explorer" class="tour-detail-img">
+                            <div class="tour-detail-badges">
+                                <span class="badge badge-gold"><i class="fas fa-star" style="font-size:0.6rem;"></i> Best Seller</span>
+                            </div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> 90 min</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">Grand Canyon Rim Explorer</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 4.98 (1,240)</div>
+                            </div>
+                            <p class="tour-detail-desc">The world's most famous geological wonder from the air. Fly over all four rims and the Colorado River corridor for unparalleled perspectives.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> Grand Canyon, AZ</div>
+                                <div class="tour-spec"><i class="fas fa-users"></i> Up to 6 pax</div>
+                                <div class="tour-spec"><i class="fas fa-helicopter"></i> Bell 407</div>
+                                <div class="tour-spec"><i class="fas fa-language"></i> EN / ES / FR</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-success"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Available Today</span>
+                                <span class="badge badge-primary">Photo Package</span>
+                                <span class="badge badge-outline">Free Cancellation</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$349 <span class="tour-price-per">/ person</span></span>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="alert('Booking: Grand Canyon Rim Explorer')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 2 -->
+                    <div class="tour-detail-card animate-on-scroll delay-2 filterable-card" data-category="coastal">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/tour-coastal.jpg" alt="Coastal Cliffs & Coves" class="tour-detail-img">
+                            <div class="tour-detail-badges">
+                                <span class="badge" style="background:var(--primary);color:#fff;font-size:0.7rem;">New Route</span>
+                            </div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> 60 min</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">Coastal Cliffs & Hidden Coves</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 4.95 (387)</div>
+                            </div>
+                            <p class="tour-detail-desc">Glide over dramatic sea cliffs, secret beaches, and emerald waters. Spot sea turtles and dolphins from a bird's-eye perspective.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> Hawaii, HI</div>
+                                <div class="tour-spec"><i class="fas fa-users"></i> Up to 6 pax</div>
+                                <div class="tour-spec"><i class="fas fa-helicopter"></i> AS350</div>
+                                <div class="tour-spec"><i class="fas fa-language"></i> EN / JP</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-success"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Available Today</span>
+                                <span class="badge badge-outline">Free Cancellation</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$249 <span class="tour-price-per">/ person</span></span>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="alert('Booking: Coastal Cliffs & Coves')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 3 -->
+                    <div class="tour-detail-card animate-on-scroll delay-3 filterable-card" data-category="city">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/helicopter-city.jpg" alt="City Lights Night Flight" class="tour-detail-img">
+                            <div class="tour-detail-badges">
+                                <span class="badge badge-gold">Limited Seats</span>
+                            </div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> 45 min</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">City Lights Night Flight</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 4.97 (829)</div>
+                            </div>
+                            <p class="tour-detail-desc">Experience your city transformed into a glittering constellation of lights from 2,000 feet. The most romantic flight we offer.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> New York, NY</div>
+                                <div class="tour-spec"><i class="fas fa-users"></i> Up to 4 pax</div>
+                                <div class="tour-spec"><i class="fas fa-helicopter"></i> Robinson R66</div>
+                                <div class="tour-spec"><i class="fas fa-moon"></i> Evening Only</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-warning">Few Seats Left</span>
+                                <span class="badge badge-primary">Champagne</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$299 <span class="tour-price-per">/ person</span></span>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="alert('Booking: City Lights Night Flight')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 4 -->
+                    <div class="tour-detail-card animate-on-scroll delay-4 filterable-card" data-category="coastal">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/hero-aerial.jpg" alt="Alpine Summit Explorer" class="tour-detail-img">
+                            <div class="tour-detail-badges"></div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> 75 min</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">Golden Hour Sunset Flight</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 4.96 (612)</div>
+                            </div>
+                            <p class="tour-detail-desc">Time-your flight for peak golden hour and watch snow-capped mountain peaks ignite in shades of amber and crimson as the sun descends.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> Alaska</div>
+                                <div class="tour-spec"><i class="fas fa-users"></i> Up to 6 pax</div>
+                                <div class="tour-spec"><i class="fas fa-helicopter"></i> Bell 407</div>
+                                <div class="tour-spec"><i class="fas fa-sun"></i> Sunset Timing</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-success"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Available</span>
+                                <span class="badge badge-primary">Photo Package</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$389 <span class="tour-price-per">/ person</span></span>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="alert('Booking: Golden Hour Sunset Flight')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 5 -->
+                    <div class="tour-detail-card animate-on-scroll delay-1 filterable-card" data-category="mountain">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/tour-canyon.jpg" alt="Canyon Depth Expedition" class="tour-detail-img" style="object-position:right;">
+                            <div class="tour-detail-badges">
+                                <span class="badge" style="background:rgba(22,163,74,0.85);color:#fff;font-size:0.7rem;backdrop-filter:blur(8px);">Family Friendly</span>
+                            </div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> 30 min</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">Canyon Express Intro Flight</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 4.91 (2,140)</div>
+                            </div>
+                            <p class="tour-detail-desc">Perfect for first-timers and families. A 30-minute introductory flight offering stunning canyon views at an accessible price point.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> Las Vegas, NV</div>
+                                <div class="tour-spec"><i class="fas fa-users"></i> Up to 6 pax</div>
+                                <div class="tour-spec"><i class="fas fa-child"></i> Kids Welcome</div>
+                                <div class="tour-spec"><i class="fas fa-language"></i> Multi-language</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-success"><i class="fas fa-circle" style="font-size:0.5rem;"></i> Daily Flights</span>
+                                <span class="badge badge-outline">Free Cancellation</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$149 <span class="tour-price-per">/ person</span></span>
+                                </div>
+                                <a href="#" class="btn btn-primary btn-sm" onclick="alert('Booking: Canyon Express')">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tour 6: Private Charter -->
+                    <div class="tour-detail-card animate-on-scroll delay-2 filterable-card" data-category="private">
+                        <div class="tour-detail-img-wrap">
+                            <img src="assets/images/helicopter-city.jpg" alt="Private Charter" class="tour-detail-img" style="object-position:left;">
+                            <div class="tour-detail-badges">
+                                <span class="badge badge-gold">Elite</span>
+                            </div>
+                            <span class="tour-detail-duration"><i class="fas fa-clock"></i> Custom</span>
+                        </div>
+                        <div class="tour-detail-body">
+                            <div class="tour-detail-header">
+                                <h3 class="tour-detail-title">Private Bespoke Charter</h3>
+                                <div class="tour-detail-rating"><i class="fas fa-star"></i> 5.00 (158)</div>
+                            </div>
+                            <p class="tour-detail-desc">Your aircraft, your route, your timeline. For proposals, anniversaries, VIP clients, and corporate events where only the best will do.</p>
+                            <div class="tour-detail-specs">
+                                <div class="tour-spec"><i class="fas fa-map-marker-alt"></i> Any Location</div>
+                                <div class="tour-spec"><i class="fas fa-lock"></i> Exclusive Aircraft</div>
+                                <div class="tour-spec"><i class="fas fa-route"></i> Custom Route</div>
+                                <div class="tour-spec"><i class="fas fa-concierge-bell"></i> Concierge</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0;">
+                                <span class="badge badge-gold">VIP Experience</span>
+                                <span class="badge badge-primary">Fully Customized</span>
+                            </div>
+                            <div class="tour-detail-footer">
+                                <div class="tour-price">
+                                    <span class="tour-price-from">From</span>
+                                    <span class="tour-price-value">$1,299 <span class="tour-price-per">/ flight</span></span>
+                                </div>
+                                <a href="contact.html" class="btn btn-outline-gold btn-sm">Enquire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT'S INCLUDED SECTION -->
+<section class="section" style="background:var(--bg-surface);">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-gift" style="font-size:0.7rem;"></i> Inclusions</span>
+            <h2 class="section-title">Every Tour Includes</h2>
+            <p class="section-subtitle">Our standard of excellence means premium extras are standard — not add-ons.</p>
+        </div>
+        <div class="includes-grid" style="margin-top:3rem;">
+            <div class="include-card animate-on-scroll delay-1">
+                <i class="fas fa-headset include-icon"></i>
+                <div class="include-title">Noise-Cancelling Headsets</div>
+                <div class="include-desc">Premium aviation headsets for crystal-clear pilot narration and two-way communication throughout your flight.</div>
+            </div>
+            <div class="include-card animate-on-scroll delay-2">
+                <i class="fas fa-shield-halved include-icon"></i>
+                <div class="include-title">Safety Briefing</div>
+                <div class="include-desc">Comprehensive pre-flight safety instruction by certified crew. All passengers are fully prepared before takeoff.</div>
+            </div>
+            <div class="include-card animate-on-scroll delay-3">
+                <i class="fas fa-cloud-sun include-icon"></i>
+                <div class="include-title">Weather Guarantee</div>
+                <div class="include-desc">Full refund or complimentary reschedule if weather conditions are not suitable for the perfect scenic experience.</div>
+            </div>
+            <div class="include-card animate-on-scroll delay-1">
+                <i class="fas fa-parking include-icon"></i>
+                <div class="include-title">Free Helipad Parking</div>
+                <div class="include-desc">Complimentary parking at all SkyVista helipads. Arrive relaxed and ready for your adventure.</div>
+            </div>
+            <div class="include-card animate-on-scroll delay-2">
+                <i class="fas fa-certificate include-icon"></i>
+                <div class="include-title">Flight Certificate</div>
+                <div class="include-desc">Each passenger receives a personalized SkyVista flight certificate as a keepsake of their aerial adventure.</div>
+            </div>
+            <div class="include-card animate-on-scroll delay-3">
+                <i class="fas fa-phone include-icon"></i>
+                <div class="include-title">24/7 Support</div>
+                <div class="include-desc">Dedicated customer support team available around the clock for bookings, changes, and any questions.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section">
+    <div class="container" style="max-width:800px;">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-circle-question" style="font-size:0.7rem;"></i> FAQ</span>
+            <h2 class="section-title">Common Questions</h2>
+        </div>
+        <div class="faq-list" style="margin-top:2.5rem;">
+            <div class="faq-item animate-on-scroll delay-1">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">What should I wear for a helicopter tour?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">We recommend comfortable, casual clothing. Avoid loose items like scarves or hats that could be affected by rotor wash. Closed-toe shoes are required. For high-altitude or cold-weather tours, we provide insulated flight suits.</div></div>
+            </div>
+            <div class="faq-item animate-on-scroll delay-2">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Can I bring my camera on board?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">Absolutely! Cameras, smartphones, and GoPros are welcome. We recommend securing them with a wrist strap or neck strap. Our pilots can position the aircraft to maximize your photo opportunities. We also offer professional photo/video packages.</div></div>
+            </div>
+            <div class="faq-item animate-on-scroll delay-3">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">What happens if the weather is bad?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">Passenger safety is our top priority. If weather conditions don't meet our standards, we will reschedule your flight at no charge or provide a full refund. Our team monitors weather continuously and will contact you at least 2 hours before departure.</div></div>
+            </div>
+            <div class="faq-item animate-on-scroll delay-4">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">Is there a weight limit for passengers?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">For safety and aircraft balance, individual passenger weight limits apply (typically 300 lbs / 136 kg). Weight is used to determine seating and pricing. If you have questions, please contact us before booking and our team will help find the ideal arrangement.</div></div>
+            </div>
+            <div class="faq-item animate-on-scroll delay-5">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span class="faq-q-text">How far in advance should I book?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </div>
+                <div class="faq-answer"><div class="faq-answer-inner">We recommend booking at least 2–4 weeks in advance, especially for peak season (May–September) and special occasions. Sunset and private charter flights typically sell out 4–6 weeks ahead. Last-minute bookings are sometimes available — check our online availability.</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<script src="components.js"></script>
+</body>
+</html>

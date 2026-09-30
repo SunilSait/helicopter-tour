@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact SkyVista Helicopter Tours. Book a tour, request a private charter, or get answers to your questions. We're ready to help you take flight.">
+    <title>Contact Us | SkyVista Helicopter Tours</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── CONTACT PAGE ── */
+        .page-hero {
+            min-height: 45vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--primary-dark);
+            padding: calc(var(--navbar-height) + 2rem) 0 3.5rem;
+            box-sizing: border-box;
+        }
+        .page-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .page-hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(8,15,26,0.65) 0%, rgba(8,15,26,0.88) 100%);
+        }
+        .page-hero-content { position: relative; z-index: 2; width: 100%; color: #fff; text-align: center; }
+        .breadcrumb { display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.8125rem; margin-bottom: 1.25rem; color: rgba(255,255,255,0.6); }
+        .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition-fast); }
+        .breadcrumb a:hover { color: var(--secondary); }
+        .breadcrumb span { color: rgba(255,255,255,0.4); }
+
+        /* Contact layout */
+        .contact-layout {
+            display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: start;
+        }
+
+        /* Contact form card */
+        .contact-form-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl); padding: 2.5rem; box-shadow: var(--shadow-card);
+        }
+
+        /* Contact info sidebar */
+        .contact-info-card {
+            background: var(--primary-dark); border-radius: var(--radius-2xl);
+            padding: 2.5rem; color: #fff; position: relative; overflow: hidden;
+        }
+        .dark .contact-info-card { background: #050C16; }
+        .contact-info-card::before {
+            content: '';
+            position: absolute; right: -40px; bottom: -40px;
+            width: 200px; height: 200px;
+            background: rgba(201,151,58,0.1); border-radius: 50%;
+            filter: blur(40px); pointer-events: none;
+        }
+
+        .contact-info-title {
+            font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600;
+            color: #fff; margin-bottom: 0.5rem;
+        }
+        .contact-info-sub { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; line-height: 1.7; }
+
+        .contact-info-items { display: flex; flex-direction: column; gap: 1.25rem; }
+        .contact-info-item {
+            display: flex; gap: 1rem; align-items: flex-start;
+            padding: 1rem; border-radius: var(--radius-lg);
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition-fast);
+        }
+        .contact-info-item:hover { background: rgba(255,255,255,0.08); }
+        .contact-info-icon {
+            width: 40px; height: 40px; border-radius: var(--radius-sm);
+            background: rgba(201,151,58,0.2); color: var(--secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; flex-shrink: 0;
+        }
+        .contact-info-key { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.45); margin-bottom: 0.25rem; }
+        .contact-info-val { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: #fff; }
+        .contact-info-note { font-size: 0.8125rem; color: rgba(255,255,255,0.5); }
+
+        .contact-social { display: flex; gap: 0.625rem; margin-top: 2rem; }
+
+        /* Map placeholder */
+        .map-placeholder {
+            border-radius: var(--radius-2xl); overflow: hidden;
+            height: 280px; background: var(--bg-alt);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 0.75rem; color: var(--text-muted); margin-top: 1.5rem;
+            border: 1px solid var(--border-default);
+        }
+
+        /* Helipad locations */
+        .helipads-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .helipad-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-xl); padding: 1.5rem; text-align: center;
+            transition: var(--transition-smooth); box-shadow: var(--shadow-card);
+        }
+        .helipad-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); border-color: var(--secondary); }
+        .helipad-icon { font-size: 1.75rem; color: var(--secondary); margin-bottom: 1rem; display: block; }
+        .helipad-name { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.25rem; }
+        .helipad-addr { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.75rem; line-height: 1.6; }
+        .helipad-hrs { font-size: 0.8125rem; color: var(--green); font-weight: 600; }
+
+        @media (max-width: 1024px) {
+            .contact-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+            .helipads-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .contact-form-card { padding: 1.5rem; }
+            .helipads-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-nav"></div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <img src="assets/images/hero-aerial.jpg" alt="Helicopter aerial view hero" class="page-hero-bg">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content container">
+        <div class="breadcrumb animate-on-scroll">
+            <a href="index.html">Home</a>
+            <span><i class="fas fa-chevron-right" style="font-size:0.6rem;"></i></span>
+            <span>Contact Us</span>
+        </div>
+        <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,5vw,3.25rem);font-weight:600;color:#fff;margin-bottom:0.875rem;" class="animate-on-scroll">Get in Touch</h1>
+        <p style="font-size:1.0625rem;color:rgba(255,255,255,0.72);max-width:520px;line-height:1.75;margin:0 auto;" class="animate-on-scroll delay-1">Have a question or ready to book? Our team is available 7 days a week to help you plan your perfect flight.</p>
+    </div>
+</section>
+
+<!-- CONTACT MAIN -->
+<section class="section">
+    <div class="container">
+        <div class="contact-layout">
+            <!-- Form -->
+            <div class="contact-form-card animate-on-scroll">
+                <h2 style="font-family:var(--font-heading);font-size:1.375rem;font-weight:600;color:var(--text-heading);margin-bottom:0.375rem;">Send Us a Message</h2>
+                <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:2rem;">We typically respond within 2 hours during business hours.</p>
+
+                <form onsubmit="event.preventDefault(); alert('Message sent! We\'ll reply within 2 hours.'); this.reset();" id="contact-form">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="c-firstname">First Name</label>
+                            <input type="text" id="c-firstname" class="form-input" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="c-lastname">Last Name</label>
+                            <input type="text" id="c-lastname" class="form-input" placeholder="Smith" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:1rem;">
+                        <label class="form-label" for="c-email">Email Address</label>
+                        <input type="email" id="c-email" class="form-input" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:1rem;">
+                        <label class="form-label" for="c-phone">Phone Number</label>
+                        <input type="tel" id="c-phone" class="form-input" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:1rem;">
+                        <label class="form-label" for="c-subject">Enquiry Type</label>
+                        <select id="c-subject" class="form-input form-select">
+                            <option value="">Select a topic</option>
+                            <option>General Enquiry</option>
+                            <option>Book a Tour</option>
+                            <option>Private Charter Request</option>
+                            <option>Group Booking (8+ people)</option>
+                            <option>Corporate Event</option>
+                            <option>Gift Voucher</option>
+                            <option>Cancel / Reschedule</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:1rem;">
+                        <label class="form-label" for="c-tour">Preferred Tour (optional)</label>
+                        <select id="c-tour" class="form-input form-select">
+                            <option value="">Not sure yet</option>
+                            <option>Grand Canyon Rim Explorer — $349/person</option>
+                            <option>Coastal Cliffs & Coves — $249/person</option>
+                            <option>City Lights Night Flight — $299/person</option>
+                            <option>Golden Hour Sunset Flight — $389/person</option>
+                            <option>Canyon Express Intro — $149/person</option>
+                            <option>Private Charter — Custom</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:1.5rem;">
+                        <label class="form-label" for="c-message">Message</label>
+                        <textarea id="c-message" class="form-input form-textarea" placeholder="Tell us about your plans, group size, preferred dates, or any special requirements..." required style="min-height:130px;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full btn-lg">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+
+            <!-- Info Panel -->
+            <div class="animate-on-scroll delay-2">
+                <div class="contact-info-card">
+                    <h3 class="contact-info-title">Contact Information</h3>
+                    <p class="contact-info-sub">Our team is available 7 days a week. You can also walk in to any of our helipads during operating hours.</p>
+
+                    <div class="contact-info-items">
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
+                            <div>
+                                <div class="contact-info-key">Phone</div>
+                                <div class="contact-info-val">+1 (800) SKY-VISTA</div>
+                                <div class="contact-info-note">+1 (800) 759-8478</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <div class="contact-info-key">Email</div>
+                                <div class="contact-info-val">hello@skyvista.com</div>
+                                <div class="contact-info-note">Response within 2 hours</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <div class="contact-info-key">Operating Hours</div>
+                                <div class="contact-info-val">Daily 6:00 AM – 8:00 PM</div>
+                                <div class="contact-info-note">All SkyVista locations</div>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <div class="contact-info-key">Main Office</div>
+                                <div class="contact-info-val">1400 Helipad Drive</div>
+                                <div class="contact-info-note">Grand Canyon, AZ 86023</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-social">
+                        <a href="#" class="footer-social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="footer-social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+
+                <!-- Map placeholder -->
+                <div class="map-placeholder">
+                    <i class="fas fa-map-location-dot" style="font-size:2.5rem;color:var(--border-default);"></i>
+                    <p style="font-size:0.875rem;font-weight:500;">Interactive Map — Grand Canyon Helipad</p>
+                    <a href="#" class="btn btn-outline btn-sm" onclick="alert('Opening directions in maps...')"><i class="fas fa-directions"></i> Get Directions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HELIPAD LOCATIONS -->
+<section class="section" style="background:var(--bg-surface);">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-map-marker-alt" style="font-size:0.7rem;"></i> Our Locations</span>
+            <h2 class="section-title">Find Your Nearest Helipad</h2>
+            <p class="section-subtitle">We operate from 6 premium helipads across North America's most spectacular destinations.</p>
+        </div>
+        <div class="helipads-grid" style="margin-top:3rem;">
+            <div class="helipad-card animate-on-scroll delay-1">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">Grand Canyon, AZ</div>
+                <div class="helipad-addr">1400 Helipad Drive<br>Grand Canyon, AZ 86023</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 6AM–8PM</div>
+            </div>
+            <div class="helipad-card animate-on-scroll delay-2">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">Kauai, Hawaii</div>
+                <div class="helipad-addr">3250 Lihue Airport Rd<br>Lihue, HI 96766</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 7AM–6PM</div>
+            </div>
+            <div class="helipad-card animate-on-scroll delay-3">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">New York, NY</div>
+                <div class="helipad-addr">Pier 6, East River Heliport<br>New York, NY 10004</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 8AM–9PM</div>
+            </div>
+            <div class="helipad-card animate-on-scroll delay-1">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">Las Vegas, NV</div>
+                <div class="helipad-addr">5100 Las Vegas Blvd S<br>Las Vegas, NV 89119</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 6AM–10PM</div>
+            </div>
+            <div class="helipad-card animate-on-scroll delay-2">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">Juneau, Alaska</div>
+                <div class="helipad-addr">1873 Shell Simmons Dr<br>Juneau, AK 99801</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;color:var(--amber);"></i> Seasonal Apr–Sep</div>
+            </div>
+            <div class="helipad-card animate-on-scroll delay-3">
+                <i class="fas fa-helicopter helipad-icon"></i>
+                <div class="helipad-name">San Francisco, CA</div>
+                <div class="helipad-addr">San Francisco Heliport<br>SF Bay, CA 94111</div>
+                <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 8AM–7PM</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="main-footer"></div>
+<script src="components.js"></script>
+</body>
+</html>

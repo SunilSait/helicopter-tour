@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This page is coming soon. Subscribe for updates on new routes, features, and aerial experiences from SkyVista Helicopter Tours.">
+    <title>Coming Soon | SkyVista — Helicopter Tours & Scenic Flights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="fullscreen-page">
+
+<!-- Top Bar -->
+<div class="fullscreen-topbar">
+    <a href="index.html" class="nav-logo" aria-label="SkyVista Home">
+        <img src="assets/images/logo.jpg" alt="SkyVista Logo" width="38" height="38" style="width:38px;height:38px;object-fit:contain;display:block;border-radius:50%;background:#ffffff;padding:2px;box-shadow:0 2px 8px rgba(0,0,0,0.15);" />
+        <div class="nav-logo-text">
+            <span class="brand-name">SkyVista</span>
+            <span class="brand-tagline">Helicopter Tours</span>
+        </div>
+    </a>
+    <div style="display:flex;gap:0.5rem;">
+        <button onclick="toggleDir()" class="auth-toggle-btn" title="Toggle Direction" aria-label="Toggle text direction">
+            <span class="dir-label" style="font-size:0.625rem;font-weight:700;">LTR</span>
+        </button>
+        <button onclick="toggleTheme()" class="auth-toggle-btn" title="Toggle Theme" aria-label="Toggle dark mode">
+            <i class="fas fa-moon theme-icon"></i>
+        </button>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="fullscreen-content">
+    <div style="position:relative;max-width:540px;width:100%;margin:0 auto;">
+        <!-- Decorative glow -->
+        <div style="position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:min(450px, 90vw);height:min(450px, 90vw);background:radial-gradient(circle,rgba(201,151,58,0.14),transparent 65%);border-radius:50%;pointer-events:none;"></div>
+
+        <div style="position:relative;z-index:2;">
+            <div class="section-tag" style="justify-content:center;margin-bottom:1rem;">
+                <i class="fas fa-helicopter"></i> New Routes in Preparation
+            </div>
+            <h1 class="coming-title">Coming Soon</h1>
+            <p class="coming-desc">
+                We're crafting something exciting for you. New scenic routes, booking options, and aerial adventures will be available soon. Subscribe to get notified!
+            </p>
+
+            <!-- Countdown -->
+            <div class="countdown-grid" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-days">28</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-hours">14</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-mins">36</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-secs">52</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+
+            <!-- Subscribe -->
+            <form class="subscribe-form" onsubmit="event.preventDefault(); alert('🎉 Subscribed! We will notify you when this page launches.'); this.reset();">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-bell"></i> Notify Me</button>
+            </form>
+
+            <!-- Feature Preview Badges -->
+            <div style="display:flex;gap:0.625rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+                <span class="badge badge-gold"><i class="fas fa-mountain"></i> Volcano Lava Tours</span>
+                <span class="badge badge-primary"><i class="fas fa-snowflake"></i> Arctic Glacier Flights</span>
+                <span class="badge badge-gold"><i class="fas fa-vr-cardboard"></i> VR Flight Previews</span>
+                <span class="badge badge-primary"><i class="fas fa-gift"></i> Gift Experience Cards</span>
+            </div>
+
+            <!-- Social -->
+            <div class="coming-socials">
+                <a href="#" class="coming-social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="coming-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="coming-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="coming-social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="components.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initAuthPage();
+
+        // Simple countdown timer (30 days from now)
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 30);
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+            if (diff <= 0) return;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const d = document.getElementById('cd-days');
+            const h = document.getElementById('cd-hours');
+            const m = document.getElementById('cd-mins');
+            const s = document.getElementById('cd-secs');
+
+            if (d) d.textContent = String(days).padStart(2, '0');
+            if (h) h.textContent = String(hours).padStart(2, '0');
+            if (m) m.textContent = String(mins).padStart(2, '0');
+            if (s) s.textContent = String(secs).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    });
+</script>
+</body>
+</html>

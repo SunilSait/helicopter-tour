@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" id="root-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SkyVista — Premium helicopter tours & scenic flights. Discover breathtaking aerial views of mountains, coastlines, cities, and more. Book your unforgettable flight today.">
+    <title>SkyVista | Helicopter Tours & Scenic Flights</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── INDEX-SPECIFIC STYLES ── */
+        /* Hero */
+        .hero-home {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: calc(var(--navbar-height) + 1.5rem) 0 3rem;
+            box-sizing: border-box;
+        }
+        .hero-home .hero-bg {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center;
+        }
+        .hero-home .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(125deg, rgba(8,15,26,0.82) 0%, rgba(10,25,41,0.6) 50%, rgba(8,15,26,0.35) 100%);
+        }
+        .hero-home-content {
+            position: relative; z-index: 2;
+            padding: 0 1.5rem;
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--secondary); padding: 0.4rem 1rem;
+            background: rgba(201,151,58,0.15);
+            border: 1px solid rgba(201,151,58,0.35);
+            border-radius: var(--radius-full); margin-bottom: 1.5rem;
+            backdrop-filter: blur(8px);
+            animation: fadeInUp 0.7s ease both;
+        }
+        .hero-title {
+            font-family: var(--font-heading); font-weight: 600;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #fff; line-height: 1.1; margin-bottom: 1.25rem;
+            max-width: 700px;
+            animation: fadeInUp 0.7s 0.15s ease both;
+        }
+        .hero-title span { color: var(--secondary); }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.1875rem);
+            color: rgba(255,255,255,0.78); max-width: 540px;
+            line-height: 1.75; margin-bottom: 2.5rem; font-weight: 450;
+            animation: fadeInUp 0.7s 0.28s ease both;
+        }
+        .hero-ctas {
+            display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;
+            animation: fadeInUp 0.7s 0.4s ease both;
+        }
+        .hero-routes {
+            display: flex; flex-wrap: wrap; gap: 0.625rem;
+            animation: fadeInUp 0.7s 0.52s ease both;
+        }
+        .hero-route-chip {
+            display: inline-flex; align-items: center; gap: 0.375rem;
+            font-size: 0.8125rem; font-weight: 500; padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            transition: var(--transition-fast);
+        }
+        .hero-route-chip:hover { background: rgba(201,151,58,0.25); border-color: var(--secondary); color: #fff; }
+        .hero-scroll-hint {
+            position: absolute; bottom: 2rem; left: 50%;
+            transform: translateX(-50%); z-index: 2;
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 0.08em;
+            text-transform: uppercase; animation: fadeInUp 1s 1s ease both;
+        }
+        .scroll-arrow {
+            width: 28px; height: 28px; border: 1.5px solid rgba(255,255,255,0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 0.6875rem; animation: float 2.5s ease-in-out infinite;
+        }
+
+        /* Stats strip below hero */
+        .stats-strip {
+            background: var(--bg-card); border-bottom: 1px solid var(--border-default);
+            box-shadow: var(--shadow-md);
+        }
+        .stats-strip-inner {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem;
+        }
+        .stat-strip-item {
+            padding: 1.625rem 1.5rem; text-align: center;
+            border-right: 1px solid var(--border-default);
+        }
+        .stat-strip-item:last-child { border-right: none; }
+        .stat-strip-val {
+            font-family: var(--font-heading); font-size: 1.875rem; font-weight: 700;
+            color: var(--secondary); display: block; margin-bottom: 0.25rem;
+        }
+        .stat-strip-lbl { font-size: 0.8125rem; color: var(--text-muted); font-weight: 500; }
+
+        /* Feature strip */
+        .features-strip {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem; margin-top: 2rem;
+        }
+        .feature-strip-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-xl); padding: 1.75rem;
+            display: flex; gap: 1.125rem; align-items: flex-start;
+            transition: var(--transition-smooth); box-shadow: var(--shadow-card);
+        }
+        .feature-strip-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); border-color: transparent; }
+
+        /* Routes highlight section (split layout) */
+        .route-highlight {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+        .route-highlight-img {
+            position: relative; border-radius: var(--radius-2xl); overflow: hidden;
+        }
+        .route-highlight-img img {
+            width: 100%; aspect-ratio: 4/3; object-fit: cover;
+            border-radius: var(--radius-2xl);
+        }
+        .route-highlight-badge {
+            position: absolute; bottom: 1.5rem; left: 1.5rem;
+            background: var(--bg-card); border-radius: var(--radius-xl);
+            padding: 1rem 1.25rem; box-shadow: var(--shadow-lg);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .route-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+        .route-item {
+            display: flex; align-items: center; gap: 0.875rem;
+            padding: 0.875rem 1.125rem; border-radius: var(--radius-lg);
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            transition: var(--transition-fast); cursor: pointer;
+        }
+        .route-item:hover { border-color: var(--secondary); background: var(--secondary-light); }
+        .dark .route-item:hover { background: rgba(232,184,96,0.08); }
+        .route-item-icon {
+            width: 36px; height: 36px; border-radius: var(--radius-sm);
+            background: var(--secondary-light); color: var(--secondary);
+            display: flex; align-items: center; justify-content: center; font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        .dark .route-item-icon { background: rgba(232,184,96,0.12); }
+        .route-item-info { flex: 1; }
+        .route-item-name { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
+        .route-item-dur { font-size: 0.8125rem; color: var(--text-muted); }
+        .route-item-price { font-family: var(--font-heading); font-weight: 700; color: var(--secondary); font-size: 1rem; }
+
+        /* Experience section (dark bg) */
+        .section-dark {
+            background: var(--primary-dark); color: #fff;
+        }
+        .dark .section-dark { background: #050C16; }
+        .experience-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem;
+        }
+        .exp-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-2xl); padding: 2rem 1.5rem; text-align: center;
+            transition: var(--transition-smooth);
+        }
+        .exp-card:hover { background: rgba(201,151,58,0.12); border-color: rgba(201,151,58,0.3); transform: translateY(-4px); }
+        .exp-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 1.25rem; display: block; }
+        .exp-title { font-family: var(--font-heading); font-size: 1.0625rem; font-weight: 600; color: #fff; margin-bottom: 0.625rem; }
+        .exp-text { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+        /* Testimonial section */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .testimonial-card {
+            background: var(--bg-card); border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl); padding: 1.75rem;
+            box-shadow: var(--shadow-card); transition: var(--transition-smooth);
+        }
+        .testimonial-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
+        .testimonial-stars { color: var(--secondary); font-size: 0.875rem; margin-bottom: 1rem; }
+        .testimonial-text {
+            font-size: 0.9375rem; color: var(--text-body); line-height: 1.75;
+            margin-bottom: 1.5rem; font-style: italic;
+        }
+        .testimonial-author { display: flex; align-items: center; gap: 0.875rem; }
+        .testimonial-avatar {
+            width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+            background: var(--primary-light); flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--primary);
+        }
+        .testimonial-name { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
+        .testimonial-loc { font-size: 0.8125rem; color: var(--text-muted); }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #0F2540 60%, #1A3A5C 100%);
+            border-radius: var(--radius-3xl); padding: 4rem 3rem;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .cta-banner::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url("assets/images/helicopter-city.jpg") center/cover no-repeat;
+            opacity: 0.12;
+        }
+        .cta-banner-content { position: relative; z-index: 1; }
+        .cta-banner h2 { font-family: var(--font-heading); font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 600; color: #fff; margin-bottom: 1rem; }
+        .cta-banner p { color: rgba(255,255,255,0.7); font-size: 1rem; max-width: 520px; margin: 0 auto 2rem; line-height: 1.75; }
+        .cta-banner-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* Filter tabs */
+        .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
+        .filter-tab {
+            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;
+            padding: 0.5rem 1.25rem; border-radius: var(--radius-full);
+            border: 1.5px solid var(--border-default); background: var(--bg-card);
+            color: var(--text-body); cursor: pointer; transition: var(--transition-fast);
+        }
+        .filter-tab:hover { border-color: var(--secondary); color: var(--secondary); }
+        .filter-tab.active { background: var(--secondary); border-color: var(--secondary); color: #fff; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .route-highlight { grid-template-columns: 1fr; gap: 2.5rem; }
+            .features-strip { grid-template-columns: 1fr; }
+            .experience-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .stats-strip-inner { grid-template-columns: repeat(2, 1fr); }
+            .stat-strip-item:nth-child(2) { border-right: none; }
+        }
+        @media (max-width: 768px) {
+            .hero-ctas { flex-direction: column; align-items: flex-start; }
+            .stats-strip-inner { grid-template-columns: repeat(2, 1fr); }
+            .experience-grid { grid-template-columns: 1fr 1fr; }
+            .cta-banner { padding: 2.5rem 1.5rem; border-radius: var(--radius-2xl); }
+            .features-strip { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .stats-strip-inner { grid-template-columns: 1fr 1fr; }
+            .experience-grid { grid-template-columns: 1fr; }
+            .hero-routes { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div id="main-nav"></div>
+
+<!-- ════════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════ -->
+<section class="hero-home">
+    <img src="assets/images/hero-aerial.jpg" alt="Aerial mountain view from helicopter" class="hero-bg">
+    <div class="hero-overlay"></div>
+    <div class="hero-home-content">
+        <span class="hero-badge">
+            <i class="fas fa-star" style="font-size:0.6875rem;"></i>
+            Premium Aerial Experiences Since 2008
+        </span>
+        <h1 class="hero-title">
+            See the World<br>from <span>Above the Clouds</span>
+        </h1>
+        <p class="hero-subtitle">
+            Discover breathtaking landscapes, glittering cityscapes, and dramatic natural wonders on our curated helicopter tours and scenic flight experiences.
+        </p>
+        <div class="hero-ctas">
+            <a href="tours.html" class="btn btn-primary btn-xl">
+                <i class="fas fa-helicopter"></i> Explore Tours
+            </a>
+            <a href="contact.html" class="btn btn-ghost btn-xl">
+                <i class="fas fa-phone"></i> Book a Call
+            </a>
+        </div>
+        <div class="hero-routes">
+            <a href="tours.html" class="hero-route-chip"><i class="fas fa-mountain" style="font-size:0.7rem;"></i> Mountain Peaks</a>
+            <a href="tours.html" class="hero-route-chip"><i class="fas fa-water" style="font-size:0.7rem;"></i> Coastal Cliffs</a>
+            <a href="tours.html" class="hero-route-chip"><i class="fas fa-city" style="font-size:0.7rem;"></i> City Skyline</a>
+            <a href="tours.html" class="hero-route-chip"><i class="fas fa-volcano" style="font-size:0.7rem;"></i> Volcano Tours</a>
+            <a href="tours.html" class="hero-route-chip"><i class="fas fa-moon" style="font-size:0.7rem;"></i> Sunset Flights</a>
+        </div>
+    </div>
+    <div class="hero-scroll-hint">
+        <div class="scroll-arrow"><i class="fas fa-chevron-down"></i></div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     STATS STRIP
+════════════════════════════════════════════ -->
+<div class="stats-strip">
+    <div class="stats-strip-inner">
+        <div class="stat-strip-item">
+            <span class="stat-strip-val" data-count="12500" data-suffix="+">0</span>
+            <span class="stat-strip-lbl">Happy Passengers</span>
+        </div>
+        <div class="stat-strip-item">
+            <span class="stat-strip-val" data-count="48" data-suffix="+">0</span>
+            <span class="stat-strip-lbl">Scenic Routes</span>
+        </div>
+        <div class="stat-strip-item">
+            <span class="stat-strip-val" data-count="16" data-suffix=" yrs">0</span>
+            <span class="stat-strip-lbl">Years of Excellence</span>
+        </div>
+        <div class="stat-strip-item">
+            <span class="stat-strip-val" data-count="100" data-suffix="%" data-prefix="">0</span>
+            <span class="stat-strip-lbl">Safety Record</span>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     WHY CHOOSE US
+════════════════════════════════════════════ -->
+<section class="section" style="background:var(--bg-surface);">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-award" style="font-size:0.7rem;"></i> Why SkyVista</span>
+            <h2 class="section-title">Excellence at Every Altitude</h2>
+            <p class="section-subtitle">From FAA-certified pilots to state-of-the-art helicopters, we deliver the world's most premium aerial experience.</p>
+        </div>
+        <div class="features-strip" style="margin-top:3rem;">
+            <div class="feature-strip-card animate-on-scroll delay-1">
+                <div class="feature-icon-wrap">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h3 style="font-family:var(--font-heading);font-size:1.0625rem;font-weight:600;color:var(--text-heading);margin-bottom:0.5rem;">Zero-Compromise Safety</h3>
+                    <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.7;">Every flight follows FAA Part 135 standards. Our aircraft undergo daily mechanical inspections and our pilots maintain rigorous certification schedules.</p>
+                </div>
+            </div>
+            <div class="feature-strip-card animate-on-scroll delay-2">
+                <div class="feature-icon-wrap">
+                    <i class="fas fa-binoculars"></i>
+                </div>
+                <div>
+                    <h3 style="font-family:var(--font-heading);font-size:1.0625rem;font-weight:600;color:var(--text-heading);margin-bottom:0.5rem;">360° Panoramic Views</h3>
+                    <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.7;">Glass-sided cabins and bubble windows maximize your view. Every passenger gets a window seat on our specially configured sightseeing helicopters.</p>
+                </div>
+            </div>
+            <div class="feature-strip-card animate-on-scroll delay-3">
+                <div class="feature-icon-wrap">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div>
+                    <h3 style="font-family:var(--font-heading);font-size:1.0625rem;font-weight:600;color:var(--text-heading);margin-bottom:0.5rem;">Expert Pilot Narration</h3>
+                    <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.7;">Our pilots double as expert guides, sharing fascinating stories and local knowledge about every landmark, valley, and geological wonder you fly over.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     AERIAL ROUTE HIGHLIGHTS
+════════════════════════════════════════════ -->
+<section class="section">
+    <div class="container">
+        <div class="route-highlight">
+            <div class="route-highlight-img animate-on-scroll">
+                <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon aerial helicopter tour">
+                <div class="route-highlight-badge">
+                    <div style="width:40px;height:40px;border-radius:10px;background:var(--secondary-light);display:flex;align-items:center;justify-content:center;color:var(--secondary);font-size:1rem;flex-shrink:0;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <div style="font-family:var(--font-heading);font-size:0.875rem;font-weight:700;color:var(--text-heading);">#1 Rated Tour</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);">4.98 · 1,240 reviews</div>
+                    </div>
+                </div>
+            </div>
+            <div class="animate-on-scroll delay-2">
+                <span class="section-tag"><i class="fas fa-route" style="font-size:0.7rem;"></i> Aerial Routes</span>
+                <h2 class="section-title">Iconic Routes,<br>Breathtaking Views</h2>
+                <p style="font-size:1rem;color:var(--text-muted);line-height:1.75;margin-bottom:1.5rem;">Choose from our expertly curated flight routes — each designed to showcase the most dramatic and photogenic landscapes from the perfect altitude.</p>
+                <div class="route-list">
+                    <div class="route-item">
+                        <div class="route-item-icon"><i class="fas fa-mountain"></i></div>
+                        <div class="route-item-info">
+                            <div class="route-item-name">Alpine Summit Explorer</div>
+                            <div class="route-item-dur"><i class="fas fa-clock" style="font-size:0.7rem;margin-right:3px;"></i> 90 min · Up to 6 passengers</div>
+                        </div>
+                        <div class="route-item-price">$349</div>
+                    </div>
+                    <div class="route-item">
+                        <div class="route-item-icon"><i class="fas fa-water"></i></div>
+                        <div class="route-item-info">
+                            <div class="route-item-name">Coastal Cliffs & Sea Caves</div>
+                            <div class="route-item-dur"><i class="fas fa-clock" style="font-size:0.7rem;margin-right:3px;"></i> 60 min · Up to 6 passengers</div>
+                        </div>
+                        <div class="route-item-price">$249</div>
+                    </div>
+                    <div class="route-item">
+                        <div class="route-item-icon"><i class="fas fa-city"></i></div>
+                        <div class="route-item-info">
+                            <div class="route-item-name">City Lights Night Flight</div>
+                            <div class="route-item-dur"><i class="fas fa-clock" style="font-size:0.7rem;margin-right:3px;"></i> 45 min · Up to 4 passengers</div>
+                        </div>
+                        <div class="route-item-price">$299</div>
+                    </div>
+                    <div class="route-item">
+                        <div class="route-item-icon"><i class="fas fa-sun"></i></div>
+                        <div class="route-item-info">
+                            <div class="route-item-name">Golden Hour Sunset Flight</div>
+                            <div class="route-item-dur"><i class="fas fa-clock" style="font-size:0.7rem;margin-right:3px;"></i> 75 min · Up to 6 passengers</div>
+                        </div>
+                        <div class="route-item-price">$389</div>
+                    </div>
+                </div>
+                <a href="tours.html" class="btn btn-primary" style="margin-top:1.75rem;">
+                    View All Tours <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     FEATURED TOURS
+════════════════════════════════════════════ -->
+<section class="section" style="background:var(--bg-surface);">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-helicopter" style="font-size:0.7rem;"></i> Featured Tours</span>
+            <h2 class="section-title">Most Booked Experiences</h2>
+            <p class="section-subtitle">Our hand-picked selection of the most popular and highly-rated helicopter experiences.</p>
+        </div>
+        <div class="filter-tabs" style="margin-top:2rem;">
+            <button class="filter-tab active" data-filter="all" onclick="switchFilter('all')">All Tours</button>
+            <button class="filter-tab" data-filter="mountain" onclick="switchFilter('mountain')">Mountain</button>
+            <button class="filter-tab" data-filter="coastal" onclick="switchFilter('coastal')">Coastal</button>
+            <button class="filter-tab" data-filter="city" onclick="switchFilter('city')">City</button>
+            <button class="filter-tab" data-filter="private" onclick="switchFilter('private')">Private</button>
+        </div>
+        <div class="grid-3">
+            <div class="tour-card filterable-card animate-on-scroll delay-1" data-category="mountain">
+                <div class="tour-card-img-wrap">
+                    <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon Tour" class="tour-card-img">
+                    <span class="tour-card-badge tour-card-badge-popular">Most Popular</span>
+                    <span class="tour-card-duration"><i class="fas fa-clock"></i> 90 min</span>
+                </div>
+                <div class="tour-card-body">
+                    <h3 class="tour-card-title">Grand Canyon Rim Explorer</h3>
+                    <p class="tour-card-desc">Witness the world's most famous geological wonder from the air. Fly over all four rims and the Colorado River corridor.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+                        <span class="badge badge-primary"><i class="fas fa-users" style="font-size:0.6rem;"></i> Max 6</span>
+                        <span class="badge badge-gold"><i class="fas fa-star" style="font-size:0.6rem;"></i> 4.98</span>
+                        <span class="badge badge-success">Available</span>
+                    </div>
+                    <div class="tour-card-meta">
+                        <div class="tour-price">
+                            <span class="tour-price-from">From</span>
+                            <span class="tour-price-value">$349 <span class="tour-price-per">/ person</span></span>
+                        </div>
+                        <a href="tours.html" class="btn btn-primary btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tour-card filterable-card animate-on-scroll delay-2" data-category="coastal">
+                <div class="tour-card-img-wrap">
+                    <img src="assets/images/tour-coastal.jpg" alt="Coastal Cliffs Tour" class="tour-card-img">
+                    <span class="tour-card-badge" style="background:rgba(26,58,92,0.85);color:#fff;backdrop-filter:blur(8px);">New Route</span>
+                    <span class="tour-card-duration"><i class="fas fa-clock"></i> 60 min</span>
+                </div>
+                <div class="tour-card-body">
+                    <h3 class="tour-card-title">Coastal Cliffs & Coves</h3>
+                    <p class="tour-card-desc">Glide over dramatic sea cliffs, hidden coves, and emerald waters. Spot marine life from above in this unforgettable coastal tour.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+                        <span class="badge badge-primary"><i class="fas fa-users" style="font-size:0.6rem;"></i> Max 6</span>
+                        <span class="badge badge-gold"><i class="fas fa-star" style="font-size:0.6rem;"></i> 4.95</span>
+                        <span class="badge badge-success">Available</span>
+                    </div>
+                    <div class="tour-card-meta">
+                        <div class="tour-price">
+                            <span class="tour-price-from">From</span>
+                            <span class="tour-price-value">$249 <span class="tour-price-per">/ person</span></span>
+                        </div>
+                        <a href="tours.html" class="btn btn-primary btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tour-card filterable-card animate-on-scroll delay-3" data-category="city">
+                <div class="tour-card-img-wrap">
+                    <img src="assets/images/helicopter-city.jpg" alt="City Night Flight" class="tour-card-img">
+                    <span class="tour-card-badge" style="background:rgba(201,151,58,0.9);color:#fff;">Limited Seats</span>
+                    <span class="tour-card-duration"><i class="fas fa-clock"></i> 45 min</span>
+                </div>
+                <div class="tour-card-body">
+                    <h3 class="tour-card-title">City Lights Night Flight</h3>
+                    <p class="tour-card-desc">Experience your city transformed into a sea of glittering lights. The most romantic and dazzling flight experience we offer.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+                        <span class="badge badge-primary"><i class="fas fa-users" style="font-size:0.6rem;"></i> Max 4</span>
+                        <span class="badge badge-gold"><i class="fas fa-star" style="font-size:0.6rem;"></i> 4.97</span>
+                        <span class="badge badge-warning">Limited</span>
+                    </div>
+                    <div class="tour-card-meta">
+                        <div class="tour-price">
+                            <span class="tour-price-from">From</span>
+                            <span class="tour-price-value">$299 <span class="tour-price-per">/ person</span></span>
+                        </div>
+                        <a href="tours.html" class="btn btn-primary btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;">
+            <a href="tours.html" class="btn btn-secondary btn-lg">View All 48 Tours <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     EXPERIENCE SECTION (Dark)
+════════════════════════════════════════════ -->
+<section class="section-lg section-dark">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag" style="background:rgba(201,151,58,0.15);border-color:rgba(201,151,58,0.3);"><i class="fas fa-gem" style="font-size:0.7rem;"></i> The Experience</span>
+            <h2 class="section-title" style="color:#fff;">What Makes Every Flight<br>Truly Unforgettable</h2>
+            <p class="section-subtitle" style="color:rgba(255,255,255,0.65);margin:0 auto;">Every detail is thoughtfully crafted to create a premium, safe, and awe-inspiring aerial adventure.</p>
+        </div>
+        <div class="experience-grid">
+            <div class="exp-card animate-on-scroll delay-1">
+                <i class="fas fa-helicopter exp-icon"></i>
+                <h3 class="exp-title">Modern Fleet</h3>
+                <p class="exp-text">Our fleet of Bell 407, Robinson R66, and AS350 helicopters are maintained to the highest standards of comfort and performance.</p>
+            </div>
+            <div class="exp-card animate-on-scroll delay-2">
+                <i class="fas fa-cloud-sun exp-icon"></i>
+                <h3 class="exp-title">Weather Monitoring</h3>
+                <p class="exp-text">Real-time meteorological monitoring ensures your flight takes advantage of the perfect visibility conditions for stunning views.</p>
+            </div>
+            <div class="exp-card animate-on-scroll delay-3">
+                <i class="fas fa-camera exp-icon"></i>
+                <h3 class="exp-title">Photo Packages</h3>
+                <p class="exp-text">Professional in-flight photography and video packages available. Every precious moment captured from the perfect aerial angle.</p>
+            </div>
+            <div class="exp-card animate-on-scroll delay-4">
+                <i class="fas fa-glass-cheers exp-icon"></i>
+                <h3 class="exp-title">Private Charters</h3>
+                <p class="exp-text">Celebrate life's biggest moments — proposals, anniversaries, birthdays — with our exclusive private charter experiences.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════ -->
+<section class="section">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-heart" style="font-size:0.7rem;"></i> Testimonials</span>
+            <h2 class="section-title">Words from Our Passengers</h2>
+            <p class="section-subtitle">Over 12,500 guests have experienced the world from above with SkyVista.</p>
+        </div>
+        <div class="testimonial-grid" style="margin-top:3rem;">
+            <div class="testimonial-card animate-on-scroll delay-1">
+                <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="testimonial-text">"Absolutely the most breathtaking experience of my life. Watching the canyon unfold beneath us was surreal. Our pilot was incredibly knowledgeable. 10/10 would do it again!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">SM</div>
+                    <div>
+                        <div class="testimonial-name">Sarah Mitchell</div>
+                        <div class="testimonial-loc">Phoenix, AZ · Grand Canyon Tour</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card animate-on-scroll delay-2">
+                <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="testimonial-text">"Proposed to my partner during the sunset flight over the coast. The pilot set up the perfect moment — she said yes! Best investment we ever made. Thank you SkyVista!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">JR</div>
+                    <div>
+                        <div class="testimonial-name">James Rodriguez</div>
+                        <div class="testimonial-loc">Los Angeles, CA · Sunset Coast Flight</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card animate-on-scroll delay-3">
+                <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p class="testimonial-text">"The city night tour blew me away. Seeing the skyline from 2,000 feet with champagne in hand was pure magic. The safety briefing gave me total confidence from the start."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">EM</div>
+                    <div>
+                        <div class="testimonial-name">Emma Chen</div>
+                        <div class="testimonial-loc">New York, NY · City Night Flight</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CTA BANNER
+════════════════════════════════════════════ -->
+<section class="section-sm">
+    <div class="container">
+        <div class="cta-banner animate-on-scroll">
+            <div class="cta-banner-content">
+                <span class="section-tag" style="background:rgba(201,151,58,0.2);border-color:rgba(201,151,58,0.4);margin-bottom:1.5rem;"><i class="fas fa-ticket" style="font-size:0.7rem;"></i> Limited Availability</span>
+                <h2>Ready to Take Flight?</h2>
+                <p>Seats fill up fast — especially for our sunset and private charter flights. Book today and secure your spot in the sky.</p>
+                <div class="cta-banner-btns">
+                    <a href="tours.html" class="btn btn-primary btn-xl"><i class="fas fa-helicopter"></i> Browse All Tours</a>
+                    <a href="contact.html" class="btn btn-outline-gold btn-xl"><i class="fas fa-phone"></i> Call Us Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div id="main-footer"></div>
+
+<script src="components.js"></script>
+</body>
+</html>

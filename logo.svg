@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <!-- Background circle -->
+  <circle cx="80" cy="80" r="74" fill="#1A3A5C" opacity="0.1" stroke="#1A3A5C" stroke-width="2"/>
+  <!-- Outer ring accent -->
+  <circle cx="80" cy="80" r="74" stroke="#C9973A" stroke-width="2.5" fill="none" opacity="0.4" stroke-dasharray="8 4"/>
+  <!-- Helicopter body -->
+  <rect x="38" y="80" width="68" height="22" rx="8" fill="#1A3A5C"/>
+  <!-- Cockpit bubble -->
+  <ellipse cx="68" cy="84" rx="18" ry="13" fill="#C9973A" opacity="0.9"/>
+  <ellipse cx="67" cy="83" rx="12" ry="9" fill="rgba(255,255,255,0.2)"/>
+  <!-- Tail boom -->
+  <rect x="106" y="86" width="34" height="8" rx="4" fill="#1A3A5C"/>
+  <!-- Tail rotor -->
+  <ellipse cx="141" cy="90" rx="3.5" ry="10" fill="#C9973A" opacity="0.85"/>
+  <!-- Main rotor hub -->
+  <circle cx="78" cy="74" r="5.5" fill="#C9973A"/>
+  <!-- Main rotor blade -->
+  <rect x="16" y="71" width="124" height="6" rx="3" fill="#C9973A" opacity="0.8"/>
+  <!-- Vertical rotor -->
+  <rect x="75" y="30" width="6" height="44" rx="3" fill="#C9973A" opacity="0.65"/>
+  <!-- Landing skids -->
+  <rect x="44" y="103" width="24" height="4" rx="2" fill="#1A3A5C" opacity="0.7"/>
+  <rect x="80" y="103" width="24" height="4" rx="2" fill="#1A3A5C" opacity="0.7"/>
+  <rect x="48" y="101" width="4" height="6" rx="1" fill="#1A3A5C"/>
+  <rect x="64" y="101" width="4" height="6" rx="1" fill="#1A3A5C"/>
+  <rect x="84" y="101" width="4" height="6" rx="1" fill="#1A3A5C"/>
+  <rect x="100" y="101" width="4" height="6" rx="1" fill="#1A3A5C"/>
+</svg>
