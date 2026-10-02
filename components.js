@@ -113,7 +113,7 @@ function injectNav() {
             <!-- Actions -->
             <div class="nav-actions">
                 <button onclick="toggleDir()" class="nav-icon-btn" title="Toggle Direction" aria-label="Toggle RTL/LTR">
-                    <span class="dir-label" style="font-size:0.6rem;font-weight:700;letter-spacing:0.04em;">${isRTL ? 'RTL' : 'LTR'}</span>
+                    <span class="dir-label" style="font-size:0.6rem;font-weight:600;letter-spacing:0.04em;">${isRTL ? 'RTL' : 'LTR'}</span>
                 </button>
                 <button onclick="toggleTheme()" class="nav-icon-btn" title="Toggle Theme" aria-label="Toggle dark mode">
                     <span class="theme-icon-wrap"><i class="${isDark ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon'}"></i></span>
@@ -140,7 +140,7 @@ function injectNav() {
             </div>
             <div class="mob-toggles">
                 <button onclick="toggleDir()" class="nav-icon-btn" title="Toggle Direction">
-                    <span class="dir-label" style="font-size:0.6rem;font-weight:700;">${isRTL ? 'RTL' : 'LTR'}</span>
+                    <span class="dir-label" style="font-size:0.6rem;font-weight:600;">${isRTL ? 'RTL' : 'LTR'}</span>
                 </button>
                 <button onclick="toggleTheme()" class="nav-icon-btn" title="Toggle Theme" aria-label="Toggle dark mode">
                     <span class="theme-icon-wrap"><i class="${isDark ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon'}"></i></span>
@@ -244,7 +244,7 @@ function injectFooter() {
                         <a href="#" class="footer-social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="footer-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="footer-social-link" aria-label="TripAdvisor"><i class="fab fa-tripadvisor"></i></a>
+                        <a href="#" class="footer-social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
 

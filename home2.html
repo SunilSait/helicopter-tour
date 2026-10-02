@@ -24,9 +24,12 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 8rem 4rem 4rem 3rem;
+            padding: 8rem 3rem 4rem max(var(--site-gutter), calc((100vw - var(--container-max)) / 2 + var(--site-gutter)));
             position: relative;
             z-index: 2;
+        }
+        [dir="rtl"] .hero2-left {
+            padding: 8rem max(var(--site-gutter), calc((100vw - var(--container-max)) / 2 + var(--site-gutter))) 4rem 3rem;
         }
         .dark .hero2-left { background: #050C16; }
         .hero2-left::after {
@@ -92,7 +95,7 @@
         }
         .dark .hero2-booking-chip { background: rgba(20, 34, 54, 0.95); }
         .booking-chip-title {
-            font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 700;
+            font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600;
             color: var(--text-heading); margin-bottom: 1rem;
         }
         .booking-chip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem; }
@@ -192,7 +195,7 @@
         .package-card.featured::before {
             content: 'Most Popular';
             position: absolute; top: 1rem; right: 1rem;
-            font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 700;
+            font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 600;
             text-transform: uppercase; letter-spacing: 0.06em;
             padding: 0.3rem 0.75rem; border-radius: var(--radius-full);
             background: var(--secondary); color: #fff; z-index: 2;
@@ -201,11 +204,11 @@
         .package-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
         .package-body { padding: 1.5rem; }
         .package-type {
-            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.08em; color: var(--secondary); margin-bottom: 0.5rem;
         }
         .package-name { font-family: var(--font-heading); font-size: 1.1875rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; }
-        .package-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
+        .package-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 450; }
         .package-features { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
         .package-feature { display: flex; align-items: center; gap: 0.625rem; font-size: 0.875rem; color: var(--text-body); }
         .package-feature i { color: var(--secondary); font-size: 0.75rem; width: 16px; }
@@ -213,7 +216,7 @@
             display: flex; align-items: center; justify-content: space-between;
             padding-top: 1.25rem; border-top: 1px solid var(--border-light);
         }
-        .package-price-val { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--secondary); }
+        .package-price-val { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; color: var(--secondary); }
         .package-price-unit { font-size: 0.75rem; color: var(--text-muted); }
 
         /* Premium gallery mosaic */
@@ -256,12 +259,12 @@
         }
         .process-step:hover { background: var(--bg-alt); }
         .process-num {
-            font-family: var(--font-heading); font-size: 3rem; font-weight: 700;
+            font-family: var(--font-heading); font-size: 3rem; font-weight: 600;
             color: var(--secondary); opacity: 0.15; line-height: 1;
             margin-bottom: 0.875rem; display: block;
         }
         .process-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; }
-        .process-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+        .process-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; font-weight: 450; }
 
         /* Partners logos */
         .partners-row {
@@ -270,14 +273,15 @@
             filter: grayscale(1);
         }
         .partner-logo {
-            font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700;
+            font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600;
             color: var(--text-body); letter-spacing: -0.01em;
         }
 
         /* Responsive */
         @media (max-width: 1024px) {
             .hero2 { grid-template-columns: 1fr; min-height: auto; }
-            .hero2-left { padding: 8rem 2rem 3rem; min-height: 60vh; }
+            .hero2-left { padding: 7.5rem var(--site-gutter) 3rem; min-height: 60vh; }
+            [dir="rtl"] .hero2-left { padding: 7.5rem var(--site-gutter) 3rem; }
             .hero2-left::after { display: none; }
             .hero2-right { min-height: 50vh; }
             .hero2-booking-chip { display: none; }
@@ -291,7 +295,8 @@
             .process-strip { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 768px) {
-            .hero2-left { padding: 7rem 1.25rem 2.5rem; }
+            .hero2-left { padding: 6.5rem var(--site-gutter) 2.5rem; }
+            [dir="rtl"] .hero2-left { padding: 6.5rem var(--site-gutter) 2.5rem; }
             .mosaic-grid { grid-template-columns: 1fr; }
             .mosaic-item-1, .mosaic-item-3 { grid-column: 1; grid-row: auto; }
             .process-strip { grid-template-columns: 1fr; }
@@ -328,15 +333,15 @@
         <!-- Floating stats on dark panel -->
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);">
             <div>
-                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:700;color:var(--secondary);" data-count="12500" data-suffix="+">0</div>
+                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:600;color:var(--secondary);" data-count="12500" data-suffix="+">0</div>
                 <div style="font-size:0.8125rem;color:rgba(255,255,255,0.5);font-weight:500;">Passengers</div>
             </div>
             <div>
-                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:700;color:var(--secondary);" data-count="48" data-suffix="+">0</div>
+                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:600;color:var(--secondary);" data-count="48" data-suffix="+">0</div>
                 <div style="font-size:0.8125rem;color:rgba(255,255,255,0.5);font-weight:500;">Scenic Routes</div>
             </div>
             <div>
-                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:700;color:var(--secondary);">4.98</div>
+                <div style="font-family:var(--font-heading);font-size:1.75rem;font-weight:600;color:var(--secondary);">4.98</div>
                 <div style="font-size:0.8125rem;color:rgba(255,255,255,0.5);font-weight:500;">Avg. Rating</div>
             </div>
         </div>
@@ -619,7 +624,7 @@
 <section class="section-sm">
     <div class="container">
         <div class="text-center animate-on-scroll" style="margin-bottom:2.5rem;">
-            <p style="font-size:0.875rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Certified & Recognized By</p>
+            <p style="font-size:0.875rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.1em;">Certified & Recognized By</p>
         </div>
         <div class="partners-row animate-on-scroll delay-1">
             <span class="partner-logo">FAA</span>
