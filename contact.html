@@ -82,13 +82,101 @@
 
         .contact-social { display: flex; gap: 0.625rem; margin-top: 2rem; }
 
-        /* Map placeholder */
-        .map-placeholder {
-            border-radius: var(--radius-2xl); overflow: hidden;
-            height: 280px; background: var(--bg-alt);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 0.75rem; color: var(--text-muted); margin-top: 1.5rem;
+        /* Live Map Container */
+        .live-map-wrapper {
+            margin: 3.5rem auto 0;
+            max-width: 1040px;
+            width: 100%;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
             border: 1px solid var(--border-default);
+            background: var(--bg-card);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+        .live-map-wrapper:hover {
+            box-shadow: var(--shadow-card-hover);
+        }
+        .live-map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-default);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .live-map-title {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+        .live-map-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--green);
+            background: var(--green-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .dark .live-map-badge {
+            background: rgba(22, 163, 74, 0.18);
+            color: #4ade80;
+        }
+        .live-map-select {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            padding: 0.45rem 0.875rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+            background: var(--bg-card);
+            color: var(--text-heading);
+            outline: none;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .live-map-select:focus {
+            border-color: var(--primary);
+        }
+        .live-map-frame-wrap {
+            position: relative;
+            width: 100%;
+            height: 380px;
+            background: var(--bg-alt);
+        }
+        .live-map-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .live-map-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.875rem 1.5rem;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-default);
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .live-map-addr {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* Helipad locations */
@@ -251,13 +339,52 @@
                         <a href="#" class="footer-social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Map placeholder -->
-                <div class="map-placeholder">
-                    <i class="fas fa-map-location-dot" style="font-size:2.5rem;color:var(--border-default);"></i>
-                    <p style="font-size:0.875rem;font-weight:500;">Interactive Map — Grand Canyon Helipad</p>
-                    <a href="#" class="btn btn-outline btn-sm" onclick="alert('Opening directions in maps...')"><i class="fas fa-directions"></i> Get Directions</a>
+        <!-- Interactive Live Map (Moved Down and Centered) -->
+        <div class="live-map-wrapper animate-on-scroll" id="live-map-card">
+            <div class="live-map-header">
+                <div class="live-map-title">
+                    <i class="fas fa-helicopter" style="color:var(--secondary);font-size:0.95rem;"></i>
+                    <span id="live-map-name">Grand Canyon Helipad (Main Base)</span>
+                    <span class="live-map-badge"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Live Map</span>
                 </div>
+                <div class="live-map-actions">
+                    <select id="helipad-selector" class="live-map-select" onchange="switchHelipad(this.value)" aria-label="Select Helipad Location">
+                        <option value="grand-canyon" selected>Grand Canyon, AZ</option>
+                        <option value="kauai">Kauai, Hawaii</option>
+                        <option value="nyc">New York, NY</option>
+                        <option value="vegas">Las Vegas, NV</option>
+                        <option value="juneau">Juneau, Alaska</option>
+                        <option value="sf">San Francisco, CA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="live-map-frame-wrap">
+                <iframe id="live-map-iframe"
+                    class="live-map-iframe"
+                    src="https://maps.google.com/maps?q=Grand+Canyon+National+Park+Airport,+AZ&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    loading="lazy"
+                    allowfullscreen=""
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="SkyVista Helipad Live Map">
+                </iframe>
+            </div>
+
+            <div class="live-map-footer">
+                <div class="live-map-addr" id="live-map-addr">
+                    <i class="fas fa-location-dot" style="color:var(--secondary);"></i>
+                    <span>1400 Helipad Drive, Grand Canyon, AZ 86023</span>
+                </div>
+                <a id="live-map-directions-btn"
+                   href="https://www.google.com/maps/dir/?api=1&destination=Grand+Canyon+National+Park+Airport"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn btn-primary btn-sm">
+                    <i class="fas fa-directions"></i> Get Directions
+                </a>
             </div>
         </div>
     </div>
@@ -269,44 +396,50 @@
         <div class="text-center animate-on-scroll">
             <span class="section-tag"><i class="fas fa-map-marker-alt" style="font-size:0.7rem;"></i> Our Locations</span>
             <h2 class="section-title">Find Your Nearest Helipad</h2>
-            <p class="section-subtitle">We operate from 6 premium helipads across North America's most spectacular destinations.</p>
+            <p class="section-subtitle">We operate from 6 premium helipads across North America's most spectacular destinations. Click any location to view it on the live map.</p>
         </div>
         <div class="helipads-grid" style="margin-top:3rem;">
-            <div class="helipad-card animate-on-scroll delay-1">
+            <div class="helipad-card animate-on-scroll delay-1" onclick="focusHelipad('grand-canyon')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">Grand Canyon, AZ</div>
                 <div class="helipad-addr">1400 Helipad Drive<br>Grand Canyon, AZ 86023</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 6AM–8PM</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
-            <div class="helipad-card animate-on-scroll delay-2">
+            <div class="helipad-card animate-on-scroll delay-2" onclick="focusHelipad('kauai')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">Kauai, Hawaii</div>
                 <div class="helipad-addr">3250 Lihue Airport Rd<br>Lihue, HI 96766</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 7AM–6PM</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
-            <div class="helipad-card animate-on-scroll delay-3">
+            <div class="helipad-card animate-on-scroll delay-3" onclick="focusHelipad('nyc')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">New York, NY</div>
                 <div class="helipad-addr">Pier 6, East River Heliport<br>New York, NY 10004</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 8AM–9PM</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
-            <div class="helipad-card animate-on-scroll delay-1">
+            <div class="helipad-card animate-on-scroll delay-1" onclick="focusHelipad('vegas')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">Las Vegas, NV</div>
                 <div class="helipad-addr">5100 Las Vegas Blvd S<br>Las Vegas, NV 89119</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 6AM–10PM</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
-            <div class="helipad-card animate-on-scroll delay-2">
+            <div class="helipad-card animate-on-scroll delay-2" onclick="focusHelipad('juneau')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">Juneau, Alaska</div>
                 <div class="helipad-addr">1873 Shell Simmons Dr<br>Juneau, AK 99801</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;color:var(--amber);"></i> Seasonal Apr–Sep</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
-            <div class="helipad-card animate-on-scroll delay-3">
+            <div class="helipad-card animate-on-scroll delay-3" onclick="focusHelipad('sf')" style="cursor:pointer;" title="Click to view on live map">
                 <i class="fas fa-helicopter helipad-icon"></i>
                 <div class="helipad-name">San Francisco, CA</div>
                 <div class="helipad-addr">San Francisco Heliport<br>SF Bay, CA 94111</div>
                 <div class="helipad-hrs"><i class="fas fa-circle" style="font-size:0.5rem;margin-right:3px;"></i> Open Daily 8AM–7PM</div>
+                <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--primary);font-weight:600;"><i class="fas fa-map-location-dot"></i> View on Live Map</div>
             </div>
         </div>
     </div>
@@ -314,5 +447,75 @@
 
 <div id="main-footer"></div>
 <script src="components.js"></script>
+<script>
+const helipadsData = {
+    'grand-canyon': {
+        name: 'Grand Canyon Helipad (Main Base)',
+        addr: '1400 Helipad Drive, Grand Canyon, AZ 86023',
+        query: 'Grand Canyon National Park Airport, AZ',
+        destination: 'Grand+Canyon+National+Park+Airport'
+    },
+    'kauai': {
+        name: 'Kauai Heliport (Lihue Base)',
+        addr: '3250 Lihue Airport Rd, Lihue, HI 96766',
+        query: '3250 Lihue Airport Rd, Lihue, HI 96766',
+        destination: '3250+Lihue+Airport+Rd+Lihue+HI+96766'
+    },
+    'nyc': {
+        name: 'Downtown Manhattan Heliport (Pier 6)',
+        addr: 'Pier 6, East River Heliport, New York, NY 10004',
+        query: 'Downtown Manhattan Heliport, Pier 6, New York, NY',
+        destination: 'Downtown+Manhattan+Heliport+Pier+6+New+York+NY'
+    },
+    'vegas': {
+        name: 'Las Vegas Strip Terminal',
+        addr: '5100 Las Vegas Blvd S, Las Vegas, NV 89119',
+        query: '5100 Las Vegas Blvd S, Las Vegas, NV 89119',
+        destination: '5100+Las+Vegas+Blvd+S+Las+Vegas+NV+89119'
+    },
+    'juneau': {
+        name: 'Juneau Glacier Heliport',
+        addr: '1873 Shell Simmons Dr, Juneau, AK 99801',
+        query: '1873 Shell Simmons Dr, Juneau, AK 99801',
+        destination: '1873+Shell+Simmons+Dr+Juneau+AK+99801'
+    },
+    'sf': {
+        name: 'San Francisco Bay Heliport',
+        addr: 'San Francisco Heliport, SF Bay, CA 94111',
+        query: 'San Francisco Heliport, CA',
+        destination: 'San+Francisco+Heliport+CA'
+    }
+};
+
+function switchHelipad(key) {
+    const data = helipadsData[key];
+    if (!data) return;
+    const iframe = document.getElementById('live-map-iframe');
+    const nameEl = document.getElementById('live-map-name');
+    const addrEl = document.getElementById('live-map-addr');
+    const dirBtn = document.getElementById('live-map-directions-btn');
+    const selector = document.getElementById('helipad-selector');
+
+    if (iframe) iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(data.query)}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+    if (nameEl) nameEl.textContent = data.name;
+    if (addrEl) addrEl.innerHTML = `<i class="fas fa-location-dot" style="color:var(--secondary);"></i> <span>${data.addr}</span>`;
+    if (dirBtn) dirBtn.href = `https://www.google.com/maps/dir/?api=1&destination=${data.destination}`;
+    if (selector) selector.value = key;
+}
+
+function focusHelipad(key) {
+    switchHelipad(key);
+    const card = document.getElementById('live-map-card');
+    if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.borderColor = 'var(--secondary)';
+        card.style.boxShadow = '0 0 0 3px rgba(201, 151, 58, 0.45)';
+        setTimeout(() => {
+            card.style.borderColor = '';
+            card.style.boxShadow = '';
+        }, 1800);
+    }
+}
+</script>
 </body>
 </html>

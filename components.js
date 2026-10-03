@@ -118,8 +118,8 @@ function injectNav() {
                 <button onclick="toggleTheme()" class="nav-icon-btn" title="Toggle Theme" aria-label="Toggle dark mode">
                     <span class="theme-icon-wrap"><i class="${isDark ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon'}"></i></span>
                 </button>
-                <a href="login.html" class="btn btn-outline btn-sm nav-cta-outline">Sign In</a>
-                <a href="tours.html" class="btn btn-primary btn-sm nav-cta-primary">Book Tour</a>
+                <a href="dashboard.html" class="btn btn-outline btn-sm nav-cta-outline">Dashboard</a>
+                <a href="login.html" class="btn btn-primary btn-sm nav-cta-primary">Sign In</a>
                 <!-- Mobile Hamburger Button -->
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu(event)" aria-label="Toggle navigation menu">
                     <span class="mobile-menu-icon"><i class="fas fa-bars"></i></span>
@@ -134,8 +134,7 @@ function injectNav() {
         <div class="mobile-menu" id="mobile-menu">
             ${mobileLinksHTML}
             <div class="mob-actions">
-                <a href="tours.html" class="btn btn-primary w-full" onclick="toggleMobileMenu()"><i class="fas fa-helicopter"></i> Book a Tour</a>
-                <a href="login.html" class="btn btn-outline w-full" onclick="toggleMobileMenu()"><i class="fas fa-right-to-bracket"></i> Sign In</a>
+                <a href="login.html" class="btn btn-primary w-full" onclick="toggleMobileMenu()"><i class="fas fa-right-to-bracket"></i> Sign In</a>
                 <a href="dashboard.html" class="btn btn-outline-gold w-full" onclick="toggleMobileMenu()"><i class="fas fa-gauge"></i> Dashboard</a>
             </div>
             <div class="mob-toggles">

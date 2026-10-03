@@ -23,10 +23,27 @@
         .page-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .page-hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(to right, rgba(8,15,26,0.88) 40%, rgba(8,15,26,0.35) 100%);
+            background: linear-gradient(to bottom, rgba(8,15,26,0.75) 0%, rgba(8,15,26,0.5) 50%, rgba(8,15,26,0.85) 100%);
         }
-        .page-hero-content { position: relative; z-index: 2; width: 100%; color: #fff; }
-        .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; margin-bottom: 1.25rem; color: rgba(255,255,255,0.6); }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            margin-bottom: 1.25rem;
+            color: rgba(255,255,255,0.6);
+        }
         .breadcrumb a { color: rgba(255,255,255,0.6); transition: var(--transition-fast); }
         .breadcrumb a:hover { color: var(--secondary); }
         .breadcrumb span { color: rgba(255,255,255,0.4); }
@@ -156,9 +173,9 @@
             <span><i class="fas fa-chevron-right" style="font-size:0.6rem;"></i></span>
             <span>Safety & Pilots</span>
         </div>
-        <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,5vw,3.25rem);font-weight:600;color:#fff;margin-bottom:0.875rem;" class="animate-on-scroll">Safety & Pilots</h1>
-        <p style="font-size:1.0625rem;color:rgba(255,255,255,0.72);max-width:560px;line-height:1.75;margin-bottom:1.5rem;" class="animate-on-scroll delay-1">Your safety is our unwavering priority. Learn about our rigorous standards, certified pilots, and the protocols that keep every flight exceptional.</p>
-        <div class="animate-on-scroll delay-2">
+        <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,5vw,3.25rem);font-weight:600;color:#fff;margin-bottom:0.875rem;text-align:center;" class="animate-on-scroll">Safety & Pilots</h1>
+        <p style="font-size:1.0625rem;color:rgba(255,255,255,0.72);max-width:580px;line-height:1.75;margin:0 auto 1.5rem;text-align:center;" class="animate-on-scroll delay-1">Your safety is our unwavering priority. Learn about our rigorous standards, certified pilots, and the protocols that keep every flight exceptional.</p>
+        <div class="animate-on-scroll delay-2" style="display:flex;justify-content:center;">
             <span class="badge badge-gold" style="font-size:0.875rem;padding:0.5rem 1.125rem;"><i class="fas fa-shield-halved"></i> FAA Part 135 Certified · Zero Accident Record</span>
         </div>
     </div>
