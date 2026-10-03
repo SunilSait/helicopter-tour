@@ -471,9 +471,24 @@
             .hero2 { min-height: auto; padding-bottom: 5.5rem; }
             .hero2-slides { min-height: auto; }
             .hero2-slide { grid-template-columns: 1fr; min-height: auto; }
-            .hero2-left { padding: 7.5rem var(--site-gutter) 2rem; min-height: auto; }
+            .hero2-left {
+                padding: 7.5rem var(--site-gutter) 2rem;
+                min-height: auto;
+                text-align: center;
+                align-items: center;
+            }
             [dir="rtl"] .hero2-left { padding: 7.5rem var(--site-gutter) 2rem; }
             .hero2-left::after { display: none; }
+            .hero2-eyebrow { justify-content: center; }
+            .hero2-subtitle { margin-left: auto; margin-right: auto; }
+            .hero2-ctas { justify-content: center; }
+            .hero2-stats {
+                width: 100%;
+                max-width: 520px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
             .hero2-right { padding: 0 var(--site-gutter) 2rem; min-height: auto; }
             [dir="rtl"] .hero2-right { padding: 0 var(--site-gutter) 2rem; }
             .hero2-img-card { height: 400px; max-height: 50vh; }
@@ -1072,10 +1087,34 @@
 
         @media (max-width: 1024px) {
             .fleet-grid { grid-template-columns: 1fr 1fr; }
+            .fleet-grid .fleet-card:last-child:nth-child(odd) {
+                grid-column: span 2;
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
+            .packages-grid { grid-template-columns: 1fr 1fr; }
+            .packages-grid .package-card:last-child:nth-child(odd) {
+                grid-column: span 2;
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
             .amenities-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .fleet-grid { grid-template-columns: 1fr; }
+            .fleet-grid .fleet-card:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: 100%;
+                margin: 0;
+            }
+            .packages-grid { grid-template-columns: 1fr; }
+            .packages-grid .package-card:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: 100%;
+                margin: 0;
+            }
             .amenities-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -1159,7 +1198,7 @@
                     </div>
                     <div>
                         <div class="hero2-stat-num">100%</div>
-                        <div class="hero2-stat-lbl">Guaranteed Views</div>
+                        <div class="hero2-stat-lbl"> Views</div>
                     </div>
                 </div>
             </div>
@@ -1190,7 +1229,7 @@
                 </div>
                 <div class="hero2-stats">
                     <div>
-                        <div class="hero2-stat-num">10,000+ ft</div>
+                        <div class="hero2-stat-num">10,000+</div>
                         <div class="hero2-stat-lbl">Peak Altitude</div>
                     </div>
                     <div>
@@ -1320,7 +1359,7 @@
                 <div class="package-body">
                     <div class="package-type">Explorer</div>
                     <div class="package-name">Canyon & Wilderness</div>
-                    <div class="package-desc">Our classic intro to aerial sightseeing. Fly over the Grand Canyon's layered rock formations and the winding Colorado River.</div>
+                    <div class="package-desc">Our classic intro to aerial sightseeing. Fly over the Grand Canyon's layered rock and the winding Colorado River.</div>
                     <div class="package-features">
                         <div class="package-feature"><i class="fas fa-clock"></i> 60–90 minutes</div>
                         <div class="package-feature"><i class="fas fa-users"></i> Up to 6 passengers</div>
@@ -1376,7 +1415,7 @@
                             <div class="package-price-val">$1,299</div>
                             <div class="package-price-unit">per flight</div>
                         </div>
-                        <a href="contact.html" class="btn btn-outline btn-sm">Enquire</a>
+                        <a href="tours.html" class="btn btn-outline btn-sm">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -1420,11 +1459,11 @@
                         </div>
                         <div class="fleet-spec-item">
                             <span class="fleet-spec-label"><i class="fas fa-fan"></i> Technology</span>
-                            <span class="fleet-spec-val">Low-Noise Fenestron</span>
+                            <span class="fleet-spec-val">Low-Noise</span>
                         </div>
                     </div>
                     <div class="fleet-footer">
-                        <span style="font-size:0.8125rem;color:var(--text-muted);"><i class="fas fa-headphones" style="color:var(--secondary);margin-right:0.35rem;"></i> Bose A20 Headsets</span>
+                        <span style="font-size:0.8125rem;color:var(--text-muted);"><i class="fas fa-headphones" style="color:var(--secondary);margin-right:0.35rem;"></i> Bose Headsets</span>
                         <a href="tours.html" class="btn btn-outline btn-sm">Explore Tours</a>
                     </div>
                 </div>
@@ -1439,7 +1478,7 @@
                 <div class="fleet-body">
                     <div class="fleet-model">Bell 407 GX Executive</div>
                     <div class="fleet-role">Mountain & Sunset Specialist</div>
-                    <p class="fleet-desc">Powered by a robust Rolls-Royce turbine engine, offering unrivaled mountain maneuverability, club-configuration hand-stitched leather seating, and silky-smooth four-blade rotor cruising.</p>
+                    <p class="fleet-desc">Powered by a robust Rolls-Royce turbine engine, offering unrivaled mountain maneuverability, club-configuration hand-stitched leather seating, and silky-smooth four-blade rotor.</p>
                     <div class="fleet-specs-grid">
                         <div class="fleet-spec-item">
                             <span class="fleet-spec-label"><i class="fas fa-gauge-high"></i> Cruise Speed</span>
@@ -1490,7 +1529,7 @@
                         </div>
                         <div class="fleet-spec-item">
                             <span class="fleet-spec-label"><i class="fas fa-shield-halved"></i> Safety</span>
-                            <span class="fleet-spec-val">Twin Turbine Dual-Pilot</span>
+                            <span class="fleet-spec-val">Twin Turbine</span>
                         </div>
                     </div>
                     <div class="fleet-footer">
@@ -1563,7 +1602,7 @@
             <div class="process-step animate-on-scroll delay-2">
                 <span class="process-num">02</span>
                 <h3 class="process-title">Reserve Your Spot</h3>
-                <p class="process-desc">Book online in under 2 minutes. Select your preferred date, time slot, and passenger count. Secure booking with instant confirmation.</p>
+                <p class="process-desc">Book online in under 2 minutes. Select your preferred date, time slot, and passenger count. Secure booking with instant.</p>
             </div>
             <div class="process-step animate-on-scroll delay-3">
                 <span class="process-num">03</span>
@@ -1769,7 +1808,6 @@
                 <div class="charter-perks">
                     <div class="charter-perk"><i class="fas fa-check-circle"></i> Custom Flight Paths</div>
                     <div class="charter-perk"><i class="fas fa-check-circle"></i> Complimentary Champagne</div>
-                    <div class="charter-perk"><i class="fas fa-check-circle"></i> Private Dedicated Pilot</div>
                 </div>
             </div>
             <div class="charter-cta-right">

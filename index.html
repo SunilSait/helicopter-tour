@@ -737,7 +737,13 @@
         /* Responsive */
         @media (max-width: 1024px) {
             .route-highlight { grid-template-columns: 1fr; gap: 2.5rem; }
-            .features-strip { grid-template-columns: 1fr; }
+            .features-strip { grid-template-columns: repeat(2, 1fr); }
+            .features-strip .feature-strip-card:last-child:nth-child(odd) {
+                grid-column: span 2;
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
             .experience-grid { grid-template-columns: repeat(2, 1fr); }
             .testimonial-grid { grid-template-columns: 1fr; }
             .stats-strip-inner { grid-template-columns: repeat(2, 1fr); }
@@ -751,6 +757,11 @@
             .experience-grid { grid-template-columns: 1fr 1fr; }
             .cta-banner { padding: 2.5rem 1.5rem; border-radius: var(--radius-2xl); }
             .features-strip { grid-template-columns: 1fr; }
+            .features-strip .feature-strip-card:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: 100%;
+                margin: 0;
+            }
             .fleet-tabs { gap: 0.5rem; }
             .fleet-tab-btn { padding: 0.5rem 1rem; font-size: 0.8125rem; }
             .fleet-specs-grid { grid-template-columns: 1fr 1fr; gap: 0.625rem; }
@@ -919,7 +930,7 @@
         </div>
         <div class="stat-strip-item">
             <span class="stat-strip-val" data-count="16" data-suffix=" yrs">0</span>
-            <span class="stat-strip-lbl">Years of Excellence</span>
+            <span class="stat-strip-lbl">Years </span>
         </div>
         <div class="stat-strip-item">
             <span class="stat-strip-val" data-count="100" data-suffix="%" data-prefix="">0</span>
@@ -1070,7 +1081,7 @@
                 </div>
                 <div class="tour-card-body">
                     <h3 class="tour-card-title">Coastal Cliffs & Coves</h3>
-                    <p class="tour-card-desc">Glide over dramatic sea cliffs, hidden coves, and emerald waters. Spot marine life from above in this unforgettable coastal tour.</p>
+                    <p class="tour-card-desc">Glide over dramatic sea cliffs, hidden coves, and emerald waters. Spot marine life from above in this unforgettable tour.</p>
                     <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
                         <span class="badge badge-primary"><i class="fas fa-users" style="font-size:0.6rem;"></i> Max 6</span>
                         <span class="badge badge-gold"><i class="fas fa-star" style="font-size:0.6rem;"></i> 4.95</span>
@@ -1291,22 +1302,22 @@
             <div class="exp-card animate-on-scroll delay-1">
                 <i class="fas fa-helicopter exp-icon"></i>
                 <h3 class="exp-title">Modern Fleet</h3>
-                <p class="exp-text">Our fleet of Bell 407, Robinson R66, and AS350 helicopters are maintained to the highest standards of comfort and performance.</p>
+                <p class="exp-text">Our fleet of Bell 407, Robinson R66, and AS350 helicopters are maintained to the highest standards of comfort.</p>
             </div>
             <div class="exp-card animate-on-scroll delay-2">
                 <i class="fas fa-cloud-sun exp-icon"></i>
                 <h3 class="exp-title">Weather Monitoring</h3>
-                <p class="exp-text">Real-time meteorological monitoring ensures your flight takes advantage of the perfect visibility conditions for stunning views.</p>
+                <p class="exp-text">Real-time meteorological monitoring ensures your flight takes advantage of the perfect visibility conditions views.</p>
             </div>
             <div class="exp-card animate-on-scroll delay-3">
                 <i class="fas fa-camera exp-icon"></i>
                 <h3 class="exp-title">Photo Packages</h3>
-                <p class="exp-text">Professional in-flight photography and video packages available. Every precious moment captured from the perfect aerial angle.</p>
+                <p class="exp-text">Professional in-flight photography and video packages available. Every precious moment captured from the aerial.</p>
             </div>
             <div class="exp-card animate-on-scroll delay-4">
                 <i class="fas fa-glass-cheers exp-icon"></i>
                 <h3 class="exp-title">Private Charters</h3>
-                <p class="exp-text">Celebrate life's biggest moments — proposals, anniversaries, birthdays — with our exclusive private charter experiences.</p>
+                <p class="exp-text">Celebrate life's biggest moments — proposals, anniversaries, birthdays — with our exclusive private experiences.</p>
             </div>
         </div>
     </div>

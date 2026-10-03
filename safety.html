@@ -51,15 +51,17 @@
         /* Safety stats */
         .safety-stats {
             display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem; margin-top: 3rem;
+            gap: 1.5rem; align-items: stretch;
         }
         .safety-stat-card {
             background: var(--bg-card); border: 1px solid var(--border-default);
             border-radius: var(--radius-2xl); padding: 2rem 1.5rem; text-align: center;
             transition: var(--transition-smooth); box-shadow: var(--shadow-card);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; min-height: 100%;
         }
         .safety-stat-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
-        .safety-stat-icon { font-size: 1.75rem; color: var(--secondary); margin-bottom: 1rem; display: block; }
+        .safety-stat-icon { font-size: 1.75rem; color: var(--secondary); margin-bottom: 0.875rem; display: block; }
         .safety-stat-val { font-family: var(--font-heading); font-size: 2.25rem; font-weight: 600; color: var(--secondary); display: block; margin-bottom: 0.375rem; }
         .safety-stat-lbl { font-size: 0.875rem; color: var(--text-muted); font-weight: 500; }
 
@@ -251,15 +253,34 @@
             .safety-stats { grid-template-columns: repeat(2, 1fr); }
             .pilot-team-grid { grid-template-columns: repeat(2, 1fr); }
             .cert-grid { grid-template-columns: 1fr 1fr; }
+            .cert-grid .cert-card:last-child:nth-child(odd),
+            .grid-3 > .fleet-card:last-child:nth-child(odd),
+            .grid-3 > *:last-child:nth-child(odd) {
+                grid-column: span 2;
+                max-width: 500px;
+                width: 100%;
+                margin: 0 auto;
+            }
         }
         @media (max-width: 768px) {
             .protocol-grid { grid-template-columns: 1fr; }
-            .safety-stats { grid-template-columns: repeat(2, 1fr); }
+            .safety-stats { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .pilot-team-grid { grid-template-columns: 1fr 1fr; }
             .cert-grid { grid-template-columns: 1fr; }
+            .cert-grid .cert-card:last-child:nth-child(odd),
+            .grid-3 > .fleet-card:last-child:nth-child(odd),
+            .grid-3 > *:last-child:nth-child(odd) {
+                grid-column: auto;
+                max-width: 100%;
+                margin: 0;
+            }
         }
         @media (max-width: 480px) {
-            .safety-stats { grid-template-columns: 1fr 1fr; }
+            .safety-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .safety-stat-card { padding: 1.25rem 0.625rem; border-radius: var(--radius-xl); }
+            .safety-stat-icon { font-size: 1.35rem; margin-bottom: 0.5rem; }
+            .safety-stat-val { font-size: 1.5rem; margin-bottom: 0.25rem; }
+            .safety-stat-lbl { font-size: 0.75rem; line-height: 1.35; }
             .pilot-team-grid { grid-template-columns: 1fr; }
         }
         /* ════════════════════════════════════════════
@@ -452,8 +473,75 @@
     </div>
 </section>
 
-<!-- SAFETY PROTOCOLS -->
+<!-- FLEET SECTION -->
 <section class="section">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-helicopter" style="font-size:0.7rem;"></i> Our Fleet</span>
+            <h2 class="section-title">Modern Aircraft, Maintained to Perfection</h2>
+            <p class="section-subtitle">Our diverse fleet is selected for safety, comfort, and the best scenic viewing experience.</p>
+        </div>
+        <div class="grid-3" style="margin-top:3rem;">
+            <div class="fleet-card animate-on-scroll delay-1">
+                <div class="fleet-img-wrap">
+                    <div class="fleet-img">
+                        <img src="assets/images/fleet-bell407.jpg" alt="Bell 407 GXP helicopter">
+                    </div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-crown" style="font-size:0.7rem;color:var(--secondary);"></i> Primary Fleet</span></div>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-name">Bell 407 GXP</div>
+                    <div class="fleet-type">Turbine • Sightseeing</div>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">6 Passengers</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Range</span><span class="fleet-spec-val">330 nm</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">140 knots </span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Views</span><span class="fleet-spec-val">Panoramic </span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="fleet-card animate-on-scroll delay-2">
+                <div class="fleet-img-wrap">
+                    <div class="fleet-img">
+                        <img src="assets/images/fleet-h130.jpg" alt="Airbus AS350 B3e helicopter">
+                    </div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-mountain" style="font-size:0.7rem;color:var(--secondary);"></i> Alpine Tours</span></div>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-name">Airbus AS350 B3e</div>
+                    <div class="fleet-type">Turbine • High Altitude</div>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">5 Passengers</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Altitude</span><span class="fleet-spec-val">20,000 ft</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">155 knots</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Special</span><span class="fleet-spec-val">Cold Certified</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="fleet-card animate-on-scroll delay-3">
+                <div class="fleet-img-wrap">
+                    <div class="fleet-img">
+                        <img src="assets/images/fleet-h145.jpg" alt="Robinson R66 helicopter">
+                    </div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-water" style="font-size:0.7rem;color:var(--secondary);"></i> Coastal Tours</span></div>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-name">Robinson R66 Turbine</div>
+                    <div class="fleet-type">Turbine • Coastal</div>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">4 Passengers</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Range</span><span class="fleet-spec-val">350 nm</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">120 knots</span></div>
+                        <div class="fleet-spec"><span class="fleet-spec-key">Views</span><span class="fleet-spec-val">360° Windows</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SAFETY PROTOCOLS -->
+<section class="section" style="background:var(--bg-surface);">
     <div class="container">
         <div class="text-center animate-on-scroll">
             <span class="section-tag"><i class="fas fa-shield-halved" style="font-size:0.7rem;"></i> Safety Protocols</span>
@@ -501,73 +589,6 @@
                 <div>
                     <h3 class="protocol-title">GPS Flight Tracking</h3>
                     <p class="protocol-desc">All flights are tracked in real-time via ADS-B and GPS systems. Our operations center monitors every aircraft continuously from departure to landing.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FLEET SECTION -->
-<section class="section" style="background:var(--bg-surface);">
-    <div class="container">
-        <div class="text-center animate-on-scroll">
-            <span class="section-tag"><i class="fas fa-helicopter" style="font-size:0.7rem;"></i> Our Fleet</span>
-            <h2 class="section-title">Modern Aircraft, Maintained to Perfection</h2>
-            <p class="section-subtitle">Our diverse fleet is selected for safety, comfort, and the best scenic viewing experience.</p>
-        </div>
-        <div class="grid-3" style="margin-top:3rem;">
-            <div class="fleet-card animate-on-scroll delay-1">
-                <div class="fleet-img-wrap">
-                    <div class="fleet-img">
-                        <img src="assets/images/fleet-bell407.jpg" alt="Bell 407 GXP helicopter">
-                    </div>
-                    <div class="fleet-badge"><span class="badge"><i class="fas fa-crown" style="font-size:0.7rem;color:var(--secondary);"></i> Primary Fleet</span></div>
-                </div>
-                <div class="fleet-body">
-                    <div class="fleet-name">Bell 407 GXP</div>
-                    <div class="fleet-type">Turbine • Sightseeing</div>
-                    <div class="fleet-specs-grid">
-                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">6 Passengers</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Range</span><span class="fleet-spec-val">330 nm</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">140 knots</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Views</span><span class="fleet-spec-val">Panoramic Glass</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fleet-card animate-on-scroll delay-2">
-                <div class="fleet-img-wrap">
-                    <div class="fleet-img">
-                        <img src="assets/images/fleet-h130.jpg" alt="Airbus AS350 B3e helicopter">
-                    </div>
-                    <div class="fleet-badge"><span class="badge"><i class="fas fa-mountain" style="font-size:0.7rem;color:var(--secondary);"></i> Alpine Tours</span></div>
-                </div>
-                <div class="fleet-body">
-                    <div class="fleet-name">Airbus AS350 B3e</div>
-                    <div class="fleet-type">Turbine • High Altitude</div>
-                    <div class="fleet-specs-grid">
-                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">5 Passengers</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Altitude</span><span class="fleet-spec-val">20,000 ft</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">155 knots</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Special</span><span class="fleet-spec-val">Cold Certified</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="fleet-card animate-on-scroll delay-3">
-                <div class="fleet-img-wrap">
-                    <div class="fleet-img">
-                        <img src="assets/images/fleet-h145.jpg" alt="Robinson R66 helicopter">
-                    </div>
-                    <div class="fleet-badge"><span class="badge"><i class="fas fa-water" style="font-size:0.7rem;color:var(--secondary);"></i> Coastal Tours</span></div>
-                </div>
-                <div class="fleet-body">
-                    <div class="fleet-name">Robinson R66 Turbine</div>
-                    <div class="fleet-type">Turbine • Coastal</div>
-                    <div class="fleet-specs-grid">
-                        <div class="fleet-spec"><span class="fleet-spec-key">Capacity</span><span class="fleet-spec-val">4 Passengers</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Range</span><span class="fleet-spec-val">350 nm</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Max Speed</span><span class="fleet-spec-val">120 knots</span></div>
-                        <div class="fleet-spec"><span class="fleet-spec-key">Views</span><span class="fleet-spec-val">360° Bubble Windows</span></div>
-                    </div>
                 </div>
             </div>
         </div>
