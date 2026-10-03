@@ -403,34 +403,38 @@
         }
         .package-price-val { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; color: var(--secondary); }
         .package-price-unit { font-size: 0.75rem; color: var(--text-muted); }
+        .btn-outline:hover,
+        .dark .btn-outline:hover,
+        .package-footer .btn-outline:hover {
+            color: #ffffff !important;
+            background: var(--primary) !important;
+        }
 
-        /* Premium gallery mosaic */
+        /* Premium gallery mosaic (3x2 Grid) */
         .mosaic-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: auto auto;
-            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
         }
         .mosaic-item { border-radius: var(--radius-xl); overflow: hidden; cursor: pointer; position: relative; }
-        .mosaic-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .mosaic-item img { width: 100%; height: 100%; aspect-ratio: 16/10; object-fit: cover; transition: transform 0.5s ease; display: block; }
         .mosaic-item:hover img { transform: scale(1.06); }
-        .mosaic-item-1 { grid-column: 1 / 3; grid-row: 1 / 2; }
-        .mosaic-item-1 img { aspect-ratio: 16/9; }
-        .mosaic-item-2 { grid-column: 3 / 4; grid-row: 1 / 2; }
-        .mosaic-item-2 img { aspect-ratio: 4/5; height: 100%; }
-        .mosaic-item-3 { grid-column: 4 / 5; grid-row: 1 / 3; }
-        .mosaic-item-3 img { aspect-ratio: 9/16; height: 100%; }
-        .mosaic-item-4 img { aspect-ratio: 4/3; }
-        .mosaic-item-5 img { aspect-ratio: 4/3; }
-        .mosaic-item-6 img { aspect-ratio: 4/3; }
         .mosaic-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(8,15,26,0.75) 0%, transparent 55%);
-            opacity: 0; transition: var(--transition-smooth);
-            display: flex; align-items: flex-end; padding: 1rem;
+            background: linear-gradient(to top, rgba(8,15,26,0.82) 0%, rgba(8,15,26,0.25) 40%, transparent 65%);
+            opacity: 1; transition: var(--transition-smooth);
+            display: flex; align-items: flex-end; padding: 1.125rem;
         }
-        .mosaic-item:hover .mosaic-overlay { opacity: 1; }
-        .mosaic-caption { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600; color: #fff; }
+        .mosaic-item:hover .mosaic-overlay {
+            background: linear-gradient(to top, rgba(8,15,26,0.92) 0%, rgba(8,15,26,0.4) 45%, transparent 70%);
+        }
+        .mosaic-caption {
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
 
         /* Process timeline (horizontal) */
         .process-strip {
@@ -479,9 +483,7 @@
             .alt-section.reverse { direction: ltr; }
             .alt-img-accent { display: none; }
             .packages-grid { grid-template-columns: 1fr; }
-            .mosaic-grid { grid-template-columns: repeat(2,1fr); }
-            .mosaic-item-1 { grid-column: 1/3; }
-            .mosaic-item-3 { grid-column: 2/3; grid-row: auto; }
+            .mosaic-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .process-strip { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 768px) {
@@ -493,10 +495,588 @@
             .hero2-stat-num { font-size: 1.35rem; }
             .hero2-stat-lbl { font-size: 0.75rem; }
             .hero2-slider-controls { bottom: 1rem; padding: 0.35rem 0.75rem; gap: 0.6rem; }
-            .mosaic-grid { grid-template-columns: 1fr; }
-            .mosaic-item-1, .mosaic-item-3 { grid-column: 1; grid-row: auto; }
+            .mosaic-grid { grid-template-columns: 1fr; gap: 1rem; }
             .process-strip { grid-template-columns: 1fr; }
             .packages-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── Passenger Testimonials Carousel (Home 2) ── */
+        .testimonial-carousel-wrap {
+            max-width: 880px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+        .testimonial-slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-2xl);
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            box-shadow: var(--shadow-md);
+            min-height: 290px;
+        }
+        .testimonial-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(30px);
+            padding: 3rem 3.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .testimonial-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            position: relative;
+        }
+        .t-quote-icon {
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            font-size: 2.75rem;
+            color: var(--secondary);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        [dir="rtl"] .t-quote-icon {
+            right: auto;
+            left: 2.5rem;
+            transform: scaleX(-1);
+        }
+        .t-stars {
+            color: var(--secondary);
+            font-size: 0.9375rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            gap: 0.25rem;
+        }
+        .t-text {
+            font-family: var(--font-heading);
+            font-size: 1.1875rem;
+            font-weight: 500;
+            line-height: 1.65;
+            color: var(--text-heading);
+            margin-bottom: 1.75rem;
+        }
+        .t-author-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-default);
+        }
+        .t-author-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .t-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            background: linear-gradient(135deg, var(--secondary) 0%, #E6B65C 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.0625rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(201, 151, 58, 0.25);
+            border: 2px solid rgba(232, 184, 96, 0.45);
+        }
+        .t-author-name {
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .t-author-meta {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+        .t-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--secondary);
+            background: rgba(201, 151, 58, 0.12);
+            border: 1px solid rgba(201, 151, 58, 0.25);
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--radius-full);
+        }
+        .testimonial-nav-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-top: 1.75rem;
+        }
+        .t-nav-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border-default);
+            background: var(--bg-card);
+            color: var(--text-body);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-sm);
+        }
+        .t-nav-btn:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .t-indicators {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .t-indicator {
+            width: 38px;
+            height: 6px;
+            border-radius: var(--radius-full);
+            background: var(--border-default);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.3s;
+        }
+        .t-indicator-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--secondary);
+            border-radius: var(--radius-full);
+            transition: none;
+        }
+        .t-indicator.active {
+            background: rgba(201, 151, 58, 0.25);
+        }
+        @media (max-width: 640px) {
+            .testimonial-slide {
+                padding: 2rem 1.5rem;
+            }
+            .t-text {
+                font-size: 1.0625rem;
+            }
+            .t-author-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        /* ════════════════════════════════════════════
+           PREMIUM PRIVATE CHARTER CTA
+        ════════════════════════════════════════════ */
+        .charter-cta-card {
+            position: relative;
+            border-radius: var(--radius-3xl);
+            overflow: hidden;
+            padding: 3.75rem 3.5rem;
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            align-items: center;
+            gap: 3rem;
+            background: linear-gradient(105deg, #071322 0%, rgba(8, 22, 42, 0.96) 42%, rgba(9, 25, 48, 0.8) 68%, rgba(9, 25, 48, 0.35) 100%),
+                        url('assets/images/charter-cta-luxury.jpg') right center / cover no-repeat;
+            border: 1px solid rgba(201, 151, 58, 0.3);
+            box-shadow: 0 25px 60px -15px rgba(2, 8, 16, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+        .charter-cta-glow {
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(201, 151, 58, 0.22) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .charter-cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .charter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(201, 151, 58, 0.15);
+            border: 1px solid rgba(201, 151, 58, 0.35);
+            color: #E8B860;
+            padding: 0.35rem 0.95rem;
+            border-radius: var(--radius-full);
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1.25rem;
+            backdrop-filter: blur(8px);
+        }
+        .charter-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.75rem, 3.2vw, 2.375rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+        }
+        .charter-gold-text {
+            background: linear-gradient(135deg, #FFE8B5 0%, #E8B860 50%, #D4A445 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .charter-desc {
+            color: rgba(255, 255, 255, 0.76);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 1.75rem;
+        }
+        .charter-perks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+        }
+        .charter-perk {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .charter-perk i {
+            color: var(--secondary);
+            font-size: 0.875rem;
+        }
+        .charter-cta-right {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1.25rem;
+        }
+        .charter-cta-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            width: 100%;
+            max-width: 280px;
+        }
+        .charter-btn-book {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            padding: 0.95rem 1.75rem;
+            box-shadow: 0 10px 25px rgba(201, 151, 58, 0.35);
+        }
+        .charter-btn-explore {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 0.9375rem;
+            padding: 0.9rem 1.75rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff !important;
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            transition: var(--transition-fast);
+        }
+        .charter-btn-explore:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            color: #ffffff !important;
+        }
+        .charter-trust {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.35rem;
+            color: rgba(255, 255, 255, 0.68);
+            font-size: 0.78125rem;
+            text-align: right;
+            max-width: 280px;
+        }
+        .charter-stars {
+            color: var(--secondary);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 991px) {
+            .charter-cta-card {
+                grid-template-columns: 1fr;
+                gap: 2.25rem;
+                padding: 3rem 2rem;
+                background: linear-gradient(180deg, #071322 0%, rgba(8, 22, 42, 0.94) 55%, rgba(9, 25, 48, 0.8) 100%),
+                            url('assets/images/hero-aerial.jpg') center / cover no-repeat;
+            }
+            .charter-cta-right {
+                align-items: flex-start;
+            }
+            .charter-trust {
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+        @media (max-width: 576px) {
+            .charter-cta-card {
+                padding: 2.25rem 1.25rem;
+            }
+            .charter-cta-actions {
+                max-width: 100%;
+            }
+        }
+
+        /* ════════════════════════════════════════════
+           NEW SECTION 1: THE EXECUTIVE FLEET
+        ════════════════════════════════════════════ */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+        .fleet-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-card);
+        }
+        .fleet-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px -15px rgba(201, 151, 58, 0.25);
+        }
+        .fleet-img-wrap {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+        .fleet-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .fleet-card:hover .fleet-img {
+            transform: scale(1.06);
+        }
+        .fleet-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(8, 18, 32, 0.75);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.3rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .fleet-body {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .fleet-model {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+        }
+        .fleet-role {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--secondary);
+            margin-bottom: 0.875rem;
+        }
+        .fleet-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 1.5rem;
+        }
+        .fleet-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.625rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg-alt);
+            padding: 0.875rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+        }
+        .fleet-spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .fleet-spec-label {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .fleet-spec-label i {
+            color: var(--secondary);
+            font-size: 0.65rem;
+        }
+        .fleet-spec-val {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+        .fleet-footer {
+            margin-top: auto;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* ════════════════════════════════════════════
+           NEW SECTION 2: VIP AMENITIES & INCLUSIONS
+        ════════════════════════════════════════════ */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .amenity-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            position: relative;
+            box-shadow: var(--shadow-card);
+        }
+        .amenity-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px -15px rgba(201, 151, 58, 0.25);
+        }
+        .dark .amenity-card:hover {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.45);
+        }
+        .amenity-img-wrap {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+        }
+        .amenity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .amenity-card:hover .amenity-img {
+            transform: scale(1.08);
+        }
+        .amenity-img-badge {
+            position: absolute;
+            top: 0.85rem;
+            left: 0.85rem;
+            background: rgba(7, 18, 33, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #FFE29F;
+            padding: 0.28rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .amenity-body {
+            padding: 1.6rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .amenity-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.65rem;
+            line-height: 1.35;
+        }
+        .amenity-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 1.25rem;
+        }
+        .amenity-tag {
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78125rem;
+            font-weight: 600;
+            color: var(--secondary);
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 1024px) {
+            .fleet-grid { grid-template-columns: 1fr 1fr; }
+            .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .fleet-grid { grid-template-columns: 1fr; }
+            .amenities-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -545,7 +1125,7 @@
             </div>
             <div class="hero2-right">
                 <div class="hero2-img-card">
-                    <img src="assets/images/helicopter-city.jpg" alt="Premium helicopter flying over city at sunset">
+                    <img src="assets/images/home2-hero-luxury.jpg" alt="Executive VIP helicopter flying over coastal headlands and ocean at sunset">
                     <div class="hero2-right-overlay"></div>
                 </div>
             </div>
@@ -585,7 +1165,7 @@
             </div>
             <div class="hero2-right">
                 <div class="hero2-img-card">
-                    <img src="assets/images/tour-canyon.jpg" alt="Aerial view of the Grand Canyon from helicopter">
+                    <img src="assets/images/home2-hero-canyon.jpg" alt="Modern helicopter banking into the deep Grand Canyon gorge over Colorado River">
                     <div class="hero2-right-overlay"></div>
                 </div>
             </div>
@@ -625,7 +1205,7 @@
             </div>
             <div class="hero2-right">
                 <div class="hero2-img-card">
-                    <img src="assets/images/hero-aerial.jpg" alt="Helicopter cockpit view flying over alpine mountains at sunset">
+                    <img src="assets/images/home2-hero-glacier.jpg" alt="Helicopter flying close to glistening alpine glacier crevasses and snowy summits">
                     <div class="hero2-right-overlay"></div>
                 </div>
             </div>
@@ -697,8 +1277,7 @@
     <div class="container">
         <div class="alt-section">
             <div class="alt-img-block animate-on-scroll">
-                <img src="assets/images/hero-aerial.jpg" alt="Aerial mountain view" class="alt-img-main">
-                <img src="assets/images/tour-coastal.jpg" alt="Coastal scenery" class="alt-img-accent">
+                <img src="assets/images/story-main-founder.jpg" alt="SkyVista founder and pilot crew at mountain base" class="alt-img-main">
             </div>
             <div class="animate-on-scroll delay-2">
                 <span class="section-tag"><i class="fas fa-building" style="font-size:0.7rem;"></i> Our Story</span>
@@ -737,7 +1316,7 @@
         </div>
         <div class="packages-grid" style="margin-top:3rem;">
             <div class="package-card animate-on-scroll delay-1">
-                <img src="assets/images/tour-canyon.jpg" alt="Explorer Package" class="package-img">
+                <img src="assets/images/package-bespoke-charter.jpg" alt="Explorer Package" class="package-img">
                 <div class="package-body">
                     <div class="package-type">Explorer</div>
                     <div class="package-name">Canyon & Wilderness</div>
@@ -759,7 +1338,7 @@
             </div>
 
             <div class="package-card featured animate-on-scroll delay-2">
-                <img src="assets/images/helicopter-city.jpg" alt="Premium Package" class="package-img">
+                <img src="assets/images/package-canyon-wilderness.jpg" alt="Premium Package" class="package-img">
                 <div class="package-body">
                     <div class="package-type">Premium</div>
                     <div class="package-name">City & Coast Grand Tour</div>
@@ -781,7 +1360,7 @@
             </div>
 
             <div class="package-card animate-on-scroll delay-3">
-                <img src="assets/images/tour-coastal.jpg" alt="Elite Charter" class="package-img">
+                <img src="assets/images/package-city-coast.jpg" alt="Elite Charter" class="package-img">
                 <div class="package-body">
                     <div class="package-type">Elite Charter</div>
                     <div class="package-name">Private Bespoke Journey</div>
@@ -806,6 +1385,125 @@
 </section>
 
 <!-- ════════════════════════════════════════════
+     THE EXECUTIVE FLEET (New Section 1)
+════════════════════════════════════════════ -->
+<section class="section">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-helicopter" style="font-size:0.7rem;"></i> Modern Aviation</span>
+            <h2 class="section-title">The SkyVista Luxury Fleet</h2>
+            <p class="section-subtitle">Engineered for whisper-quiet flight, exceptional safety, and unobstructed 180° panoramic vistas.</p>
+        </div>
+        <div class="fleet-grid" style="margin-top:3rem;">
+            <!-- Aircraft 1 -->
+            <div class="fleet-card animate-on-scroll delay-1">
+                <div class="fleet-img-wrap">
+                    <img src="assets/images/fleet-h130.jpg" alt="Airbus H130 EcoStar" class="fleet-img">
+                    <span class="fleet-badge">Sightseeing Icon</span>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-model">Airbus H130 EcoStar</div>
+                    <div class="fleet-role">Primary Touring Aircraft</div>
+                    <p class="fleet-desc">The benchmark for luxury aerial tourism. Features a massive wrap-around bubble glass cockpit, raised theater-style stadium seating, and a quiet Fenestron tail rotor.</p>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-gauge-high"></i> Cruise Speed</span>
+                            <span class="fleet-spec-val">155 mph</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-users"></i> Capacity</span>
+                            <span class="fleet-spec-val">6 Passengers</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-route"></i> Max Range</span>
+                            <span class="fleet-spec-val">380 NM</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-fan"></i> Technology</span>
+                            <span class="fleet-spec-val">Low-Noise Fenestron</span>
+                        </div>
+                    </div>
+                    <div class="fleet-footer">
+                        <span style="font-size:0.8125rem;color:var(--text-muted);"><i class="fas fa-headphones" style="color:var(--secondary);margin-right:0.35rem;"></i> Bose A20 Headsets</span>
+                        <a href="tours.html" class="btn btn-outline btn-sm">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aircraft 2 -->
+            <div class="fleet-card animate-on-scroll delay-2">
+                <div class="fleet-img-wrap">
+                    <img src="assets/images/fleet-bell407.jpg" alt="Bell 407 GX Executive" class="fleet-img">
+                    <span class="fleet-badge">High Altitude Power</span>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-model">Bell 407 GX Executive</div>
+                    <div class="fleet-role">Mountain & Sunset Specialist</div>
+                    <p class="fleet-desc">Powered by a robust Rolls-Royce turbine engine, offering unrivaled mountain maneuverability, club-configuration hand-stitched leather seating, and silky-smooth four-blade rotor cruising.</p>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-gauge-high"></i> Cruise Speed</span>
+                            <span class="fleet-spec-val">160 mph</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-users"></i> Capacity</span>
+                            <span class="fleet-spec-val">5–6 Passengers</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-route"></i> Max Range</span>
+                            <span class="fleet-spec-val">324 NM</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-microchip"></i> Avionics</span>
+                            <span class="fleet-spec-val">Garmin G1000H</span>
+                        </div>
+                    </div>
+                    <div class="fleet-footer">
+                        <span style="font-size:0.8125rem;color:var(--text-muted);"><i class="fas fa-couch" style="color:var(--secondary);margin-right:0.35rem;"></i> Executive Leather</span>
+                        <a href="tours.html" class="btn btn-outline btn-sm">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aircraft 3 -->
+            <div class="fleet-card animate-on-scroll delay-3">
+                <div class="fleet-img-wrap">
+                    <img src="assets/images/fleet-h145.jpg" alt="Airbus H145 Twin-Engine VIP" class="fleet-img">
+                    <span class="fleet-badge" style="background:var(--secondary);color:#fff;">Flagship VIP</span>
+                </div>
+                <div class="fleet-body">
+                    <div class="fleet-model">Airbus H145 Twin-Engine</div>
+                    <div class="fleet-role">VIP & Bespoke Charters</div>
+                    <p class="fleet-desc">The crown jewel of our private charter fleet. Dual-turbine redundancy, whisper-quiet soundproofing, customizable VIP executive club cabin, and full refreshment bar service.</p>
+                    <div class="fleet-specs-grid">
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-gauge-high"></i> Cruise Speed</span>
+                            <span class="fleet-spec-val">168 mph</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-users"></i> Capacity</span>
+                            <span class="fleet-spec-val">Up to 8 Passengers</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-route"></i> Max Range</span>
+                            <span class="fleet-spec-val">440 NM</span>
+                        </div>
+                        <div class="fleet-spec-item">
+                            <span class="fleet-spec-label"><i class="fas fa-shield-halved"></i> Safety</span>
+                            <span class="fleet-spec-val">Twin Turbine Dual-Pilot</span>
+                        </div>
+                    </div>
+                    <div class="fleet-footer">
+                        <span style="font-size:0.8125rem;color:var(--text-muted);"><i class="fas fa-martini-glass" style="color:var(--secondary);margin-right:0.35rem;"></i> Full Bar Available</span>
+                        <a href="contact.html" class="btn btn-primary btn-sm">Charter VIP</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
      GALLERY MOSAIC
 ════════════════════════════════════════════ -->
 <section class="section">
@@ -818,29 +1516,29 @@
             <a href="gallery.html" class="btn btn-outline btn-sm">View Full Gallery <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="mosaic-grid animate-on-scroll delay-1">
-            <div class="mosaic-item mosaic-item-1" onclick="openLightbox('assets/images/hero-aerial.jpg','Mountain Valley at Sunrise')">
-                <img src="assets/images/hero-aerial.jpg" alt="Mountain valley aerial view">
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-mountain-sunrise.jpg','Mountain Valley at Sunrise')">
+                <img src="assets/images/mosaic-mountain-sunrise.jpg" alt="Mountain valley aerial view">
                 <div class="mosaic-overlay"><span class="mosaic-caption">Mountain Valley at Sunrise</span></div>
             </div>
-            <div class="mosaic-item mosaic-item-2" onclick="openLightbox('assets/images/tour-canyon.jpg','Grand Canyon Aerial')">
-                <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon from helicopter">
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-canyon-aerial.jpg','Grand Canyon Aerial')">
+                <img src="assets/images/mosaic-canyon-aerial.jpg" alt="Grand Canyon from helicopter">
                 <div class="mosaic-overlay"><span class="mosaic-caption">Grand Canyon Aerial</span></div>
             </div>
-            <div class="mosaic-item mosaic-item-3" onclick="openLightbox('assets/images/helicopter-city.jpg','City Lights at Dusk')">
-                <img src="assets/images/helicopter-city.jpg" alt="City night flight">
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-city-dusk.jpg','City Lights at Dusk')">
+                <img src="assets/images/mosaic-city-dusk.jpg" alt="City night flight">
                 <div class="mosaic-overlay"><span class="mosaic-caption">City Lights at Dusk</span></div>
             </div>
-            <div class="mosaic-item mosaic-item-4" onclick="openLightbox('assets/images/tour-coastal.jpg','Coastal Cliffs & Coves')">
-                <img src="assets/images/tour-coastal.jpg" alt="Coastal cliffs from above">
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-coastal-coves.jpg','Coastal Cliffs & Coves')">
+                <img src="assets/images/mosaic-coastal-coves.jpg" alt="Coastal cliffs from above">
                 <div class="mosaic-overlay"><span class="mosaic-caption">Coastal Cliffs & Coves</span></div>
             </div>
-            <div class="mosaic-item mosaic-item-5" onclick="openLightbox('assets/images/hero-aerial.jpg','Alpine Peaks')">
-                <img src="assets/images/hero-aerial.jpg" alt="Alpine peaks aerial" style="object-position:right;">
-                <div class="mosaic-overlay"><span class="mosaic-caption">Alpine Peaks</span></div>
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-glacier-flyover.jpg','Alpine Glacier Flyover')">
+                <img src="assets/images/mosaic-glacier-flyover.jpg" alt="Alpine peaks and glacier aerial view">
+                <div class="mosaic-overlay"><span class="mosaic-caption">Alpine Glacier Flyover</span></div>
             </div>
-            <div class="mosaic-item mosaic-item-6" onclick="openLightbox('assets/images/tour-canyon.jpg','Canyon River Corridor')">
-                <img src="assets/images/tour-canyon.jpg" alt="Canyon river view" style="object-position:left;">
-                <div class="mosaic-overlay"><span class="mosaic-caption">Canyon River Corridor</span></div>
+            <div class="mosaic-item" onclick="openLightbox('assets/images/mosaic-sunset-horizon.jpg','Golden Sunset Horizon')">
+                <img src="assets/images/mosaic-sunset-horizon.jpg" alt="Sunset helicopter flight horizon">
+                <div class="mosaic-overlay"><span class="mosaic-caption">Golden Sunset Horizon</span></div>
             </div>
         </div>
     </div>
@@ -882,20 +1580,174 @@
 </section>
 
 <!-- ════════════════════════════════════════════
-     PARTNERS / CERTIFICATIONS
+     VIP AMENITIES & INCLUSIONS (New Section 2)
 ════════════════════════════════════════════ -->
-<section class="section-sm">
+<section class="section" style="background:var(--bg-surface);">
     <div class="container">
-        <div class="text-center animate-on-scroll" style="margin-bottom:2.5rem;">
-            <p style="font-size:0.875rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.1em;">Certified & Recognized By</p>
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-crown" style="font-size:0.7rem;"></i> The SkyVista Standard</span>
+            <h2 class="section-title">Elevated Ground & Air Hospitality</h2>
+            <p class="section-subtitle">Your five-star flight experience begins long before the rotor blades start spinning.</p>
         </div>
-        <div class="partners-row animate-on-scroll delay-1">
-            <span class="partner-logo">FAA</span>
-            <span class="partner-logo">NTSB</span>
-            <span class="partner-logo">TripAdvisor</span>
-            <span class="partner-logo">Viator</span>
-            <span class="partner-logo">HAI</span>
-            <span class="partner-logo">AOPA</span>
+        <div class="amenities-grid">
+            <!-- Amenity 1 -->
+            <div class="amenity-card animate-on-scroll delay-1">
+                <div class="amenity-img-wrap">
+                    <img src="assets/images/amenity-lounge.jpg" alt="Private Helipad Sky Lounge" class="amenity-img">
+                    <span class="amenity-img-badge"><i class="fas fa-crown"></i> VIP Lounge</span>
+                </div>
+                <div class="amenity-body">
+                    <h3 class="amenity-title">Private Helipad Sky Lounge</h3>
+                    <p class="amenity-desc">Relax before takeoff in our climate-controlled private terminal lounges featuring artisan espresso, chilled champagne, and runway panoramic views.</p>
+                    <span class="amenity-tag"><i class="fas fa-check-circle"></i> Complimentary Access</span>
+                </div>
+            </div>
+
+            <!-- Amenity 2 -->
+            <div class="amenity-card animate-on-scroll delay-2">
+                <div class="amenity-img-wrap">
+                    <img src="assets/images/amenity-chauffeur.jpg" alt="Chauffeured Executive Transfers" class="amenity-img">
+                    <span class="amenity-img-badge"><i class="fas fa-car"></i> Mercedes-Maybach</span>
+                </div>
+                <div class="amenity-body">
+                    <h3 class="amenity-title">Chauffeured Executive</h3>
+                    <p class="amenity-desc">Seamless private door-to-helipad transportation in luxury Mercedes-Maybach and Cadillac Escalade vehicles directly from your hotel or resort.</p>
+                    <span class="amenity-tag"><i class="fas fa-check-circle"></i> Available on Request</span>
+                </div>
+            </div>
+
+            <!-- Amenity 3 -->
+            <div class="amenity-card animate-on-scroll delay-3">
+                <div class="amenity-img-wrap">
+                    <img src="assets/images/amenity-cockpit.jpg" alt="Cockpit Multi-Cam 4K Video" class="amenity-img">
+                    <span class="amenity-img-badge"><i class="fas fa-video"></i> 4K Multi-Cam</span>
+                </div>
+                <div class="amenity-body">
+                    <h3 class="amenity-title">Cockpit Multi-Cam 4K Video</h3>
+                    <p class="amenity-desc">State-of-the-art external 4K Cam action cameras and cockpit microphones capture your flight and narration, delivered instantly to your device.</p>
+                    <span class="amenity-tag"><i class="fas fa-check-circle"></i> Digital Download Included</span>
+                </div>
+            </div>
+
+            <!-- Amenity 4 -->
+            <div class="amenity-card animate-on-scroll delay-4">
+                <div class="amenity-img-wrap">
+                    <img src="assets/images/amenity-concierge.jpg" alt="Personal Aviation Concierge" class="amenity-img">
+                    <span class="amenity-img-badge"><i class="fas fa-champagne-glasses"></i> White-Glove VIP</span>
+                </div>
+                <div class="amenity-body">
+                    <h3 class="amenity-title">Personal Aviation Concierge</h3>
+                    <p class="amenity-desc">Dedicated specialists coordinate custom wilderness landing permits, floral arrangements, celebratory surprises, and personalized flight schedules.</p>
+                    <span class="amenity-tag"><i class="fas fa-check-circle"></i> 24/7 VIP Assistance</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     PASSENGER TESTIMONIALS (3 Slides, 5s Auto-play)
+════════════════════════════════════════════ -->
+<section class="section" id="section-testimonials">
+    <div class="container">
+        <div class="text-center animate-on-scroll">
+            <span class="section-tag"><i class="fas fa-heart" style="font-size:0.7rem;"></i> Passenger Stories</span>
+            <h2 class="section-title">Loved by Travelers Worldwide</h2>
+            <p class="section-subtitle">Over 12,500 adventurers have experienced the sky with us. Here is what they have to say.</p>
+        </div>
+
+        <div class="testimonial-carousel-wrap animate-on-scroll delay-1" id="testimonial-slider-wrap">
+            <div class="testimonial-slider-container">
+                <!-- Slide 1 -->
+                <div class="testimonial-slide active" data-slide="0">
+                    <i class="fas fa-quote-right t-quote-icon"></i>
+                    <div>
+                        <div class="t-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="t-text">
+                            "Absolutely the most breathtaking experience of our entire lives. Watching the morning sunlight cascade across the snow-capped mountain peaks from 8,000 feet was completely surreal. Our captain was an encyclopedia of local knowledge and the flight was silky smooth from start to finish."
+                        </p>
+                    </div>
+                    <div class="t-author-row">
+                        <div class="t-author-info">
+                            <img src="assets/images/passenger-sarah.jpg" alt="Sarah Mitchell" class="t-avatar" loading="lazy">
+                            <div>
+                                <div class="t-author-name">Sarah Mitchell</div>
+                                <div class="t-author-meta">Phoenix, AZ · Alpine Summit Explorer</div>
+                            </div>
+                        </div>
+                        <span class="t-badge"><i class="fas fa-circle-check"></i> Verified Passenger</span>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="testimonial-slide" data-slide="1">
+                    <i class="fas fa-quote-right t-quote-icon"></i>
+                    <div>
+                        <div class="t-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="t-text">
+                            "I chartered a private sunset flight along the Pacific coast to propose to my fiancé. SkyVista took care of every single detail with sheer perfection — champagne on a secluded canyon ridge, our favorite playlist in the Bose headsets, and the golden hour view of a lifetime. She said YES!"
+                        </p>
+                    </div>
+                    <div class="t-author-row">
+                        <div class="t-author-info">
+                            <img src="assets/images/passenger-james.jpg" alt="James Rodriguez" class="t-avatar" loading="lazy">
+                            <div>
+                                <div class="t-author-name">James Rodriguez</div>
+                                <div class="t-author-meta">Los Angeles, CA · Sunset Coast Private Flight</div>
+                            </div>
+                        </div>
+                        <span class="t-badge"><i class="fas fa-champagne-glasses"></i> VIP Anniversary Flight</span>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="testimonial-slide" data-slide="2">
+                    <i class="fas fa-quote-right t-quote-icon"></i>
+                    <div>
+                        <div class="t-stars">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="t-text">
+                            "As an avid landscape photographer, the panoramic bubble windows on the Airbus H130 were a dream come true. Zero window glare, crystal-clear optics, and our pilot hovered seamlessly beside geological canyon spires for incredible framing. Unrivaled professionalism and safety."
+                        </p>
+                    </div>
+                    <div class="t-author-row">
+                        <div class="t-author-info">
+                            <img src="assets/images/passenger-emma.jpg" alt="Emma Chen" class="t-avatar" loading="lazy">
+                            <div>
+                                <div class="t-author-name">Emma Chen</div>
+                                <div class="t-author-meta">New York, NY · Grand Canyon Photography Tour</div>
+                            </div>
+                        </div>
+                        <span class="t-badge"><i class="fas fa-camera"></i> Photography Specialist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls (Prev / Next & 5s Progress Bars) -->
+            <div class="testimonial-nav-controls">
+                <button class="t-nav-btn" onclick="prevTestimonialSlide()" aria-label="Previous testimonial">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="t-indicators">
+                    <div class="t-indicator active" onclick="goToTestimonialSlide(0)" title="Slide 1">
+                        <div class="t-indicator-bar"></div>
+                    </div>
+                    <div class="t-indicator" onclick="goToTestimonialSlide(1)" title="Slide 2">
+                        <div class="t-indicator-bar"></div>
+                    </div>
+                    <div class="t-indicator" onclick="goToTestimonialSlide(2)" title="Slide 3">
+                        <div class="t-indicator-bar"></div>
+                    </div>
+                </div>
+                <button class="t-nav-btn" onclick="nextTestimonialSlide()" aria-label="Next testimonial">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </div>
 </section>
@@ -905,16 +1757,38 @@
 ════════════════════════════════════════════ -->
 <section class="section-sm">
     <div class="container">
-        <div style="background:var(--primary-gradient);border-radius:var(--radius-3xl);padding:4rem 3rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;position:relative;overflow:hidden;" class="animate-on-scroll">
-            <div style="position:absolute;right:0;top:0;bottom:0;width:40%;background:url('assets/images/hero-aerial.jpg') center/cover;opacity:0.15;border-radius:0 var(--radius-3xl) var(--radius-3xl) 0;"></div>
-            <div style="position:relative;z-index:1;">
-                <span style="font-family:var(--font-heading);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--secondary);display:block;margin-bottom:0.75rem;">Exclusive Experience</span>
-                <h2 style="font-family:var(--font-heading);font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:600;color:#fff;margin-bottom:0.875rem;line-height:1.2;">Celebrate in the Sky with a Private Charter</h2>
-                <p style="color:rgba(255,255,255,0.65);font-size:0.9375rem;max-width:480px;line-height:1.75;">Proposals, anniversaries, corporate VIP events — we craft once-in-a-lifetime aerial experiences tailored to your vision.</p>
+        <div class="charter-cta-card animate-on-scroll">
+            <div class="charter-cta-glow"></div>
+            <div class="charter-cta-content">
+                <div class="charter-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>Exclusive Experience</span>
+                </div>
+                <h2 class="charter-title">Celebrate in the Sky with a <span class="charter-gold-text">Private Charter</span></h2>
+                <p class="charter-desc">Proposals, anniversaries, executive VIP retreats, or sunset escapes — we craft once-in-a-lifetime aerial journeys tailored to your exact vision.</p>
+                <div class="charter-perks">
+                    <div class="charter-perk"><i class="fas fa-check-circle"></i> Custom Flight Paths</div>
+                    <div class="charter-perk"><i class="fas fa-check-circle"></i> Complimentary Champagne</div>
+                    <div class="charter-perk"><i class="fas fa-check-circle"></i> Private Dedicated Pilot</div>
+                </div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0;position:relative;z-index:1;">
-                <a href="contact.html" class="btn btn-primary btn-lg" style="white-space:nowrap;">Request Charter</a>
-                <a href="tours.html" class="btn btn-ghost btn-lg" style="white-space:nowrap;">All Packages</a>
+            <div class="charter-cta-right">
+                <div class="charter-cta-actions">
+                    <a href="contact.html" class="btn btn-primary btn-xl charter-btn-book">
+                        <i class="fas fa-helicopter"></i>
+                        <span>Request Charter</span>
+                    </a>
+                    <a href="tours.html" class="charter-btn-explore">
+                        <i class="fas fa-layer-group"></i>
+                        <span>All Packages</span>
+                    </a>
+                </div>
+                <div class="charter-trust">
+                    <div class="charter-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <span>Rated 4.9/5 by 500+ private charter guests</span>
+                </div>
             </div>
         </div>
     </div>
@@ -1049,6 +1923,135 @@
         }
 
         // Initialize slider
+        showSlide(0);
+        startTimer();
+    })();
+
+    // ════════════════════════════════════════════
+    // PASSENGER TESTIMONIALS CAROUSEL
+    // 3 slides, 5 seconds per slide with live progress bar
+    // ════════════════════════════════════════════
+    (function initTestimonialsCarousel() {
+        let currentSlide = 0;
+        const totalSlides = 3;
+        const SLIDE_DURATION = 5000; // 5 seconds per slide
+        let timer = null;
+        let isPaused = false;
+
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const indicators = document.querySelectorAll('.t-indicator');
+        const container = document.getElementById('testimonial-slider-wrap');
+
+        if (!slides.length) return;
+
+        function showSlide(index) {
+            currentSlide = (index + totalSlides) % totalSlides;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+
+            indicators.forEach((ind, i) => {
+                const bar = ind.querySelector('.t-indicator-bar');
+                if (i === currentSlide) {
+                    ind.classList.add('active');
+                    if (bar) {
+                        bar.style.transition = 'none';
+                        bar.style.width = '0%';
+                        void bar.offsetWidth; // Force repaint
+                        if (!isPaused) {
+                            bar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+                            bar.style.width = '100%';
+                        }
+                    }
+                } else {
+                    ind.classList.remove('active');
+                    if (bar) {
+                        bar.style.transition = 'none';
+                        bar.style.width = '0%';
+                    }
+                }
+            });
+        }
+
+        window.goToTestimonialSlide = function(index) {
+            showSlide(index);
+            restartTimer();
+        };
+
+        window.nextTestimonialSlide = function() {
+            showSlide(currentSlide + 1);
+            restartTimer();
+        };
+
+        window.prevTestimonialSlide = function() {
+            showSlide(currentSlide - 1);
+            restartTimer();
+        };
+
+        function startTimer() {
+            stopTimer();
+            timer = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, SLIDE_DURATION);
+        }
+
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function restartTimer() {
+            startTimer();
+        }
+
+        if (container) {
+            container.addEventListener('mouseenter', () => {
+                isPaused = true;
+                stopTimer();
+                const activeInd = indicators[currentSlide];
+                if (activeInd) {
+                    const bar = activeInd.querySelector('.t-indicator-bar');
+                    if (bar) {
+                        const computedWidth = window.getComputedStyle(bar).width;
+                        bar.style.transition = 'none';
+                        bar.style.width = computedWidth;
+                    }
+                }
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isPaused = false;
+                startTimer();
+                const activeInd = indicators[currentSlide];
+                if (activeInd) {
+                    const bar = activeInd.querySelector('.t-indicator-bar');
+                    if (bar) {
+                        bar.style.transition = `width ${SLIDE_DURATION}ms linear`;
+                        bar.style.width = '100%';
+                    }
+                }
+            });
+
+            // Touch Swipe support
+            let touchStartX = 0;
+            container.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            container.addEventListener('touchend', e => {
+                const touchEndX = e.changedTouches[0].screenX;
+                if (touchStartX - touchEndX > 45) {
+                    window.nextTestimonialSlide();
+                } else if (touchEndX - touchStartX > 45) {
+                    window.prevTestimonialSlide();
+                }
+            }, { passive: true });
+        }
+
+        // Initialize
         showSlide(0);
         startTimer();
     })();

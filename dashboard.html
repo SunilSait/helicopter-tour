@@ -16,6 +16,9 @@
         .dashboard-layout {
             display: flex;
             height: 100vh;
+            width: 100%;
+            max-width: 100vw;
+            overflow: hidden;
             background: var(--bg-surface);
         }
         .dark .dashboard-layout { background: var(--bg-body); }
@@ -36,14 +39,12 @@
             z-index: 200;
         }
         .dark .db-sidebar { background: #050C16; }
-        .db-sidebar.collapsed { width: 68px; min-width: 68px; }
 
         .db-sidebar-top {
-            padding: 1.25rem 1rem;
+            padding: 1.25rem 1.25rem;
             border-bottom: 1px solid rgba(255,255,255,0.08);
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 0.75rem;
             flex-shrink: 0;
         }
@@ -60,35 +61,69 @@
         .db-brand { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; color: #fff; white-space: nowrap; display: block; }
         .db-brand-sub { font-size: 0.5875rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; display: block; }
 
-        .db-collapsed-hide { transition: opacity 0.2s, width 0.2s; }
-        .db-sidebar.collapsed .db-collapsed-hide { opacity: 0; width: 0; overflow: hidden; }
-
-        .db-sidebar-toggle {
-            width: 28px; height: 28px; border-radius: 6px;
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6); font-size: 0.75rem;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: var(--transition-fast); flex-shrink: 0;
-        }
-        .db-sidebar-toggle:hover { background: rgba(255,255,255,0.14); color: #fff; }
-
         /* Nav items */
-        .db-nav { flex: 1; padding: 1rem 0.75rem; display: flex; flex-direction: column; gap: 0.25rem; overflow-y: auto; }
+        .db-nav {
+            flex: 1;
+            padding: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            overflow-y: auto;
+            min-height: 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+        }
+        .db-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        .db-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .db-nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+        .db-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .db-nav > * {
+            flex-shrink: 0;
+        }
 
         .db-nav-section-label {
-            font-size: 0.625rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.1em; color: rgba(255,255,255,0.3);
-            padding: 0.75rem 0.5rem 0.375rem; white-space: nowrap; overflow: hidden;
+            display: block;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 0.875rem 0.5rem 0.375rem;
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 1.2;
+            flex-shrink: 0;
         }
-        .db-sidebar.collapsed .db-nav-section-label { opacity: 0; height: 0; padding: 0; }
+        .db-nav-section-label:first-child {
+            padding-top: 0.25rem;
+        }
 
         .db-nav-item {
-            display: flex; align-items: center; gap: 0.75rem;
-            padding: 0.6875rem 0.75rem; border-radius: var(--radius-md);
-            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 500;
-            color: rgba(255,255,255,0.65); cursor: pointer; transition: var(--transition-fast);
-            text-decoration: none; white-space: nowrap; overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6875rem 0.75rem;
+            border-radius: var(--radius-md);
+            font-family: var(--font-heading);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.65);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
             position: relative;
+            flex-shrink: 0;
         }
         .db-nav-item:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
         .db-nav-item.active { background: rgba(201,151,58,0.18); color: #fff; }
@@ -100,8 +135,6 @@
             padding: 0.125rem 0.5rem; border-radius: var(--radius-full);
             background: var(--secondary); color: #fff; flex-shrink: 0;
         }
-        .db-sidebar.collapsed .db-nav-label,
-        .db-sidebar.collapsed .db-nav-badge { display: none; }
 
         /* Sidebar footer */
         .db-sidebar-footer {
@@ -126,21 +159,24 @@
         .db-profile-info { overflow: hidden; }
         .db-profile-name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
         .db-profile-email { font-size: 0.75rem; color: rgba(255,255,255,0.45); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
-        .db-sidebar.collapsed .db-profile-info { display: none; }
 
         /* Logout link */
         .db-logout-btn {
             display: flex; align-items: center; gap: 0.75rem;
             padding: 0.6875rem 0.75rem; border-radius: var(--radius-md);
-            font-size: 0.875rem; color: rgba(255,255,255,0.5);
+            font-size: 0.875rem; color: #EF4444; font-weight: 500;
             cursor: pointer; margin-top: 0.25rem; transition: var(--transition-fast);
         }
-        .db-logout-btn:hover { color: #EF4444; background: rgba(239,68,68,0.1); }
-        .db-sidebar.collapsed .db-logout-label { display: none; }
+        .db-logout-btn .db-nav-icon { color: #EF4444; }
+        .db-logout-btn:hover { color: #F87171; background: rgba(239,68,68,0.12); }
+        .db-logout-btn:hover .db-nav-icon { color: #F87171; }
 
         /* ── Main area ── */
         .db-main {
             flex: 1;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -155,6 +191,8 @@
             border-bottom: 1px solid var(--border-default);
             flex-shrink: 0;
             gap: 1rem;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .db-topbar-left { display: flex; align-items: center; gap: 1rem; }
@@ -186,9 +224,42 @@
         }
         .db-theme-btn:hover { color: var(--primary); border-color: var(--primary); }
 
+        .db-topbar-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--secondary); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;
+            cursor: pointer; flex-shrink: 0;
+            transition: var(--transition-fast);
+        }
+        .db-topbar-avatar:hover { transform: scale(1.05); }
+
         /* Scroll area */
         .db-content {
-            flex: 1; overflow-y: auto; padding: var(--site-gutter);
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: var(--site-gutter);
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Section containers */
+        #section-overview,
+        #section-bookings,
+        #section-weather,
+        #section-manifest,
+        #section-photos,
+        #section-certificates,
+        #section-payments,
+        #section-notifications,
+        #section-settings {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
         }
 
         /* Welcome banner */
@@ -198,6 +269,7 @@
             padding: 1.75rem 2rem;
             display: flex; align-items: center; justify-content: space-between;
             gap: 1.5rem; margin-bottom: 1.75rem; position: relative; overflow: hidden;
+            width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
         }
         .db-welcome::before {
             content: '';
@@ -205,25 +277,35 @@
             width: 40%; background: url('assets/images/helicopter-city.jpg') center/cover;
             opacity: 0.12; border-radius: 0 var(--radius-2xl) var(--radius-2xl) 0;
         }
-        .db-welcome-text { position: relative; z-index: 1; }
+        .db-welcome-text { position: relative; z-index: 1; min-width: 0; }
         .db-welcome-greeting { font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 0.375rem; }
         .db-welcome-name { font-family: var(--font-heading); font-size: 1.375rem; font-weight: 600; color: #fff; display: block; margin-bottom: 0.375rem; }
         .db-welcome-sub { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
-        .db-welcome-actions { display: flex; gap: 0.75rem; flex-shrink: 0; position: relative; z-index: 1; }
+        .db-welcome-actions { display: flex; gap: 0.75rem; flex-shrink: 0; position: relative; z-index: 1; flex-wrap: wrap; }
 
         /* Metrics row */
-        .db-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
+        .db-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
         .db-metric-card {
             background: var(--bg-card); border: 1px solid var(--border-default);
             border-radius: var(--radius-xl); padding: 1.25rem 1.5rem;
             box-shadow: var(--shadow-card); transition: var(--transition-smooth);
+            min-width: 0; box-sizing: border-box;
         }
         .db-metric-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-2px); }
         .db-metric-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
         .db-metric-icon {
             width: 40px; height: 40px; border-radius: var(--radius-sm);
             display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
+            font-size: 1rem; flex-shrink: 0;
         }
         .db-metric-icon.gold { background: var(--secondary-light); color: var(--secondary); }
         .db-metric-icon.blue { background: var(--accent-sky-light); color: var(--accent-sky); }
@@ -240,33 +322,234 @@
         .db-metric-change.neutral { color: var(--text-muted); }
 
         /* Content grid */
-        .db-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; }
+        .db-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 340px;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .db-grid > * {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        /* Responsive Table Wrapper */
+        .db-table-responsive {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            display: block;
+            box-sizing: border-box;
+        }
+        .db-table-responsive .db-table {
+            width: 100%;
+            min-width: 0;
+        }
 
         /* Booking table */
         .db-card {
             background: var(--bg-card); border: 1px solid var(--border-default);
             border-radius: var(--radius-xl); box-shadow: var(--shadow-card);
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
         }
         .db-card-header {
             display: flex; align-items: center; justify-content: space-between;
             padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-default);
+            flex-wrap: wrap; gap: 0.5rem;
         }
-        .db-card-title { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
+        .db-card-title {
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            line-height: 1.45;
+        }
         .db-card-action { font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600; color: var(--secondary); cursor: pointer; transition: var(--transition-fast); }
         .db-card-action:hover { text-decoration: underline; }
 
         /* Table */
         .db-table { width: 100%; border-collapse: collapse; }
-        .db-table th { font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding: 0.875rem 1.5rem; text-align: left; background: var(--bg-surface); border-bottom: 1px solid var(--border-default); }
-        .db-table td { padding: 1rem 1.5rem; font-size: 0.875rem; color: var(--text-body); border-bottom: 1px solid var(--border-light); }
+        .db-table th { font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); padding: 0.875rem 1rem; text-align: left; background: var(--bg-surface); border-bottom: 1px solid var(--border-default); white-space: nowrap; }
+        .db-table td { padding: 0.875rem 1rem; font-size: 0.875rem; color: var(--text-body); border-bottom: 1px solid var(--border-light); white-space: nowrap; }
         .db-table tr:last-child td { border-bottom: none; }
         .db-table tr:hover td { background: var(--bg-alt); }
         .dark .db-table th { background: var(--bg-surface); }
         .dark .db-table tr:hover td { background: var(--bg-surface); }
+        .db-table .btn-sm { padding: 0.35rem 0.85rem; font-size: 0.8125rem; white-space: nowrap; }
+        [dir="rtl"] .db-table th { text-align: right; }
 
-        .booking-name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600; color: var(--text-heading); }
-        .booking-loc { font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px; }
+        .booking-name { font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600; color: var(--text-heading); white-space: nowrap; }
+        .booking-loc { font-size: 0.8125rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; }
+        .db-card-footer {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-surface);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border-default);
+        }
+
+        /* ── Mobile Card Views (Zero Side Scroll on Mobile) ── */
+        .db-mobile-cards {
+            display: none;
+            flex-direction: column;
+        }
+        .db-mobile-card {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+            transition: var(--transition-fast);
+        }
+        .db-mobile-card:last-child {
+            border-bottom: none;
+        }
+        .db-mobile-card:hover {
+            background: var(--bg-alt);
+        }
+        .dark .db-mobile-card:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .db-mobile-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+        .db-mobile-card-top .booking-name {
+            font-size: 0.9375rem;
+            white-space: normal;
+            line-height: 1.35;
+        }
+        .db-mobile-card-top .booking-loc {
+            white-space: normal;
+        }
+        .db-mobile-card-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.875rem;
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        .db-mobile-card-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .db-mobile-card-meta i {
+            color: var(--secondary);
+            font-size: 0.75rem;
+        }
+        .db-mobile-card-amount {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--secondary) !important;
+            margin-left: auto;
+            font-size: 0.9375rem;
+        }
+        .db-mobile-card-action {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 0.25rem;
+        }
+        .db-mobile-card-action .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        [dir="rtl"] .db-mobile-card-amount {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        [dir="rtl"] .db-mobile-card-meta i {
+            margin-right: 0;
+            margin-left: 0.25rem;
+        }
+
+        @media (max-width: 680px) {
+            .db-table-desktop { display: none !important; }
+            .db-mobile-cards { display: flex !important; }
+            .db-mobile-card { padding: 0.875rem 1rem; }
+            .db-mobile-card-top .booking-name { font-size: 0.875rem; }
+            .db-mobile-card-meta { font-size: 0.75rem; }
+        }
+        @media (min-width: 681px) {
+            .db-table-desktop { display: block !important; }
+            .db-mobile-cards { display: none !important; }
+        }
+
+        /* Certificate items */
+        .db-cert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-xl);
+            background: var(--bg-card);
+            transition: var(--transition-fast);
+        }
+        .db-cert-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .dark .db-cert-icon {
+            background: rgba(201, 151, 58, 0.15);
+        }
+        .db-cert-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .db-cert-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--text-heading);
+            font-size: 0.9375rem;
+            line-height: 1.35;
+        }
+        .db-cert-meta {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            line-height: 1.4;
+        }
+        .db-cert-btn {
+            flex-shrink: 0;
+        }
+        @media (max-width: 520px) {
+            .db-cert-item {
+                flex-wrap: wrap;
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+            .db-cert-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 0.625rem 1rem;
+                margin-top: 0.25rem;
+            }
+        }
 
         /* Status badges in table */
         .status-badge {
@@ -279,6 +562,139 @@
         .status-badge.completed { background: var(--primary-light); color: var(--primary); }
         .status-badge.cancelled { background: var(--red-light); color: var(--red); }
         .status-badge i { font-size: 0.5rem; }
+        .dark .status-badge.confirmed { background: rgba(34,197,94,0.15); color: #4ADE80; }
+        .dark .status-badge.pending { background: rgba(245,158,11,0.15); color: #FBBF24; }
+        .dark .status-badge.completed { background: rgba(74,144,217,0.15); color: #60A5FA; }
+        .dark .status-badge.cancelled { background: rgba(239,68,68,0.15); color: #F87171; }
+
+        /* Weather alert cards & Advisories Grid */
+        .weather-advisories-grid {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .weather-advisories-grid > * {
+            min-width: 0;
+            max-width: 100%;
+        }
+        .flight-weather-alert {
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.875rem;
+            transition: var(--transition-fast);
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .flight-weather-alert-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .flight-weather-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+            flex: 1;
+        }
+        .flight-weather-title-group > div:last-child {
+            min-width: 0;
+        }
+        .flight-weather-icon-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .flight-weather-title {
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        .flight-weather-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+            word-break: break-word;
+        }
+        .flight-weather-sub {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            line-height: 1.5;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .flight-weather-meta {
+            display: flex;
+            gap: 0.5rem 0.875rem;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding-top: 0.625rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .flight-weather-alert.success {
+            background: #F0FDF4;
+            border: 1px solid rgba(22, 163, 74, 0.25);
+        }
+        .flight-weather-alert.success .flight-weather-title {
+            color: #14532D;
+        }
+        .flight-weather-alert.success .flight-weather-sub {
+            color: #15803D;
+        }
+        .flight-weather-alert.warning {
+            background: #FFFBEB;
+            border: 1px solid rgba(217, 119, 6, 0.25);
+        }
+        .flight-weather-alert.warning .flight-weather-title {
+            color: #78350F;
+        }
+        .flight-weather-alert.warning .flight-weather-sub {
+            color: #B45309;
+        }
+        .dark .flight-weather-alert.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.25);
+        }
+        .dark .flight-weather-alert.success .flight-weather-title {
+            color: #F8FAFC;
+        }
+        .dark .flight-weather-alert.success .flight-weather-sub {
+            color: #4ADE80;
+        }
+        .dark .flight-weather-alert.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+        .dark .flight-weather-alert.warning .flight-weather-title {
+            color: #F8FAFC;
+        }
+        .dark .flight-weather-alert.warning .flight-weather-sub {
+            color: #FBBF24;
+        }
 
         /* Weather widget */
         .weather-card {
@@ -293,6 +709,14 @@
         .weather-location { font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; display: block; }
         .weather-icon { font-size: 2.75rem; color: var(--secondary); }
         .weather-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.625rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.12); }
+        .weather-hero-row { display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center; }
+        .weather-hero-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.875rem; }
+        @media (max-width: 1120px) {
+            .weather-hero-metrics { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .weather-hero-row { grid-template-columns: 1fr; gap: 1.5rem; }
+        }
         .weather-detail-item { text-align: center; }
         .weather-detail-val { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: #fff; display: block; }
         .weather-detail-lbl { font-size: 0.6875rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -340,6 +764,30 @@
         .notif-text { font-size: 0.8125rem; color: var(--text-body); line-height: 1.55; }
         .notif-time { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; display: block; }
 
+        /* Flight Photos Gallery Grid with Centered Last Row */
+        .db-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+        .db-photos-grid > div:nth-child(9) {
+            grid-column-start: 2;
+        }
+        @media (max-width: 640px) {
+            .db-photos-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.5rem;
+            }
+            .db-photos-grid > div:nth-child(9) {
+                grid-column-start: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .db-photos-container {
+                padding: 1rem !important;
+            }
+        }
+
         /* Mobile sidebar overlay */
         .db-sidebar-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
@@ -355,9 +803,11 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .db-metrics { grid-template-columns: repeat(2, 1fr); }
-            .db-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1200px) {
+            .db-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .db-grid { grid-template-columns: minmax(0, 1fr); width: 100%; }
+            .db-grid-side { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 1.5rem; width: 100%; min-width: 0; }
+            .db-grid-side > * { margin-bottom: 0 !important; min-width: 0; }
             .db-sidebar { position: fixed; top: 0; bottom: 0; left: -260px; transition: left 0.3s ease; z-index: 200; }
             .db-sidebar.open { left: 0; }
             .db-sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -365,15 +815,292 @@
             .db-mobile-menu-btn { display: flex; }
             .db-welcome { flex-direction: column; align-items: flex-start; }
         }
+        @media (min-width: 601px) and (max-width: 900px) {
+            .db-quick-actions-card,
+            .db-grid-side > *:nth-child(3):last-child {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: 100%;
+                max-width: 500px;
+            }
+            .db-quick-actions-card .db-card-header {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+        .db-quick-actions-card {
+            display: flex;
+            flex-direction: column;
+        }
+        .db-quick-actions-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem;
+            gap: 0.75rem;
+        }
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 0.625rem;
+            flex: 1;
+        }
+        .quick-actions-grid .quick-action-btn {
+            height: 100%;
+            min-height: 52px;
+        }
+        @media (min-width: 901px) and (max-width: 1200px) {
+            .db-grid-side {
+                grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+                gap: 1.25rem;
+                align-items: stretch;
+            }
+            .db-quick-actions-card,
+            .db-grid-side > *:nth-child(3):last-child {
+                grid-column: auto !important;
+                justify-self: stretch !important;
+                width: 100% !important;
+                max-width: none !important;
+            }
+            .quick-action-btn {
+                padding: 0.75rem 0.35rem;
+                font-size: 0.75rem;
+                gap: 0.35rem;
+                white-space: nowrap;
+            }
+        }
+        @media (max-width: 900px) {
+            .db-table th { padding: 0.65rem 0.75rem; font-size: 0.6875rem; letter-spacing: 0.04em; }
+            .db-table td { padding: 0.75rem 0.75rem; font-size: 0.8125rem; }
+            .db-table .btn-sm { padding: 0.3rem 0.65rem; font-size: 0.75rem; }
+            .booking-name { font-size: 0.8125rem; }
+            .booking-loc { font-size: 0.72rem; }
+            .status-badge { padding: 0.2rem 0.5rem; font-size: 0.6875rem; }
+        }
         @media (max-width: 768px) {
-            .db-content { padding: var(--site-gutter); }
-            .db-metrics { grid-template-columns: 1fr 1fr; }
-            .db-topbar { padding: 0 var(--site-gutter); }
+            .db-content { padding: 1rem; }
+            .db-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+            .db-topbar { padding: 0 0.875rem; gap: 0.5rem; }
+            .db-topbar-left { gap: 0.625rem; min-width: 0; }
+            .db-topbar-right { gap: 0.5rem; flex-shrink: 0; }
+            .db-card-header { padding: 0.875rem 1rem; }
+            .db-card-footer { padding: 0.875rem 1rem; }
+            .db-table th { padding: 0.6rem 0.55rem; font-size: 0.65rem; letter-spacing: 0.03em; }
+            .db-table td { padding: 0.65rem 0.55rem; font-size: 0.8rem; }
+            .db-table .btn-sm { padding: 0.25rem 0.55rem; font-size: 0.72rem; }
+            .booking-name { font-size: 0.8rem; }
+            .booking-loc { font-size: 0.7rem; }
+            .status-badge { padding: 0.18rem 0.45rem; font-size: 0.65rem; gap: 0.25rem; }
+            .db-welcome { padding: 1.25rem 1.25rem; gap: 1rem; }
+            .db-welcome-name { font-size: 1.15rem; }
+            .db-welcome-actions { width: 100%; flex-wrap: wrap; }
+            .db-welcome-actions .btn { flex: 1; min-width: 120px; text-align: center; justify-content: center; }
+            #section-weather .weather-card { padding: 1.5rem 1.25rem; }
+            .weather-advisories-grid { padding: 1.25rem; gap: 1rem; }
+        }
+        @media (max-width: 640px) {
+            .weather-advisories-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .flight-weather-alert {
+                padding: 1rem 0.875rem;
+                gap: 0.75rem;
+            }
         }
         @media (max-width: 480px) {
+            .db-content { padding: 0.75rem; }
+            .db-topbar { padding: 0 0.625rem; gap: 0.35rem; height: 56px; }
+            .db-topbar-left { gap: 0.35rem; min-width: 0; flex: 1; overflow: hidden; }
+            .db-mobile-menu-btn { width: 32px; height: 32px; font-size: 0.875rem; flex-shrink: 0; }
+            .db-page-title { font-size: 0.9375rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; }
+            .db-topbar-right { gap: 0.25rem; flex-shrink: 0; }
+            .db-notif-btn { width: 30px; height: 30px; font-size: 0.75rem; flex-shrink: 0; }
+            .db-notif-dot { width: 6px; height: 6px; top: 4px; right: 4px; }
+            .db-theme-btn { width: 30px; height: 30px; font-size: 0.75rem; flex-shrink: 0; }
+            .dir-label { font-size: 0.625rem !important; }
+            .db-topbar-avatar { width: 30px !important; height: 30px !important; font-size: 0.75rem !important; flex-shrink: 0; }
+            .db-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.625rem; }
+            .db-metric-card { padding: 0.875rem 0.75rem; border-radius: var(--radius-lg); }
+            .db-metric-header { margin-bottom: 0.5rem; }
+            .db-metric-icon { width: 32px; height: 32px; font-size: 0.8125rem; }
+            .db-metric-val { font-size: 1.35rem; margin-bottom: 0.15rem; }
+            .db-metric-lbl { font-size: 0.6875rem; }
+            .db-metric-change { font-size: 0.65rem; }
+            .db-card-header { padding: 0.875rem 1rem; }
+            .db-card-footer { padding: 0.875rem 1rem; flex-direction: column; align-items: stretch; gap: 0.75rem; }
+            .db-card-footer .btn { width: 100%; justify-content: center; }
+            .db-table th { padding: 0.625rem 0.75rem; font-size: 0.6875rem; }
+            .db-table td { padding: 0.75rem 0.75rem; font-size: 0.8125rem; }
+            .status-badge { padding: 0.2rem 0.45rem; font-size: 0.625rem; }
+            #section-weather .weather-card {
+                padding: 1.125rem 0.875rem !important;
+                border-radius: var(--radius-xl) !important;
+            }
+            .weather-location {
+                font-size: 0.75rem !important;
+                line-height: 1.4 !important;
+            }
+            .weather-hero-row {
+                gap: 1rem !important;
+            }
+            .weather-hero-metrics {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 0.5rem !important;
+            }
+            .weather-detail-item {
+                padding: 0.5rem 0.625rem !important;
+            }
+            .weather-detail-val {
+                font-size: 0.9375rem !important;
+            }
+            .weather-advisories-grid {
+                grid-template-columns: 1fr !important;
+                padding: 0.75rem !important;
+                gap: 0.75rem !important;
+            }
+            .flight-weather-alert {
+                padding: 0.875rem 0.75rem !important;
+                gap: 0.75rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .flight-weather-alert-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.5rem !important;
+            }
+            .flight-weather-title-group {
+                width: 100% !important;
+            }
+            .flight-weather-alert .status-badge {
+                align-self: flex-start !important;
+                margin-left: calc(38px + 0.75rem);
+            }
+            [dir="rtl"] .flight-weather-alert .status-badge {
+                margin-left: 0 !important;
+                margin-right: calc(38px + 0.75rem) !important;
+            }
+            .flight-weather-title {
+                font-size: 0.875rem !important;
+            }
+            .flight-weather-sub {
+                font-size: 0.75rem !important;
+            }
+            .flight-weather-meta {
+                font-size: 0.6875rem !important;
+                gap: 0.35rem 0.625rem !important;
+            }
+        }
+        @media (max-width: 360px) {
+            .flight-weather-alert .status-badge {
+                margin-left: 0 !important;
+            }
+            [dir="rtl"] .flight-weather-alert .status-badge {
+                margin-right: 0 !important;
+            }
+        }
+        @media (max-width: 340px) {
+            .db-topbar { padding: 0 0.4rem; gap: 0.2rem; }
+            .db-page-title { font-size: 0.875rem; max-width: 85px; }
+            .db-topbar-right { gap: 0.2rem; }
+            .db-notif-btn, .db-theme-btn, .db-topbar-avatar { width: 28px !important; height: 28px !important; }
             .db-metrics { grid-template-columns: 1fr; }
-            .db-table th:nth-child(3), .db-table td:nth-child(3) { display: none; }
-            .db-table th:nth-child(4), .db-table td:nth-child(4) { display: none; }
+            .weather-hero-metrics { grid-template-columns: 1fr !important; }
+        }
+
+        /* Logout Confirmation Modal */
+        .db-modal-backdrop {
+            position: fixed; inset: 0; background: rgba(5, 11, 20, 0.78);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem; z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .db-modal-backdrop.open {
+            opacity: 1; pointer-events: auto;
+        }
+        .db-modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+            max-width: 440px; width: 100%;
+            padding: 2rem; position: relative;
+            transform: scale(0.92) translateY(10px);
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+        }
+        .db-modal-backdrop.open .db-modal-box {
+            transform: scale(1) translateY(0);
+        }
+        .db-modal-icon-badge {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(239, 68, 68, 0.12);
+            color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin: 0 auto 1.25rem;
+            box-shadow: 0 0 24px rgba(239, 68, 68, 0.15);
+        }
+        .db-modal-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem; font-weight: 600;
+            color: var(--text-heading); margin-bottom: 0.5rem;
+        }
+        .db-modal-text {
+            font-size: 0.875rem; color: var(--text-muted);
+            line-height: 1.6; margin-bottom: 1.75rem;
+        }
+        .db-modal-actions {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem;
+        }
+        .db-modal-close-btn {
+            position: absolute; top: 1rem; right: 1rem;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: transparent; border: none;
+            color: var(--text-muted); font-size: 0.875rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition-fast);
+        }
+        .db-modal-close-btn:hover {
+            background: var(--bg-alt); color: var(--text-heading);
+        }
+
+        /* ── RTL Support for Dashboard ── */
+        [dir="rtl"] .db-sidebar {
+            border-right: none;
+            border-left: 1px solid var(--border-default);
+        }
+        [dir="rtl"] .db-nav-badge {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        [dir="rtl"] .db-notif-dot {
+            right: auto;
+            left: 6px;
+        }
+        [dir="rtl"] .db-table th,
+        [dir="rtl"] .db-table td {
+            text-align: right;
+        }
+        [dir="rtl"] .db-modal-close-btn {
+            right: auto;
+            left: 1rem;
+        }
+        @media (max-width: 1200px) {
+            [dir="rtl"] .db-sidebar {
+                left: auto;
+                right: -260px;
+                transition: right 0.3s ease;
+            }
+            [dir="rtl"] .db-sidebar.open {
+                left: auto;
+                right: 0;
+            }
         }
     </style>
 </head>
@@ -389,14 +1116,11 @@
         <div class="db-sidebar-top">
             <a href="index.html" class="db-logo" aria-label="SkyVista Home">
                 <img src="assets/images/logo.jpg" alt="SkyVista Logo" class="db-logo-img">
-                <div class="db-logo-text db-collapsed-hide">
+                <div class="db-logo-text">
                     <span class="db-brand">SkyVista</span>
                     <span class="db-brand-sub">Helicopter Tours</span>
                 </div>
             </a>
-            <button class="db-sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
 
         <!-- Nav Items -->
@@ -435,27 +1159,11 @@
                 <i class="fas fa-credit-card db-nav-icon"></i>
                 <span class="db-nav-label">Payments</span>
             </a>
-            <a class="db-nav-item" href="#" onclick="showSection('notifications',this)">
-                <i class="fas fa-bell db-nav-icon"></i>
-                <span class="db-nav-label">Notifications</span>
-                <span class="db-nav-badge">5</span>
-            </a>
-            <a class="db-nav-item" href="#" onclick="showSection('settings',this)">
-                <i class="fas fa-gear db-nav-icon"></i>
-                <span class="db-nav-label">Settings</span>
-            </a>
         </nav>
 
         <!-- Sidebar Footer -->
         <div class="db-sidebar-footer">
-            <div class="db-profile-btn" onclick="showSection('settings',null)">
-                <div class="db-avatar">JD</div>
-                <div class="db-profile-info">
-                    <span class="db-profile-name">John Davidson</span>
-                    <span class="db-profile-email">john@example.com</span>
-                </div>
-            </div>
-            <a href="login.html" class="db-logout-btn">
+            <a href="javascript:void(0)" onclick="openLogoutModal()" class="db-logout-btn">
                 <i class="fas fa-right-from-bracket db-nav-icon"></i>
                 <span class="db-logout-label">Logout</span>
             </a>
@@ -470,20 +1178,20 @@
                 <button class="db-mobile-menu-btn" onclick="openSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
-                <div>
-                    <div class="db-page-title" id="db-page-title">Overview</div>
-                    <div class="db-breadcrumb">Dashboard › <span id="db-breadcrumb-current">Overview</span></div>
-                </div>
+                <div class="db-page-title" id="db-page-title">Overview</div>
             </div>
             <div class="db-topbar-right">
                 <button class="db-notif-btn" onclick="showSection('notifications',null)" title="Notifications">
                     <i class="fas fa-bell"></i>
                     <div class="db-notif-dot"></div>
                 </button>
+                <button class="db-theme-btn" onclick="toggleDir()" title="Toggle Direction (RTL/LTR)" aria-label="Toggle RTL/LTR">
+                    <span class="dir-label" style="font-size:0.6875rem;font-weight:700;letter-spacing:0.04em;font-family:var(--font-heading);">RTL</span>
+                </button>
                 <button class="db-theme-btn" onclick="toggleTheme(); updateThemeIcon(this.querySelector('i'))" title="Toggle Theme">
                     <i class="fas fa-moon theme-icon"></i>
                 </button>
-                <div style="width:36px;height:36px;border-radius:50%;background:var(--secondary);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-size:0.875rem;font-weight:600;cursor:pointer;" title="Profile" onclick="showSection('settings',null)">JD</div>
+                <div class="db-topbar-avatar" title="Profile" onclick="showSection('settings',null)">JD</div>
             </div>
         </div>
 
@@ -543,69 +1251,212 @@
 
                 <!-- Main Grid -->
                 <div class="db-grid">
-                    <!-- Bookings Table -->
-                    <div class="db-card animate-on-scroll delay-1">
-                        <div class="db-card-header">
-                            <h3 class="db-card-title">My Bookings</h3>
-                            <span class="db-card-action" onclick="showSection('bookings',null)">View All</span>
+                    <!-- Left Column -->
+                    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                        <!-- Bookings Table -->
+                        <div class="db-card animate-on-scroll delay-1">
+                            <div class="db-card-header">
+                                <h3 class="db-card-title">My Bookings</h3>
+                                <span class="db-card-action" onclick="showSection('bookings',null)">View All</span>
+                            </div>
+                            <div class="db-table-responsive db-table-desktop">
+                            <table class="db-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tour</th>
+                                        <th>Date</th>
+                                        <th>Passengers</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="booking-name">Grand Canyon Explorer</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Grand Canyon, AZ</div>
+                                        </td>
+                                        <td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td>
+                                        <td>2 people</td>
+                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$698</td>
+                                        <td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="booking-name">Coastal Cliffs & Coves</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Kauai, HI</div>
+                                        </td>
+                                        <td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td>
+                                        <td>4 people</td>
+                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$996</td>
+                                        <td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="booking-name">City Lights Night Flight</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> New York, NY</div>
+                                        </td>
+                                        <td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td>
+                                        <td>2 people</td>
+                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$598</td>
+                                        <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="booking-name">Sunset Alpine Flight</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Juneau, AK</div>
+                                        </td>
+                                        <td>Aug 28, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">6:00 PM</span></td>
+                                        <td>3 people</td>
+                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$1,167</td>
+                                        <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+
+                            <!-- Mobile Card View (No side scroll on phones) -->
+                            <div class="db-mobile-cards">
+                                <div class="db-mobile-card">
+                                    <div class="db-mobile-card-top">
+                                        <div>
+                                            <div class="booking-name">Grand Canyon Explorer</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Grand Canyon, AZ</div>
+                                        </div>
+                                        <span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span>
+                                    </div>
+                                    <div class="db-mobile-card-meta">
+                                        <span><i class="fas fa-calendar"></i> Oct 3, 2026 · 10:00 AM</span>
+                                        <span><i class="fas fa-users"></i> 2 people</span>
+                                        <span class="db-mobile-card-amount">$698</span>
+                                    </div>
+                                </div>
+                                <div class="db-mobile-card">
+                                    <div class="db-mobile-card-top">
+                                        <div>
+                                            <div class="booking-name">Coastal Cliffs & Coves</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Kauai, HI</div>
+                                        </div>
+                                        <span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span>
+                                    </div>
+                                    <div class="db-mobile-card-meta">
+                                        <span><i class="fas fa-calendar"></i> Oct 17, 2026 · 2:00 PM</span>
+                                        <span><i class="fas fa-users"></i> 4 people</span>
+                                        <span class="db-mobile-card-amount">$996</span>
+                                    </div>
+                                </div>
+                                <div class="db-mobile-card">
+                                    <div class="db-mobile-card-top">
+                                        <div>
+                                            <div class="booking-name">City Lights Night Flight</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> New York, NY</div>
+                                        </div>
+                                        <span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span>
+                                    </div>
+                                    <div class="db-mobile-card-meta">
+                                        <span><i class="fas fa-calendar"></i> Sep 15, 2026 · 7:30 PM</span>
+                                        <span><i class="fas fa-users"></i> 2 people</span>
+                                        <span class="db-mobile-card-amount">$598</span>
+                                    </div>
+                                </div>
+                                <div class="db-mobile-card">
+                                    <div class="db-mobile-card-top">
+                                        <div>
+                                            <div class="booking-name">Sunset Alpine Flight</div>
+                                            <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Juneau, AK</div>
+                                        </div>
+                                        <span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span>
+                                    </div>
+                                    <div class="db-mobile-card-meta">
+                                        <span><i class="fas fa-calendar"></i> Aug 28, 2026 · 6:00 PM</span>
+                                        <span><i class="fas fa-users"></i> 3 people</span>
+                                        <span class="db-mobile-card-amount">$1,167</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <table class="db-table">
-                            <thead>
-                                <tr>
-                                    <th>Tour</th>
-                                    <th>Date</th>
-                                    <th>Passengers</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="booking-name">Grand Canyon Explorer</div>
-                                        <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Grand Canyon, AZ</div>
-                                    </td>
-                                    <td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td>
-                                    <td>2 people</td>
-                                    <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$698</td>
-                                    <td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="booking-name">Coastal Cliffs & Coves</div>
-                                        <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Kauai, HI</div>
-                                    </td>
-                                    <td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td>
-                                    <td>4 people</td>
-                                    <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$996</td>
-                                    <td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="booking-name">City Lights Night Flight</div>
-                                        <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> New York, NY</div>
-                                    </td>
-                                    <td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td>
-                                    <td>2 people</td>
-                                    <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$598</td>
-                                    <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="booking-name">Sunset Alpine Flight</div>
-                                        <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Juneau, AK</div>
-                                    </td>
-                                    <td>Aug 28, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">6:00 PM</span></td>
-                                    <td>3 people</td>
-                                    <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$1,167</td>
-                                    <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                        <!-- Recent Flight Memories & In-Flight Photography Card -->
+                        <div class="db-card animate-on-scroll delay-2">
+                            <div class="db-card-header">
+                                <div style="display:flex; align-items:center; gap:0.625rem;">
+                                    <div style="width:32px; height:32px; border-radius:var(--radius-md); background:rgba(201,151,58,0.12); display:flex; align-items:center; justify-content:center; color:var(--secondary);">
+                                        <i class="fas fa-camera"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="db-card-title" style="margin:0;">Recent Flight Memories</h3>
+                                        <span style="font-size:0.75rem; color:var(--text-muted);">From your recent completed flights · 18 HD photos available</span>
+                                    </div>
+                                </div>
+                                <span class="db-card-action" onclick="showSection('photos',null)" style="display:flex; align-items:center; gap:0.35rem; cursor:pointer;">
+                                    View Gallery <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i>
+                                </span>
+                            </div>
+                            <div style="padding:1.25rem 1.5rem;">
+                                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:1rem;">
+                                    <!-- Photo 1 -->
+                                    <div onclick="openLightbox('assets/images/helicopter-city.jpg','Manhattan Skyline at Dusk')" style="position:relative; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:4/3; cursor:pointer; box-shadow:var(--shadow-sm); border:1px solid var(--border-light);">
+                                        <img src="assets/images/helicopter-city.jpg" alt="Manhattan Dusk" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); display:block;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+                                        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,18,30,0.85) 0%, rgba(10,18,30,0.1) 50%, transparent 100%); pointer-events:none;"></div>
+                                        <span class="badge badge-gold" style="position:absolute; top:8px; left:8px; font-size:0.65rem; padding:0.2rem 0.5rem; backdrop-filter:blur(6px);"><i class="fas fa-camera"></i> Sep 15</span>
+                                        <div style="position:absolute; bottom:8px; left:10px; right:10px; color:#fff; pointer-events:none;">
+                                            <div style="font-family:var(--font-heading); font-size:0.8125rem; font-weight:600; line-height:1.2; text-shadow:0 1px 2px rgba(0,0,0,0.6);">NYC at Dusk</div>
+                                            <div style="font-size:0.6875rem; color:rgba(255,255,255,0.7); margin-top:2px;">City Lights Tour</div>
+                                        </div>
+                                    </div>
+                                    <!-- Photo 2 -->
+                                    <div onclick="openLightbox('assets/images/tour-canyon.jpg','Grand Canyon Vista')" style="position:relative; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:4/3; cursor:pointer; box-shadow:var(--shadow-sm); border:1px solid var(--border-light);">
+                                        <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); display:block;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+                                        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,18,30,0.85) 0%, rgba(10,18,30,0.1) 50%, transparent 100%); pointer-events:none;"></div>
+                                        <span class="badge badge-gold" style="position:absolute; top:8px; left:8px; font-size:0.65rem; padding:0.2rem 0.5rem; backdrop-filter:blur(6px);"><i class="fas fa-mountain"></i> Canyon</span>
+                                        <div style="position:absolute; bottom:8px; left:10px; right:10px; color:#fff; pointer-events:none;">
+                                            <div style="font-family:var(--font-heading); font-size:0.8125rem; font-weight:600; line-height:1.2; text-shadow:0 1px 2px rgba(0,0,0,0.6);">Colorado River</div>
+                                            <div style="font-size:0.6875rem; color:rgba(255,255,255,0.7); margin-top:2px;">South Rim Flyover</div>
+                                        </div>
+                                    </div>
+                                    <!-- Photo 3 -->
+                                    <div onclick="openLightbox('assets/images/tour-coastal.jpg','Emerald Coastline Waves')" style="position:relative; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:4/3; cursor:pointer; box-shadow:var(--shadow-sm); border:1px solid var(--border-light);">
+                                        <img src="assets/images/tour-coastal.jpg" alt="Kauai Cliffs" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); display:block;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+                                        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,18,30,0.85) 0%, rgba(10,18,30,0.1) 50%, transparent 100%); pointer-events:none;"></div>
+                                        <span class="badge badge-gold" style="position:absolute; top:8px; left:8px; font-size:0.65rem; padding:0.2rem 0.5rem; backdrop-filter:blur(6px);"><i class="fas fa-water"></i> Coast</span>
+                                        <div style="position:absolute; bottom:8px; left:10px; right:10px; color:#fff; pointer-events:none;">
+                                            <div style="font-family:var(--font-heading); font-size:0.8125rem; font-weight:600; line-height:1.2; text-shadow:0 1px 2px rgba(0,0,0,0.6);">Na Pali Coast</div>
+                                            <div style="font-size:0.6875rem; color:rgba(255,255,255,0.7); margin-top:2px;">Doors-Off Safari</div>
+                                        </div>
+                                    </div>
+                                    <!-- Photo 4 -->
+                                    <div onclick="openLightbox('assets/images/hero-aerial.jpg','Alpine Ridge Glacier')" style="position:relative; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:4/3; cursor:pointer; box-shadow:var(--shadow-sm); border:1px solid var(--border-light);">
+                                        <img src="assets/images/hero-aerial.jpg" alt="Alpine Flight" style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s cubic-bezier(0.16,1,0.3,1); display:block;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+                                        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,18,30,0.85) 0%, rgba(10,18,30,0.1) 50%, transparent 100%); pointer-events:none;"></div>
+                                        <span class="badge badge-gold" style="position:absolute; top:8px; left:8px; font-size:0.65rem; padding:0.2rem 0.5rem; backdrop-filter:blur(6px);"><i class="fas fa-snowflake"></i> Alpine</span>
+                                        <div style="position:absolute; bottom:8px; left:10px; right:10px; color:#fff; pointer-events:none;">
+                                            <div style="font-family:var(--font-heading); font-size:0.8125rem; font-weight:600; line-height:1.2; text-shadow:0 1px 2px rgba(0,0,0,0.6);">Glacier Summit</div>
+                                            <div style="font-size:0.6875rem; color:rgba(255,255,255,0.7); margin-top:2px;">Sunset Alpine Tour</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-top:1.125rem; padding-top:1rem; border-top:1px solid var(--border-light);">
+                                    <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8125rem; color:var(--text-muted);">
+                                        <i class="fas fa-circle-check" style="color:var(--green);"></i>
+                                        <span>Complimentary 4K album ready for download</span>
+                                    </div>
+                                    <div style="display:flex; gap:0.5rem;">
+                                        <button class="quick-action-btn" onclick="alert('Downloading all 18 high-resolution flight photos (ZIP - 148 MB)...')" style="padding:0.45rem 0.85rem; font-size:0.75rem;">
+                                            <i class="fas fa-download"></i> Download (.ZIP)
+                                        </button>
+                                        <button class="quick-action-btn" onclick="showSection('certificates',null)" style="padding:0.45rem 0.85rem; font-size:0.75rem;">
+                                            <i class="fas fa-award"></i> Certificates
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Right Column -->
-                    <div>
+                    <div class="db-grid-side">
                         <!-- Weather -->
                         <div class="weather-card animate-on-scroll delay-2">
                             <span class="weather-location"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Grand Canyon, AZ — Oct 3</span>
@@ -656,15 +1507,30 @@
                         </div>
 
                         <!-- Quick Actions -->
-                        <div class="db-card animate-on-scroll delay-4">
+                        <div class="db-card db-quick-actions-card animate-on-scroll delay-4">
                             <div class="db-card-header">
                                 <h3 class="db-card-title">Quick Actions</h3>
+                                <span class="badge badge-gold" style="font-size:0.68rem;padding:0.2rem 0.5rem;"><i class="fas fa-bolt"></i> Shortcuts</span>
                             </div>
-                            <div style="padding:1rem;display:grid;grid-template-columns:1fr 1fr;gap:0.625rem;">
-                                <button class="quick-action-btn" onclick="window.location.href='tours.html'"><i class="fas fa-helicopter"></i> Book Tour</button>
-                                <button class="quick-action-btn" onclick="showSection('photos',null)"><i class="fas fa-images"></i> My Photos</button>
-                                <button class="quick-action-btn" onclick="showSection('certificates',null)"><i class="fas fa-certificate"></i> Certificates</button>
-                                <button class="quick-action-btn" onclick="showSection('payments',null)"><i class="fas fa-receipt"></i> Receipts</button>
+                            <div class="db-quick-actions-body">
+                                <div class="quick-actions-grid">
+                                    <button class="quick-action-btn" onclick="window.location.href='tours.html'"><i class="fas fa-helicopter"></i> Book Tour</button>
+                                    <button class="quick-action-btn" onclick="showSection('photos',null)"><i class="fas fa-images"></i> My Photos</button>
+                                    <button class="quick-action-btn" onclick="showSection('certificates',null)"><i class="fas fa-certificate"></i> Certificates</button>
+                                    <button class="quick-action-btn" onclick="showSection('payments',null)"><i class="fas fa-receipt"></i> Receipts</button>
+                                </div>
+                                <div style="background:var(--bg-alt);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:0.75rem 0.875rem;display:flex;align-items:center;justify-content:space-between;gap:0.5rem;">
+                                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                                        <div style="width:32px;height:32px;border-radius:50%;background:rgba(201,151,58,0.12);display:flex;align-items:center;justify-content:center;color:var(--secondary);flex-shrink:0;">
+                                            <i class="fas fa-headset" style="font-size:0.875rem;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-family:var(--font-heading);font-size:0.78rem;font-weight:600;color:var(--text-heading);line-height:1.2;">Flight Concierge</div>
+                                            <div style="font-size:0.68rem;color:var(--text-muted);margin-top:1px;">24/7 Priority Support</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline btn-sm" onclick="alert('Connecting to SkyVista Concierge: 1-800-555-SKYS')" style="padding:0.25rem 0.6rem;font-size:0.7rem;white-space:nowrap;">Contact</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -675,46 +1541,213 @@
             <div id="section-bookings" style="display:none;">
                 <div class="db-card">
                     <div class="db-card-header"><h3 class="db-card-title">All Bookings</h3><span class="db-card-action" onclick="window.location.href='tours.html'">+ New Booking</span></div>
+                    <div class="db-table-responsive db-table-desktop">
                     <table class="db-table">
                         <thead><tr><th>Tour</th><th>Date & Time</th><th>Passengers</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
                         <tbody>
-                            <tr><td><div class="booking-name">Grand Canyon Explorer</div><div class="booking-loc">Grand Canyon, AZ</div></td><td>Oct 3, 2026 10:00 AM</td><td>2</td><td style="font-weight:600;color:var(--secondary);">$698</td><td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('View booking details')">Details</button></td></tr>
-                            <tr><td><div class="booking-name">Coastal Cliffs & Coves</div><div class="booking-loc">Kauai, HI</div></td><td>Oct 17, 2026 2:00 PM</td><td>4</td><td style="font-weight:600;color:var(--secondary);">$996</td><td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('Confirm payment to finalize booking')">Pay Now</button></td></tr>
-                            <tr><td><div class="booking-name">City Lights Night Flight</div><div class="booking-loc">New York, NY</div></td><td>Sep 15, 2026 7:30 PM</td><td>2</td><td style="font-weight:600;color:var(--secondary);">$598</td><td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td><td><button class="btn btn-outline btn-sm" onclick="showSection('photos',null)">Photos</button></td></tr>
+                            <tr><td><div class="booking-name">Grand Canyon Explorer</div><div class="booking-loc">Grand Canyon, AZ</div></td><td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td><td>2</td><td style="font-weight:600;color:var(--secondary);">$698</td><td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('View booking details')">Details</button></td></tr>
+                            <tr><td><div class="booking-name">Coastal Cliffs & Coves</div><div class="booking-loc">Kauai, HI</div></td><td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td><td>4</td><td style="font-weight:600;color:var(--secondary);">$996</td><td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('Confirm payment to finalize booking')">Pay Now</button></td></tr>
+                            <tr><td><div class="booking-name">City Lights Night Flight</div><div class="booking-loc">New York, NY</div></td><td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td><td>2</td><td style="font-weight:600;color:var(--secondary);">$598</td><td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td><td><button class="btn btn-outline btn-sm" onclick="showSection('photos',null)">Photos</button></td></tr>
                         </tbody>
                     </table>
+                    </div>
+
+                    <!-- Mobile Card View (No side scroll on phones) -->
+                    <div class="db-mobile-cards">
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">Grand Canyon Explorer</div>
+                                    <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Grand Canyon, AZ</div>
+                                </div>
+                                <span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Oct 3, 2026 · 10:00 AM</span>
+                                <span><i class="fas fa-users"></i> 2 people</span>
+                                <span class="db-mobile-card-amount">$698</span>
+                            </div>
+                            <div class="db-mobile-card-action">
+                                <button class="btn btn-outline btn-sm" onclick="alert('View booking details')">Details</button>
+                            </div>
+                        </div>
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">Coastal Cliffs & Coves</div>
+                                    <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> Kauai, HI</div>
+                                </div>
+                                <span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Oct 17, 2026 · 2:00 PM</span>
+                                <span><i class="fas fa-users"></i> 4 people</span>
+                                <span class="db-mobile-card-amount">$996</span>
+                            </div>
+                            <div class="db-mobile-card-action">
+                                <button class="btn btn-outline btn-sm" onclick="alert('Confirm payment to finalize booking')">Pay Now</button>
+                            </div>
+                        </div>
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">City Lights Night Flight</div>
+                                    <div class="booking-loc"><i class="fas fa-map-marker-alt" style="font-size:0.6rem;"></i> New York, NY</div>
+                                </div>
+                                <span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Sep 15, 2026 · 7:30 PM</span>
+                                <span><i class="fas fa-users"></i> 2 people</span>
+                                <span class="db-mobile-card-amount">$598</span>
+                            </div>
+                            <div class="db-mobile-card-action">
+                                <button class="btn btn-outline btn-sm" onclick="showSection('photos',null)">Photos</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="section-weather" style="display:none;">
-                <div class="db-grid">
-                    <div>
-                        <div class="db-card">
-                            <div class="db-card-header"><h3 class="db-card-title">Flight Weather Status</h3></div>
-                            <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;">
-                                <div style="background:var(--green-light);border:1px solid rgba(22,163,74,0.2);border-radius:var(--radius-lg);padding:1.25rem;display:flex;align-items:center;gap:1rem;">
-                                    <i class="fas fa-cloud-sun" style="font-size:1.75rem;color:var(--green);"></i>
-                                    <div><div style="font-family:var(--font-heading);font-weight:600;color:var(--text-heading);">Grand Canyon — Oct 3, 2026</div><div style="font-size:0.875rem;color:var(--green);font-weight:600;margin-top:3px;"><i class="fas fa-circle-check"></i> Your flight is ON — Excellent conditions forecast</div></div>
+                <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                    <!-- Full-Width Live Weather Hero Banner on Top -->
+                    <div class="weather-card" style="margin-bottom:0; border-radius:var(--radius-2xl);">
+                        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.25rem;">
+                            <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; min-width:0;">
+                                <span class="badge badge-gold" style="font-size:0.75rem; padding:0.3rem 0.65rem;"><i class="fas fa-satellite-dish"></i> Live Meteorological Feed</span>
+                                <span class="weather-location" style="margin-bottom:0; font-size:0.875rem; color:rgba(255,255,255,0.85);"><i class="fas fa-map-marker-alt"></i> Grand Canyon South Rim Helipad · Next Departure: Oct 3, 10:00 AM</span>
+                            </div>
+                            <div class="weather-status weather-ok" style="margin:0; background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.3); padding:0.35rem 0.85rem; border-radius:var(--radius-full);">
+                                <i class="fas fa-circle-check"></i> Ideal Flying Conditions
+                            </div>
+                        </div>
+
+                        <div class="weather-hero-row">
+                            <div style="display:flex; align-items:center; gap:1.5rem; flex-shrink:0;">
+                                <i class="fas fa-cloud-sun weather-icon" style="font-size:3.75rem; flex-shrink:0;"></i>
+                                <div>
+                                    <div class="weather-temp" style="font-size:3.5rem;">74<span class="weather-unit">°F</span></div>
+                                    <div class="weather-desc" style="font-size:1rem; font-weight:500;">Partly Cloudy · VFR Cleared</div>
                                 </div>
-                                <div style="background:var(--amber-light);border:1px solid rgba(217,119,6,0.2);border-radius:var(--radius-lg);padding:1.25rem;display:flex;align-items:center;gap:1rem;">
-                                    <i class="fas fa-cloud" style="font-size:1.75rem;color:var(--amber);"></i>
-                                    <div><div style="font-family:var(--font-heading);font-weight:600;color:var(--text-heading);">Kauai — Oct 17, 2026</div><div style="font-size:0.875rem;color:var(--amber);font-weight:600;margin-top:3px;"><i class="fas fa-triangle-exclamation"></i> Monitoring — Possible trade winds, check closer to date</div></div>
+                            </div>
+                            <div class="weather-hero-metrics">
+                                <div class="weather-detail-item" style="text-align:left; background:rgba(255,255,255,0.06); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+                                    <span class="weather-detail-lbl" style="font-size:0.6875rem;"><i class="fas fa-wind"></i> Wind</span>
+                                    <span class="weather-detail-val" style="font-size:1.0625rem; margin-top:3px;">12 mph SW</span>
+                                </div>
+                                <div class="weather-detail-item" style="text-align:left; background:rgba(255,255,255,0.06); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+                                    <span class="weather-detail-lbl" style="font-size:0.6875rem;"><i class="fas fa-eye"></i> Visibility</span>
+                                    <span class="weather-detail-val" style="font-size:1.0625rem; margin-top:3px;">18 mi</span>
+                                </div>
+                                <div class="weather-detail-item" style="text-align:left; background:rgba(255,255,255,0.06); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+                                    <span class="weather-detail-lbl" style="font-size:0.6875rem;"><i class="fas fa-droplet"></i> Humidity</span>
+                                    <span class="weather-detail-val" style="font-size:1.0625rem; margin-top:3px;">32% (Dry)</span>
+                                </div>
+                                <div class="weather-detail-item" style="text-align:left; background:rgba(255,255,255,0.06); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+                                    <span class="weather-detail-lbl" style="font-size:0.6875rem;"><i class="fas fa-gauge-high"></i> Pressure</span>
+                                    <span class="weather-detail-val" style="font-size:1.0625rem; margin-top:3px;">29.92 inHg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flight Day Hourly Forecast Strip -->
+                        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,0.12); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+                            <span style="font-size:0.75rem; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.07em; font-weight:600;"><i class="fas fa-clock"></i> Departure Window Timeline</span>
+                            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                                <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8125rem;">
+                                    <span style="color:rgba(255,255,255,0.5);">9:00 AM</span>
+                                    <i class="fas fa-sun" style="color:var(--secondary);"></i>
+                                    <span style="font-weight:600;">71°F</span>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8125rem; background:rgba(255,255,255,0.15); padding:0.2rem 0.6rem; border-radius:var(--radius-sm);">
+                                    <span style="color:#4ADE80; font-weight:600;">10:00 AM (Takeoff)</span>
+                                    <i class="fas fa-cloud-sun" style="color:var(--secondary);"></i>
+                                    <span style="font-weight:600;">74°F</span>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8125rem;">
+                                    <span style="color:rgba(255,255,255,0.5);">11:30 AM (Landing)</span>
+                                    <i class="fas fa-sun" style="color:var(--secondary);"></i>
+                                    <span style="font-weight:600;">76°F</span>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8125rem;">
+                                    <span style="color:rgba(255,255,255,0.5);">1:00 PM</span>
+                                    <i class="fas fa-sun" style="color:var(--secondary);"></i>
+                                    <span style="font-weight:600;">78°F</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="weather-card" style="height:fit-content;">
-                        <span class="weather-location">Grand Canyon, AZ · Next Flight</span>
-                        <div class="weather-main"><div><div class="weather-temp">74<span class="weather-unit">°F</span></div><div class="weather-desc">Partly Cloudy</div></div><i class="fas fa-cloud-sun weather-icon"></i></div>
-                        <div class="weather-details"><div class="weather-detail-item"><span class="weather-detail-val">12 mph</span><span class="weather-detail-lbl">Wind</span></div><div class="weather-detail-item"><span class="weather-detail-val">18 mi</span><span class="weather-detail-lbl">Visibility</span></div><div class="weather-detail-item"><span class="weather-detail-val">32%</span><span class="weather-detail-lbl">Humidity</span></div></div>
-                        <div class="weather-status weather-ok"><i class="fas fa-circle-check"></i> Ideal for Flying</div>
+
+                    <!-- Flight Weather Status Cards Below -->
+                    <div class="db-card">
+                        <div class="db-card-header">
+                            <div>
+                                <h3 class="db-card-title">Booked Tour Routes · Weather Advisories</h3>
+                                <span style="font-size:0.75rem; color:var(--text-muted);">Real-time dispatch status updated every 15 minutes</span>
+                            </div>
+                            <span class="db-card-action" onclick="alert('Weather data refreshed!')" style="cursor:pointer;"><i class="fas fa-rotate"></i> Refresh Feed</span>
+                        </div>
+                        <div class="weather-advisories-grid">
+                            <!-- Flight 1 Card -->
+                            <div class="flight-weather-alert success">
+                                <div class="flight-weather-alert-header">
+                                    <div class="flight-weather-title-group">
+                                        <div class="flight-weather-icon-badge" style="background:rgba(34,197,94,0.15);">
+                                            <i class="fas fa-cloud-sun" style="font-size:1.2rem; color:#22C55E;"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flight-weather-title">Grand Canyon Explorer</div>
+                                            <div class="flight-weather-time">Thursday, Oct 3, 2026 · 10:00 AM</div>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge confirmed" style="white-space:nowrap;"><i class="fas fa-circle"></i> Flight Confirmed</span>
+                                </div>
+                                <div class="flight-weather-sub">
+                                    <i class="fas fa-circle-check"></i> <strong>Conditions Optimal:</strong> Unlimited visibility across the South & North rims. Calm surface winds and zero precipitation forecast.
+                                </div>
+                                <div class="flight-weather-meta" style="border-top:1px solid rgba(22,163,74,0.15);">
+                                    <span><i class="fas fa-location-dot"></i> South Rim Helipad Gate 2</span>
+                                    <span><i class="fas fa-wind"></i> 12 mph</span>
+                                    <span><i class="fas fa-helicopter"></i> Bell 407 (VFR)</span>
+                                </div>
+                            </div>
+
+                            <!-- Flight 2 Card -->
+                            <div class="flight-weather-alert warning">
+                                <div class="flight-weather-alert-header">
+                                    <div class="flight-weather-title-group">
+                                        <div class="flight-weather-icon-badge" style="background:rgba(245,158,11,0.15);">
+                                            <i class="fas fa-cloud" style="font-size:1.2rem; color:#F59E0B;"></i>
+                                        </div>
+                                        <div>
+                                            <div class="flight-weather-title">Coastal Cliffs & Coves</div>
+                                            <div class="flight-weather-time">Saturday, Oct 17, 2026 · 2:00 PM</div>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge pending" style="white-space:nowrap;"><i class="fas fa-circle"></i> Advisory Watch</span>
+                                </div>
+                                <div class="flight-weather-sub">
+                                    <i class="fas fa-triangle-exclamation"></i> <strong>Monitoring Trade Winds:</strong> Pacific easterly breeze expected. Normal flight schedule maintained; official dispatch clearance.
+                                </div>
+                                <div class="flight-weather-meta" style="border-top:1px solid rgba(217,119,6,0.15);">
+                                    <span><i class="fas fa-location-dot"></i> Lihue Heliport Gate 1</span>
+                                    <span><i class="fas fa-wind"></i> 18 mph</span>
+                                    <span><i class="fas fa-helicopter"></i> Airbus H130</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="section-manifest" style="display:none;">
                 <div class="db-card">
-                    <div class="db-card-header"><h3 class="db-card-title">Passenger Manifest — Grand Canyon Explorer (Oct 3)</h3></div>
+                    <div class="db-card-header">
+                        <h3 class="db-card-title">Passenger Manifest — Grand Canyon Explorer (Oct 3)</h3>
+                        <span class="db-card-action" onclick="alert('Adding passenger...')"><i class="fas fa-plus"></i> Add Passenger</span>
+                    </div>
+                    <div class="db-table-responsive db-table-desktop">
                     <table class="db-table">
                         <thead><tr><th>#</th><th>Passenger Name</th><th>Date of Birth</th><th>Weight</th><th>Seat</th><th>Status</th></tr></thead>
                         <tbody>
@@ -722,8 +1755,44 @@
                             <tr><td>2</td><td><div class="booking-name">Sarah Davidson</div><div class="booking-loc">Guest Passenger</div></td><td>Jul 22, 1990</td><td>142 lbs</td><td>Seat B (Window)</td><td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Verified</span></td></tr>
                         </tbody>
                     </table>
-                    <div style="padding:1.25rem 1.5rem;background:var(--bg-surface);display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
-                        <span style="font-size:0.875rem;color:var(--text-muted);">Combined weight: 320 lbs · Max capacity: 900 lbs</span>
+                    </div>
+
+                    <!-- Mobile Card View (No side scroll on phones) -->
+                    <div class="db-mobile-cards">
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">#1 · John Davidson</div>
+                                    <div class="booking-loc">Primary Passenger</div>
+                                </div>
+                                <span class="status-badge confirmed"><i class="fas fa-circle"></i> Verified</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-cake-candles"></i> Mar 15, 1988</span>
+                                <span><i class="fas fa-weight-scale"></i> 178 lbs</span>
+                                <span class="db-mobile-card-amount" style="font-size:0.8125rem;"><i class="fas fa-chair" style="color:var(--secondary);"></i> Seat A (Window)</span>
+                            </div>
+                        </div>
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">#2 · Sarah Davidson</div>
+                                    <div class="booking-loc">Guest Passenger</div>
+                                </div>
+                                <span class="status-badge confirmed"><i class="fas fa-circle"></i> Verified</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-cake-candles"></i> Jul 22, 1990</span>
+                                <span><i class="fas fa-weight-scale"></i> 142 lbs</span>
+                                <span class="db-mobile-card-amount" style="font-size:0.8125rem;"><i class="fas fa-chair" style="color:var(--secondary);"></i> Seat B (Window)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="db-card-footer">
+                        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+                            <span style="font-size:0.875rem;color:var(--text-muted);"><i class="fas fa-weight-scale" style="color:var(--secondary);margin-right:0.35rem;"></i> Combined weight: <strong style="color:var(--text-heading);">320 lbs</strong> / 900 lbs max</span>
+                            <span class="badge" style="background:rgba(34,197,94,0.15);color:#22C55E;font-size:0.75rem;font-weight:600;padding:0.2rem 0.55rem;"><i class="fas fa-circle-check"></i> Within Safe Limit</span>
+                        </div>
                         <button class="btn btn-outline btn-sm" onclick="alert('Adding passenger...')"><i class="fas fa-user-plus"></i> Add Passenger</button>
                     </div>
                 </div>
@@ -732,13 +1801,19 @@
             <div id="section-photos" style="display:none;">
                 <div class="db-card">
                     <div class="db-card-header"><h3 class="db-card-title">My Flight Photos (142)</h3><span class="db-card-action" onclick="alert('Downloading all photos...')">Download All</span></div>
-                    <div style="padding:1.5rem;">
+                    <div class="db-photos-container" style="padding:1.5rem;">
                         <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1.25rem;">Photos from your City Lights Night Flight (Sep 15, 2026)</p>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.75rem;">
+                        <div class="db-photos-grid">
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/helicopter-city.jpg','City Lights')"><img src="assets/images/helicopter-city.jpg" alt="City photo 1" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-canyon.jpg','Canyon View')"><img src="assets/images/tour-canyon.jpg" alt="City photo 2" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-coastal.jpg','Coastal View')"><img src="assets/images/tour-coastal.jpg" alt="Coastal photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/hero-aerial.jpg','Mountain View')"><img src="assets/images/hero-aerial.jpg" alt="Mountain photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-glacier.jpg','Alaskan Glacier Crevasses')"><img src="assets/images/tour-glacier.jpg" alt="Glacier photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-reef.jpg','Emerald Tropical Reef')"><img src="assets/images/tour-reef.jpg" alt="Tropical reef aerial" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-sunset.jpg','Cockpit Sunset Skyline')"><img src="assets/images/tour-sunset.jpg" alt="Sunset cockpit photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-canyon-flight.jpg','Red Rock Canyon Expedition')"><img src="assets/images/tour-canyon-flight.jpg" alt="Canyon flight photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-volcano.jpg','Volcanic Caldera & Lava Lake')"><img src="assets/images/tour-volcano.jpg" alt="Volcano tour photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-waterfalls.jpg','Kauai Rainforest Waterfalls')"><img src="assets/images/tour-waterfalls.jpg" alt="Tropical waterfalls photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                         </div>
                     </div>
                 </div>
@@ -748,15 +1823,21 @@
                 <div class="db-card">
                     <div class="db-card-header"><h3 class="db-card-title">My Flight Certificates</h3></div>
                     <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;">
-                        <div style="display:flex;align-items:center;gap:1rem;padding:1.25rem;border:1px solid var(--border-default);border-radius:var(--radius-xl);">
-                            <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--secondary-light);display:flex;align-items:center;justify-content:center;color:var(--secondary);font-size:1.25rem;flex-shrink:0;"><i class="fas fa-certificate"></i></div>
-                            <div style="flex:1;"><div style="font-family:var(--font-heading);font-weight:600;color:var(--text-heading);">City Lights Night Flight</div><div style="font-size:0.8125rem;color:var(--text-muted);">Issued: September 15, 2026 · New York, NY</div></div>
-                            <button class="btn btn-outline btn-sm" onclick="alert('Downloading certificate...')"><i class="fas fa-download"></i> Download</button>
+                        <div class="db-cert-item">
+                            <div class="db-cert-icon"><i class="fas fa-certificate"></i></div>
+                            <div class="db-cert-info">
+                                <div class="db-cert-name">City Lights Night Flight</div>
+                                <div class="db-cert-meta">Issued: September 15, 2026 · New York, NY</div>
+                            </div>
+                            <button class="btn btn-outline btn-sm db-cert-btn" onclick="alert('Downloading certificate...')"><i class="fas fa-download"></i> Download</button>
                         </div>
-                        <div style="display:flex;align-items:center;gap:1rem;padding:1.25rem;border:1px solid var(--border-default);border-radius:var(--radius-xl);">
-                            <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--secondary-light);display:flex;align-items:center;justify-content:center;color:var(--secondary);font-size:1.25rem;flex-shrink:0;"><i class="fas fa-certificate"></i></div>
-                            <div style="flex:1;"><div style="font-family:var(--font-heading);font-weight:600;color:var(--text-heading);">Sunset Alpine Flight</div><div style="font-size:0.8125rem;color:var(--text-muted);">Issued: August 28, 2026 · Juneau, AK</div></div>
-                            <button class="btn btn-outline btn-sm" onclick="alert('Downloading certificate...')"><i class="fas fa-download"></i> Download</button>
+                        <div class="db-cert-item">
+                            <div class="db-cert-icon"><i class="fas fa-certificate"></i></div>
+                            <div class="db-cert-info">
+                                <div class="db-cert-name">Sunset Alpine Flight</div>
+                                <div class="db-cert-meta">Issued: August 28, 2026 · Juneau, AK</div>
+                            </div>
+                            <button class="btn btn-outline btn-sm db-cert-btn" onclick="alert('Downloading certificate...')"><i class="fas fa-download"></i> Download</button>
                         </div>
                     </div>
                 </div>
@@ -765,6 +1846,7 @@
             <div id="section-payments" style="display:none;">
                 <div class="db-card">
                     <div class="db-card-header"><h3 class="db-card-title">Payment History</h3></div>
+                    <div class="db-table-responsive db-table-desktop">
                     <table class="db-table">
                         <thead><tr><th>Description</th><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
                         <tbody>
@@ -773,6 +1855,50 @@
                             <tr><td>City Lights Night × 2</td><td>Aug 20, 2026</td><td style="font-weight:600;color:var(--secondary);">$598</td><td><i class="fab fa-cc-visa" style="color:#1a1f71;font-size:1.25rem;"></i> Visa ···4242</td><td><span class="status-badge confirmed">Paid</span></td></tr>
                         </tbody>
                     </table>
+                    </div>
+
+                    <!-- Mobile Card View (No side scroll on phones) -->
+                    <div class="db-mobile-cards">
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">Grand Canyon Explorer × 2</div>
+                                    <div class="booking-loc"><i class="fab fa-cc-visa" style="color:#1a1f71;"></i> Visa ···4242</div>
+                                </div>
+                                <span class="status-badge confirmed">Paid</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Sep 1, 2026</span>
+                                <span class="db-mobile-card-amount">$698</span>
+                            </div>
+                        </div>
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">Coastal Cliffs × 4</div>
+                                    <div class="booking-loc"><i class="fab fa-cc-mastercard" style="color:#EB001B;"></i> MC ···8847</div>
+                                </div>
+                                <span class="status-badge pending">Pending</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Sep 10, 2026</span>
+                                <span class="db-mobile-card-amount" style="color:var(--amber) !important;">$996</span>
+                            </div>
+                        </div>
+                        <div class="db-mobile-card">
+                            <div class="db-mobile-card-top">
+                                <div>
+                                    <div class="booking-name">City Lights Night × 2</div>
+                                    <div class="booking-loc"><i class="fab fa-cc-visa" style="color:#1a1f71;"></i> Visa ···4242</div>
+                                </div>
+                                <span class="status-badge confirmed">Paid</span>
+                            </div>
+                            <div class="db-mobile-card-meta">
+                                <span><i class="fas fa-calendar"></i> Aug 20, 2026</span>
+                                <span class="db-mobile-card-amount">$598</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -809,12 +1935,36 @@
                             <label class="checkbox-wrapper"><input type="checkbox" checked> Email notifications for flight updates</label>
                             <label class="checkbox-wrapper"><input type="checkbox" checked> SMS alerts for weather changes</label>
                             <label class="checkbox-wrapper"><input type="checkbox"> Marketing emails and promotions</label>
-                            <a href="login.html" class="btn btn-outline" style="margin-top:0.5rem;width:fit-content;color:var(--red);border-color:var(--red);" onmouseover="this.style.background='var(--red-light)'" onmouseout="this.style.background='transparent'"><i class="fas fa-right-from-bracket"></i> Logout</a>
+                            <a href="javascript:void(0)" onclick="openLogoutModal()" class="btn btn-outline" style="margin-top:0.5rem;width:fit-content;color:var(--red);border-color:var(--red);" onmouseover="this.style.background='var(--red-light)'" onmouseout="this.style.background='transparent'"><i class="fas fa-right-from-bracket"></i> Logout</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div id="logout-modal" class="db-modal-backdrop" onclick="handleLogoutBackdropClick(event)">
+    <div class="db-modal-box" role="dialog" aria-modal="true" aria-labelledby="logout-modal-title">
+        <button class="db-modal-close-btn" onclick="closeLogoutModal()" aria-label="Close modal">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <div class="db-modal-icon-badge">
+            <i class="fas fa-right-from-bracket"></i>
+        </div>
+        <h3 id="logout-modal-title" class="db-modal-title">Confirm Logout</h3>
+        <p class="db-modal-text">
+            Are you sure you want to sign out of your SkyVista account? You will need to sign in again to access your flight bookings and photos.
+        </p>
+        <div class="db-modal-actions">
+            <button type="button" class="btn btn-outline" onclick="closeLogoutModal()" style="padding:0.75rem 1rem; border-color:var(--border-default); color:var(--text-body); font-weight:600; cursor:pointer;">
+                Cancel
+            </button>
+            <a href="login.html" class="btn btn-primary" style="padding:0.75rem 1rem; background:linear-gradient(135deg, #DC2626 0%, #EF4444 100%); border-color:#DC2626; color:#fff; display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; text-decoration:none; font-weight:600;">
+                <i class="fas fa-right-from-bracket"></i> Log Out
+            </a>
         </div>
     </div>
 </div>
@@ -830,6 +1980,15 @@
         document.querySelectorAll('.theme-icon').forEach(el => {
             el.className = html.classList.contains('dark') ? 'fas fa-sun theme-icon' : 'fas fa-moon theme-icon';
         });
+        if (localStorage.getItem('sv_dir') === 'rtl') html.setAttribute('dir', 'rtl');
+        const isRTL = html.getAttribute('dir') === 'rtl';
+        document.querySelectorAll('.dir-label').forEach(el => {
+            el.textContent = isRTL ? 'LTR' : 'RTL';
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            const ca = document.getElementById('db-content-area');
+            if (ca) ca.scrollLeft = 0;
+        });
     })();
 
     const sections = ['overview','bookings','weather','manifest','photos','certificates','payments','notifications','settings'];
@@ -839,21 +1998,42 @@
             const el = document.getElementById('section-'+s);
             if (el) el.style.display = s === name ? '' : 'none';
         });
-        const label = name.charAt(0).toUpperCase() + name.slice(1).replace(/([A-Z])/g,' $1');
-        document.getElementById('db-page-title').textContent = label;
-        document.getElementById('db-breadcrumb-current').textContent = label;
+        const sectionLabels = {
+            overview: 'Overview',
+            bookings: 'My Bookings',
+            weather: 'Flight Status',
+            manifest: 'Passenger Manifest',
+            photos: 'Flight Photos',
+            certificates: 'Certificates',
+            payments: 'Payments',
+            notifications: 'Notifications',
+            settings: 'Settings'
+        };
+        const label = sectionLabels[name] || (name.charAt(0).toUpperCase() + name.slice(1).replace(/([A-Z])/g,' $1'));
+        const titleEl = document.getElementById('db-page-title');
+        if (titleEl) titleEl.textContent = label;
+        const breadcrumbEl = document.getElementById('db-breadcrumb-current');
+        if (breadcrumbEl) breadcrumbEl.textContent = label;
         if (navEl) {
             document.querySelectorAll('.db-nav-item').forEach(el => el.classList.remove('active'));
             navEl.classList.add('active');
+        } else {
+            document.querySelectorAll('.db-nav-item').forEach(el => {
+                const onclickAttr = el.getAttribute('onclick') || '';
+                if (onclickAttr.includes("'" + name + "'")) {
+                    document.querySelectorAll('.db-nav-item').forEach(item => item.classList.remove('active'));
+                    el.classList.add('active');
+                }
+            });
         }
         // Close mobile sidebar
         closeSidebar();
-        // Scroll to top
-        document.getElementById('db-content-area').scrollTop = 0;
-    }
-
-    function toggleSidebar() {
-        document.getElementById('db-sidebar').classList.toggle('collapsed');
+        // Scroll to top and reset horizontal scroll
+        const contentArea = document.getElementById('db-content-area');
+        if (contentArea) {
+            contentArea.scrollTop = 0;
+            contentArea.scrollLeft = 0;
+        }
     }
 
     function openSidebar() {
@@ -879,6 +2059,35 @@
         document.getElementById('lb-img').src = src;
         lb.classList.add('open');
     }
+
+    // Logout Modal Logic
+    function openLogoutModal() {
+        const modal = document.getElementById('logout-modal');
+        if (modal) {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeLogoutModal() {
+        const modal = document.getElementById('logout-modal');
+        if (modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function handleLogoutBackdropClick(e) {
+        if (e.target.id === 'logout-modal') {
+            closeLogoutModal();
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLogoutModal();
+        }
+    });
 
     // Animate counters on overview
     document.addEventListener('DOMContentLoaded', function() {

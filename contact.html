@@ -82,6 +82,84 @@
 
         .contact-social { display: flex; gap: 0.625rem; margin-top: 2rem; }
 
+        /* Terminal operations card in right column */
+        .contact-terminal-card {
+            margin-top: 1.75rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-smooth);
+        }
+        .contact-terminal-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--secondary);
+            box-shadow: 0 16px 36px -10px rgba(201, 151, 58, 0.2);
+        }
+        .contact-terminal-img-wrap {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+        .contact-terminal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .contact-terminal-card:hover .contact-terminal-img {
+            transform: scale(1.06);
+        }
+        .contact-terminal-badge {
+            position: absolute;
+            top: 0.85rem;
+            left: 0.85rem;
+            background: rgba(8, 18, 32, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #FFE29F;
+            padding: 0.3rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .contact-terminal-body {
+            padding: 1.5rem 1.75rem;
+        }
+        .contact-terminal-title {
+            font-family: var(--font-heading);
+            font-size: 1.0625rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+        }
+        .contact-terminal-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+        .contact-terminal-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            font-size: 0.78125rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-light);
+            padding-top: 0.875rem;
+        }
+        .contact-terminal-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
         /* Live Map Container */
         .live-map-wrapper {
             margin: 3.5rem auto 0;
@@ -208,7 +286,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-    <img src="assets/images/hero-aerial.jpg" alt="Helicopter aerial view hero" class="page-hero-bg">
+    <img src="assets/images/hero-contact-banner.jpg" alt="Luxury helipad concierge terminal lounge" class="page-hero-bg">
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content container">
         <div class="breadcrumb animate-on-scroll">
@@ -314,22 +392,6 @@
                                 <div class="contact-info-note">Response within 2 hours</div>
                             </div>
                         </div>
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon"><i class="fas fa-clock"></i></div>
-                            <div>
-                                <div class="contact-info-key">Operating Hours</div>
-                                <div class="contact-info-val">Daily 6:00 AM – 8:00 PM</div>
-                                <div class="contact-info-note">All SkyVista locations</div>
-                            </div>
-                        </div>
-                        <div class="contact-info-item">
-                            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                            <div>
-                                <div class="contact-info-key">Main Office</div>
-                                <div class="contact-info-val">1400 Helipad Drive</div>
-                                <div class="contact-info-note">Grand Canyon, AZ 86023</div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="contact-social">
@@ -337,6 +399,14 @@
                         <a href="#" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="footer-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                         <a href="#" class="footer-social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Helipad Terminal & Dispatch Operations Card -->
+                <div class="contact-terminal-card">
+                    <div class="contact-terminal-img-wrap">
+                        <img src="assets/images/contact-operations.jpg" alt="SkyVista Flight Operations Center" class="contact-terminal-img">
+                        <span class="contact-terminal-badge"><i class="fas fa-tower-broadcast"></i> VIP Helipad Terminal</span>
                     </div>
                 </div>
             </div>

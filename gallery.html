@@ -42,26 +42,36 @@
         .gal-tab:hover { border-color: var(--secondary); color: var(--secondary); }
         .gal-tab.active { background: var(--secondary); border-color: var(--secondary); color: #fff; }
 
-        /* Masonry gallery grid */
+        /* Equal-aligned gallery grid */
         .masonry-gallery {
-            columns: 3;
-            column-gap: 1rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
         .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1rem;
             border-radius: var(--radius-xl);
             overflow: hidden;
             cursor: pointer;
             position: relative;
             display: block;
+            aspect-ratio: 4 / 3;
+            background: var(--bg-card);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        .masonry-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
         }
         .masonry-item img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .masonry-item:hover img { transform: scale(1.05); }
+        .masonry-item:hover img { transform: scale(1.08); }
         .masonry-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(to top, rgba(8,15,26,0.8) 0%, transparent 55%);
@@ -92,6 +102,65 @@
         .photo-service-title { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.25rem; }
         .photo-service-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
 
+        /* Photo showcase container & badge */
+        .photo-showcase-container {
+            position: relative;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+        .photo-showcase-img {
+            width: 100%;
+            border-radius: var(--radius-2xl);
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-showcase-badge {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            background: rgba(10, 25, 47, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(232, 184, 96, 0.4);
+            border-radius: var(--radius-xl);
+            padding: 1.1rem 1.25rem;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
+        }
+        .photo-showcase-badge-inner {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+        .photo-showcase-star-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: rgba(232, 184, 96, 0.2);
+            border: 1px solid rgba(232, 184, 96, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+        .photo-showcase-title {
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: #ffffff !important;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+        .photo-showcase-sub {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.78) !important;
+            font-weight: 500;
+        }
+
         /* Instagram strip */
         .insta-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
         .insta-item {
@@ -108,17 +177,157 @@
         .insta-item:hover .insta-item-overlay { opacity: 1; }
 
         @media (max-width: 1024px) {
-            .masonry-gallery { columns: 2; }
+            .masonry-gallery { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
             .photo-service-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             .insta-strip { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-            .masonry-gallery { columns: 2; }
+            .masonry-gallery { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .insta-strip { grid-template-columns: repeat(3, 1fr); }
         }
-        @media (max-width: 480px) {
-            .masonry-gallery { columns: 1; }
+        @media (max-width: 580px) {
+            .masonry-gallery { grid-template-columns: 1fr; gap: 1rem; }
             .insta-strip { grid-template-columns: repeat(2, 1fr); }
+        }
+        /* ════════════════════════════════════════════
+           GALLERY PAGE CTA: CINEMATIC PHOTO VIEWPORT
+        ════════════════════════════════════════════ */
+        .gallery-viewport-cta {
+            position: relative;
+            border-radius: var(--radius-3xl);
+            overflow: hidden;
+            padding: 4.5rem 3.5rem;
+            background: linear-gradient(135deg, rgba(6, 15, 27, 0.94) 0%, rgba(8, 22, 40, 0.82) 50%, rgba(7, 18, 32, 0.6) 100%),
+                        url('assets/images/tour-sunset.jpg') center / cover no-repeat;
+            border: 1px solid rgba(201, 151, 58, 0.35);
+            box-shadow: 0 25px 60px -15px rgba(2, 8, 16, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            text-align: center;
+        }
+        /* Camera Viewfinder Crosshairs / HUD brackets */
+        .gallery-viewport-cta::before,
+        .gallery-viewport-cta::after {
+            content: '';
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            pointer-events: none;
+        }
+        .gallery-viewport-cta::before {
+            top: 1.5rem; left: 1.5rem;
+            border-top: 2px solid rgba(201, 151, 58, 0.6);
+            border-left: 2px solid rgba(201, 151, 58, 0.6);
+        }
+        .gallery-viewport-cta::after {
+            bottom: 1.5rem; right: 1.5rem;
+            border-bottom: 2px solid rgba(201, 151, 58, 0.6);
+            border-right: 2px solid rgba(201, 151, 58, 0.6);
+        }
+        .gallery-aperture-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(201, 151, 58, 0.18);
+            border: 1px solid rgba(201, 151, 58, 0.4);
+            color: #FFE29F;
+            padding: 0.4rem 1rem;
+            border-radius: var(--radius-full);
+            font-family: var(--font-heading);
+            font-size: 0.78125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            margin-bottom: 1.25rem;
+            backdrop-filter: blur(8px);
+        }
+        .gallery-cta-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+        .gallery-cta-title span {
+            background: linear-gradient(135deg, #FFE8B5 0%, #E8B860 50%, #D4A445 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gallery-cta-desc {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            max-width: 620px;
+            margin: 0 auto 2.25rem;
+        }
+        .gallery-perks-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .gallery-perk-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(6px);
+        }
+        .gallery-perk-item i {
+            color: var(--secondary);
+            font-size: 0.85rem;
+        }
+        .gallery-cta-btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .gallery-cta-btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.85rem;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-fast);
+        }
+        .gallery-cta-btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            color: #ffffff !important;
+        }
+        @media (max-width: 768px) {
+            .gallery-viewport-cta {
+                padding: 3rem 1.5rem;
+            }
+            .gallery-perks-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .gallery-cta-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            .gallery-cta-btns .btn,
+            .gallery-cta-btn-ghost {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -128,7 +337,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-    <img src="assets/images/tour-coastal.jpg" alt="Coastal aerial helicopter photography" class="page-hero-bg">
+    <img src="assets/images/hero-gallery-banner.jpg" alt="Aerial photography of tropical mountain coastline" class="page-hero-bg">
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content container">
         <div class="breadcrumb animate-on-scroll">
@@ -158,74 +367,74 @@
 
         <div class="masonry-gallery animate-on-scroll delay-1">
             <!-- Row 1 — All different images, varied orientations -->
-            <div class="masonry-item" onclick="openLightbox('assets/images/hero-aerial.jpg','Alpine Valley at Sunrise')">
+            <div class="masonry-item" data-category="mountain" onclick="openLightbox('assets/images/hero-aerial.jpg','Alpine Valley at Sunrise')">
                 <img src="assets/images/hero-aerial.jpg" alt="Alpine valley sunrise from helicopter">
                 <div class="masonry-overlay"><span class="masonry-caption">Alpine Valley at Sunrise</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-canyon.jpg','Grand Canyon — Colorado River')">
+            <div class="masonry-item" data-category="canyon" onclick="openLightbox('assets/images/tour-canyon.jpg','Grand Canyon — Colorado River')">
                 <img src="assets/images/tour-canyon.jpg" alt="Grand Canyon aerial view">
                 <div class="masonry-overlay"><span class="masonry-caption">Grand Canyon — Colorado River</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/helicopter-city.jpg','City Skyline at Dusk')">
+            <div class="masonry-item" data-category="city" onclick="openLightbox('assets/images/helicopter-city.jpg','City Skyline at Dusk')">
                 <img src="assets/images/helicopter-city.jpg" alt="City dusk flight">
                 <div class="masonry-overlay"><span class="masonry-caption">City Skyline at Dusk</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-coastal.jpg','Na Pali Coast — Kauai')">
+            <div class="masonry-item" data-category="coastal" onclick="openLightbox('assets/images/tour-coastal.jpg','Na Pali Coast — Kauai')">
                 <img src="assets/images/tour-coastal.jpg" alt="Na Pali coast aerial">
                 <div class="masonry-overlay"><span class="masonry-caption">Na Pali Coast — Kauai</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/hero-aerial.jpg','Mountain Peak Valley')">
-                <img src="assets/images/hero-aerial.jpg" alt="Mountain peak" style="object-position:right;">
+            <div class="masonry-item" data-category="mountain" onclick="openLightbox('assets/images/gallery-alpine-summit.jpg','Snow-Capped Peak Views')">
+                <img src="assets/images/gallery-alpine-summit.jpg" alt="Snow-capped alpine summit helipad and lake">
                 <div class="masonry-overlay"><span class="masonry-caption">Snow-Capped Peak Views</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-canyon.jpg','Canyon Depth Exploration')">
-                <img src="assets/images/tour-canyon.jpg" alt="Canyon depth" style="object-position:bottom;">
+            <div class="masonry-item" data-category="canyon" onclick="openLightbox('assets/images/gallery-canyon-depth.jpg','Canyon Layers & Depth')">
+                <img src="assets/images/gallery-canyon-depth.jpg" alt="Canyon depth striated rock formations">
                 <div class="masonry-overlay"><span class="masonry-caption">Canyon Layers & Depth</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/helicopter-city.jpg','Harbor Lights')">
-                <img src="assets/images/helicopter-city.jpg" alt="Harbor at night" style="object-position:bottom;">
+            <div class="masonry-item" data-category="city" onclick="openLightbox('assets/images/gallery-harbor-lights.jpg','Harbor Lights at Twilight')">
+                <img src="assets/images/gallery-harbor-lights.jpg" alt="City harbor lights at twilight">
                 <div class="masonry-overlay"><span class="masonry-caption">Harbor Lights at Twilight</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-coastal.jpg','Hidden Sea Cave')">
-                <img src="assets/images/tour-coastal.jpg" alt="Sea cave from above" style="object-position:bottom;">
+            <div class="masonry-item" data-category="coastal" onclick="openLightbox('assets/images/gallery-sea-cave.jpg','Hidden Sea Cave Discovery')">
+                <img src="assets/images/gallery-sea-cave.jpg" alt="Hidden sea cave and natural rock arch from above">
                 <div class="masonry-overlay"><span class="masonry-caption">Hidden Sea Cave Discovery</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/hero-aerial.jpg','River Through Peaks')">
-                <img src="assets/images/hero-aerial.jpg" alt="River through mountain peaks" style="object-position:bottom;">
+            <div class="masonry-item" data-category="mountain" onclick="openLightbox('assets/images/gallery-mountain-river.jpg','River Through Mountain Peaks')">
+                <img src="assets/images/gallery-mountain-river.jpg" alt="Turquoise river winding through alpine mountain peaks">
                 <div class="masonry-overlay"><span class="masonry-caption">River Through Mountain Peaks</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-canyon.jpg','Desert Canyon at Golden Hour')">
-                <img src="assets/images/tour-canyon.jpg" alt="Canyon golden hour" style="object-position:top;">
+            <div class="masonry-item" data-category="canyon" onclick="openLightbox('assets/images/gallery-desert-golden.jpg','Desert Canyon — Golden Hour')">
+                <img src="assets/images/gallery-desert-golden.jpg" alt="Desert canyon monuments at golden hour sunset">
                 <div class="masonry-overlay"><span class="masonry-caption">Desert Canyon — Golden Hour</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/helicopter-city.jpg','Waterfront District')">
-                <img src="assets/images/helicopter-city.jpg" alt="Waterfront aerial view" style="object-position:right;">
+            <div class="masonry-item" data-category="city" onclick="openLightbox('assets/images/gallery-waterfront-night.jpg','Waterfront District Aerial')">
+                <img src="assets/images/gallery-waterfront-night.jpg" alt="Downtown waterfront district illuminated at night">
                 <div class="masonry-overlay"><span class="masonry-caption">Waterfront District Aerial</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
 
-            <div class="masonry-item" onclick="openLightbox('assets/images/tour-coastal.jpg','Dramatic Cliffside')">
-                <img src="assets/images/tour-coastal.jpg" alt="Dramatic cliffside" style="object-position:top;">
+            <div class="masonry-item" data-category="coastal" onclick="openLightbox('assets/images/gallery-cliffside.jpg','Dramatic Cliffside Profile')">
+                <img src="assets/images/gallery-cliffside.jpg" alt="Dramatic green cliffside plunging into ocean waves">
                 <div class="masonry-overlay"><span class="masonry-caption">Dramatic Cliffside Profile</span></div>
                 <div class="masonry-zoom"><i class="fas fa-expand"></i></div>
             </div>
@@ -264,13 +473,6 @@
                         </div>
                     </div>
                     <div class="photo-service-item">
-                        <div class="photo-service-icon"><i class="fas fa-certificate"></i></div>
-                        <div>
-                            <div class="photo-service-title">Personalized Flight Certificate</div>
-                            <div class="photo-service-desc">Included free with every booking. A premium printed certificate commemorating your adventure.</div>
-                        </div>
-                    </div>
-                    <div class="photo-service-item">
                         <div class="photo-service-icon"><i class="fas fa-globe"></i></div>
                         <div>
                             <div class="photo-service-title">Social Media Ready Files</div>
@@ -280,15 +482,14 @@
                 </div>
                 <a href="tours.html" class="btn btn-primary" style="margin-top:1.75rem;">Add Photo Package <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="animate-on-scroll delay-2" style="position:relative;">
-                <img src="assets/images/hero-aerial.jpg" alt="Aerial photography during helicopter tour" style="width:100%;border-radius:var(--radius-2xl);aspect-ratio:4/3;object-fit:cover;">
-                <div style="position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-radius:var(--radius-xl);padding:1rem 1.25rem;box-shadow:var(--shadow-xl);">
-                    <div class="dark" style="background:rgba(20,34,54,0.95);border-radius:var(--radius-xl);padding:1rem 1.25rem;display:none;"></div>
-                    <div style="display:flex;align-items:center;gap:0.875rem;">
-                        <div style="width:44px;height:44px;border-radius:var(--radius-sm);background:var(--secondary-light);display:flex;align-items:center;justify-content:center;color:var(--secondary);font-size:1.125rem;flex-shrink:0;"><i class="fas fa-star"></i></div>
+            <div class="animate-on-scroll delay-2 photo-showcase-container">
+                <img src="assets/images/gallery-featured-showcase.jpg" alt="Aerial photography taken from helicopter cabin window" class="photo-showcase-img">
+                <div class="photo-showcase-badge">
+                    <div class="photo-showcase-badge-inner">
+                        <div class="photo-showcase-star-icon"><i class="fas fa-star"></i></div>
                         <div>
-                            <div style="font-family:var(--font-heading);font-size:0.9375rem;font-weight:600;color:var(--text-heading);">Most-liked photo on our feed</div>
-                            <div style="font-size:0.8125rem;color:var(--text-muted);">Alpine Valley at Sunrise — 4.2K likes</div>
+                            <div class="photo-showcase-title">Most-liked photo on our feed</div>
+                            <div class="photo-showcase-sub">Alpine Valley at Sunrise — 4.2K likes</div>
                         </div>
                     </div>
                 </div>
@@ -314,6 +515,44 @@
     </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     CTA: CINEMATIC PHOTO VIEWPORT
+════════════════════════════════════════════ -->
+<section class="section-sm">
+    <div class="container">
+        <div class="gallery-viewport-cta animate-on-scroll">
+            <div class="gallery-aperture-badge">
+                <i class="fas fa-camera-retro"></i>
+                <span>Live Your Own Story</span>
+            </div>
+            <h2 class="gallery-cta-title">Bring Your Camera. We'll Provide the <span>Wonder</span>.</h2>
+            <p class="gallery-cta-desc">Don't just admire aerial captures from your screen. Step into the cockpit, feel the gentle liftoff, and shoot breathtaking panoramic memories from the front-row seat of the sky.</p>
+            <div class="gallery-perks-row">
+                <div class="gallery-perk-item">
+                    <i class="fas fa-mountain-sun"></i>
+                    <span>Golden Hour Hover Stops</span>
+                </div>
+                <div class="gallery-perk-item">
+                    <i class="fas fa-video"></i>
+                    <span>4K Cockpit GoPro Package</span>
+                </div>
+                <div class="gallery-perk-item">
+                    <i class="fas fa-certificate"></i>
+                    <span>Free Digital Flight Certificate</span>
+                </div>
+            </div>
+            <div class="gallery-cta-btns">
+                <a href="tours.html" class="btn btn-primary btn-xl">
+                    <i class="fas fa-helicopter"></i> Book a Photo Flight
+                </a>
+                <a href="tours.html" class="gallery-cta-btn-ghost">
+                    <i class="fas fa-compass"></i> Explore All 48 Tours
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div id="main-footer"></div>
 
 <script src="components.js"></script>
@@ -321,7 +560,15 @@
     function setGalleryFilter(tab, category) {
         document.querySelectorAll('.gal-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        // Simple filter logic - in real implementation would filter masonry items
+        document.querySelectorAll('.masonry-item').forEach(item => {
+            const itemCat = item.getAttribute('data-category');
+            if (category === 'all' || itemCat === category) {
+                item.style.display = '';
+                item.style.animation = 'fadeInUp 0.4s ease forwards';
+            } else {
+                item.style.display = 'none';
+            }
+        });
     }
 </script>
 </body>

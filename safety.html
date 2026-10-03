@@ -85,22 +85,121 @@
 
         /* Fleet section */
         .fleet-card {
-            background: var(--bg-card); border: 1px solid var(--border-default);
-            border-radius: var(--radius-2xl); overflow: hidden; transition: var(--transition-smooth);
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
             box-shadow: var(--shadow-card);
+            position: relative;
         }
-        .fleet-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-4px); border-color: transparent; }
-        .fleet-img-wrap { position: relative; overflow: hidden; aspect-ratio: 16/9; }
-        .fleet-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; background: var(--bg-alt); display: flex; align-items: center; justify-content: center; }
-        .fleet-card:hover .fleet-img-wrap img { transform: scale(1.05); }
-        .fleet-badge { position: absolute; top: 1rem; left: 1rem; }
-        .fleet-body { padding: 1.5rem; }
-        .fleet-name { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.25rem; }
-        .fleet-type { font-size: 0.8125rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-        .fleet-specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-        .fleet-spec { display: flex; flex-direction: column; gap: 0.125rem; }
-        .fleet-spec-key { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 600; }
-        .fleet-spec-val { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
+        .fleet-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(232, 184, 96, 0.6);
+            box-shadow: 0 22px 48px -12px rgba(0, 0, 0, 0.75), 0 0 28px rgba(201, 151, 58, 0.22);
+        }
+        .fleet-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+        .fleet-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: var(--bg-alt);
+        }
+        .fleet-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fleet-card:hover .fleet-img img {
+            transform: scale(1.08);
+        }
+        .fleet-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 2;
+        }
+        .fleet-badge .badge {
+            background: rgba(8, 18, 32, 0.88) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(232, 184, 96, 0.5) !important;
+            color: #FFE29F !important;
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.35rem 0.85rem;
+            border-radius: var(--radius-full);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .fleet-card:hover .fleet-badge .badge {
+            border-color: rgba(232, 184, 96, 0.85) !important;
+            transform: scale(1.03);
+        }
+        .fleet-body {
+            padding: 1.5rem;
+        }
+        .fleet-name {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.25rem;
+            transition: color 0.3s ease;
+        }
+        .fleet-card:hover .fleet-name {
+            color: var(--secondary);
+        }
+        .fleet-type {
+            font-size: 0.8125rem;
+            color: var(--secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        .fleet-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .fleet-spec {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            padding: 0.5rem 0.65rem;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-light);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .fleet-card:hover .fleet-spec {
+            background: rgba(232, 184, 96, 0.05);
+            border-color: rgba(232, 184, 96, 0.2);
+        }
+        .fleet-spec-key {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .fleet-spec-val {
+            font-family: var(--font-heading);
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
 
         /* Pilot cards - enhanced */
         .pilot-team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -111,13 +210,19 @@
         }
         .pilot-enhanced-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-4px); border-color: transparent; }
         .pilot-img-wrap { position: relative; overflow: hidden; }
-        .pilot-img-placeholder {
-            width: 100%; aspect-ratio: 3/3.5;
-            background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg-surface) 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 0.75rem; color: var(--text-muted);
+        .pilot-img {
+            width: 100%; aspect-ratio: 3/3.5; object-fit: cover; object-position: center top;
+            display: block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .pilot-icon-large { font-size: 3.5rem; color: var(--border-default); }
+        .pilot-enhanced-card:hover .pilot-img { transform: scale(1.06); }
+        .pilot-badge-float {
+            position: absolute; bottom: 0.75rem; right: 0.75rem;
+            background: rgba(10, 25, 47, 0.88); backdrop-filter: blur(8px);
+            border: 1px solid rgba(232, 184, 96, 0.4); color: var(--secondary);
+            font-size: 0.6875rem; font-weight: 700; padding: 0.3rem 0.65rem;
+            border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;
+            letter-spacing: 0.05em; text-transform: uppercase; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
         .pilot-card-body-enhanced { padding: 1.5rem; }
         .pilot-name { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.25rem; }
         .pilot-role { font-size: 0.75rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
@@ -157,6 +262,144 @@
             .safety-stats { grid-template-columns: 1fr 1fr; }
             .pilot-team-grid { grid-template-columns: 1fr; }
         }
+        /* ════════════════════════════════════════════
+           SAFETY PAGE CTA: AVIATION TRUST & SHIELD
+        ════════════════════════════════════════════ */
+        .safety-trust-cta {
+            position: relative;
+            border-radius: var(--radius-3xl);
+            overflow: hidden;
+            padding: 4rem 3.5rem;
+            background: linear-gradient(135deg, #050E1A 0%, #0B1E36 50%, #061220 100%);
+            border: 1px solid rgba(74, 144, 217, 0.35);
+            box-shadow: 0 25px 60px -15px rgba(2, 6, 12, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .safety-trust-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 500px; height: 260px;
+            background: radial-gradient(ellipse at top, rgba(74, 144, 217, 0.25) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .safety-shield-crest {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(74, 144, 217, 0.2) 0%, rgba(201, 151, 58, 0.2) 100%);
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 25px rgba(201, 151, 58, 0.3);
+        }
+        .safety-cta-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7BB2ED;
+            font-family: var(--font-heading);
+            font-size: 0.78125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .safety-cta-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.85rem, 3.5vw, 2.65rem);
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.25;
+        }
+        .safety-cta-title span {
+            background: linear-gradient(135deg, #FFE29F 0%, #D4A445 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .safety-cta-desc {
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            max-width: 640px;
+            margin: 0 auto 2.25rem;
+        }
+        .safety-guarantees {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .safety-guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.6rem 1.25rem;
+            border-radius: var(--radius-full);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+        }
+        .safety-guarantee-item i {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        .safety-cta-btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .safety-cta-btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-fast);
+        }
+        .safety-cta-btn-outline:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            color: #ffffff !important;
+        }
+        @media (max-width: 768px) {
+            .safety-trust-cta {
+                padding: 3rem 1.5rem;
+            }
+            .safety-guarantees {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .safety-cta-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            .safety-cta-btns .btn,
+            .safety-cta-btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -165,7 +408,7 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-    <img src="assets/images/helicopter-city.jpg" alt="Professional helicopter in flight" class="page-hero-bg">
+    <img src="assets/images/hero-safety-banner.jpg" alt="Helicopter safety inspection by certified pilot and engineer" class="page-hero-bg">
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content container">
         <div class="breadcrumb animate-on-scroll">
@@ -276,9 +519,9 @@
             <div class="fleet-card animate-on-scroll delay-1">
                 <div class="fleet-img-wrap">
                     <div class="fleet-img">
-                        <img src="assets/images/helicopter-city.jpg" alt="Bell 407 GXP helicopter" style="width:100%;height:100%;object-fit:cover;">
+                        <img src="assets/images/fleet-bell407.jpg" alt="Bell 407 GXP helicopter">
                     </div>
-                    <div class="fleet-badge"><span class="badge badge-gold">Primary Fleet</span></div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-crown" style="font-size:0.7rem;color:var(--secondary);"></i> Primary Fleet</span></div>
                 </div>
                 <div class="fleet-body">
                     <div class="fleet-name">Bell 407 GXP</div>
@@ -294,9 +537,9 @@
             <div class="fleet-card animate-on-scroll delay-2">
                 <div class="fleet-img-wrap">
                     <div class="fleet-img">
-                        <img src="assets/images/hero-aerial.jpg" alt="AS350 B3e Ecureuil helicopter" style="width:100%;height:100%;object-fit:cover;object-position:right;">
+                        <img src="assets/images/fleet-h130.jpg" alt="Airbus AS350 B3e helicopter">
                     </div>
-                    <div class="fleet-badge"><span class="badge badge-primary">Alpine Tours</span></div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-mountain" style="font-size:0.7rem;color:var(--secondary);"></i> Alpine Tours</span></div>
                 </div>
                 <div class="fleet-body">
                     <div class="fleet-name">Airbus AS350 B3e</div>
@@ -312,9 +555,9 @@
             <div class="fleet-card animate-on-scroll delay-3">
                 <div class="fleet-img-wrap">
                     <div class="fleet-img">
-                        <img src="assets/images/tour-coastal.jpg" alt="Robinson R66 helicopter" style="width:100%;height:100%;object-fit:cover;">
+                        <img src="assets/images/fleet-h145.jpg" alt="Robinson R66 helicopter">
                     </div>
-                    <div class="fleet-badge"><span class="badge" style="background:rgba(201,151,58,0.85);color:#fff;">Coastal Tours</span></div>
+                    <div class="fleet-badge"><span class="badge"><i class="fas fa-water" style="font-size:0.7rem;color:var(--secondary);"></i> Coastal Tours</span></div>
                 </div>
                 <div class="fleet-body">
                     <div class="fleet-name">Robinson R66 Turbine</div>
@@ -343,10 +586,8 @@
             <!-- Pilot 1 -->
             <div class="pilot-enhanced-card animate-on-scroll delay-1">
                 <div class="pilot-img-wrap">
-                    <div class="pilot-img-placeholder">
-                        <i class="fas fa-user-tie pilot-icon-large"></i>
-                        <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Chief Pilot</span>
-                    </div>
+                    <img src="assets/images/pilot-torres.jpg" alt="Capt. Michael Torres - Chief Pilot & Founder" class="pilot-img" loading="lazy">
+                    <span class="pilot-badge-float"><i class="fas fa-crown"></i> Chief</span>
                 </div>
                 <div class="pilot-card-body-enhanced">
                     <div class="pilot-name">Capt. Michael Torres</div>
@@ -362,10 +603,8 @@
             <!-- Pilot 2 -->
             <div class="pilot-enhanced-card animate-on-scroll delay-2">
                 <div class="pilot-img-wrap">
-                    <div class="pilot-img-placeholder">
-                        <i class="fas fa-user-tie pilot-icon-large"></i>
-                        <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Senior Pilot</span>
-                    </div>
+                    <img src="assets/images/pilot-chen.jpg" alt="Capt. Sarah Chen - Senior Pilot & Coastal Expert" class="pilot-img" loading="lazy">
+                    <span class="pilot-badge-float"><i class="fas fa-water"></i> Coastal</span>
                 </div>
                 <div class="pilot-card-body-enhanced">
                     <div class="pilot-name">Capt. Sarah Chen</div>
@@ -381,14 +620,12 @@
             <!-- Pilot 3 -->
             <div class="pilot-enhanced-card animate-on-scroll delay-3">
                 <div class="pilot-img-wrap">
-                    <div class="pilot-img-placeholder">
-                        <i class="fas fa-user-tie pilot-icon-large"></i>
-                        <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Senior Pilot</span>
-                    </div>
+                    <img src="assets/images/pilot-okafor.jpg" alt="Capt. James Okafor - Senior Pilot & Night Flight" class="pilot-img" loading="lazy">
+                    <span class="pilot-badge-float"><i class="fas fa-city"></i> Night Ops</span>
                 </div>
                 <div class="pilot-card-body-enhanced">
                     <div class="pilot-name">Capt. James Okafor</div>
-                    <div class="pilot-role">Senior Pilot · Night Flight Specialist</div>
+                    <div class="pilot-role">Senior Pilot · Night Flight</div>
                     <p class="pilot-bio">12 years of experience with specialty in urban night operations and city flight tourism. New York base.</p>
                     <div class="pilot-certs">
                         <span class="badge badge-primary" style="font-size:0.7rem;">ATP</span>
@@ -400,10 +637,8 @@
             <!-- Pilot 4 -->
             <div class="pilot-enhanced-card animate-on-scroll delay-4">
                 <div class="pilot-img-wrap">
-                    <div class="pilot-img-placeholder">
-                        <i class="fas fa-user-tie pilot-icon-large"></i>
-                        <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Pilot</span>
-                    </div>
+                    <img src="assets/images/pilot-voss.jpg" alt="Capt. Elena Voss - High Altitude Expert" class="pilot-img" loading="lazy">
+                    <span class="pilot-badge-float"><i class="fas fa-mountain"></i> Alpine</span>
                 </div>
                 <div class="pilot-card-body-enhanced">
                     <div class="pilot-name">Capt. Elena Voss</div>
@@ -432,7 +667,7 @@
             <div class="cert-card animate-on-scroll delay-1">
                 <i class="fas fa-id-badge cert-icon"></i>
                 <div class="cert-title">FAA Part 135 Certificate</div>
-                <div class="cert-desc">Certified under the Federal Aviation Administration's Air Carrier and Commercial Operator regulations — the gold standard in US aviation.</div>
+                <div class="cert-desc">Certified under the Federal Aviation Administration's Air Carrier and Commercial Operator regulations — the gold standard.</div>
             </div>
             <div class="cert-card animate-on-scroll delay-2">
                 <i class="fas fa-award cert-icon"></i>
@@ -443,6 +678,46 @@
                 <i class="fas fa-star cert-icon"></i>
                 <div class="cert-title">TripAdvisor Travelers' Choice</div>
                 <div class="cert-desc">Consistently ranked among the top 1% of attractions worldwide based on genuine traveller reviews and satisfaction scores.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+     CTA: AVIATION TRUST & SAFETY SHIELD
+════════════════════════════════════════════ -->
+<section class="section-sm">
+    <div class="container">
+        <div class="safety-trust-cta animate-on-scroll">
+            <div class="safety-shield-crest">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <div>
+                <span class="safety-cta-tag"><i class="fas fa-lock"></i> FAA Part 135 Certified Operations</span>
+                <h2 class="safety-cta-title">Fly with 100% <span>Peace of Mind</span></h2>
+                <p class="safety-cta-desc">Every SkyVista flight is conducted under rigorous aviation safety protocols with dual-turbine aircraft, factory-trained master mechanics, and unconditional weather guarantees.</p>
+            </div>
+            <div class="safety-guarantees">
+                <div class="safety-guarantee-item">
+                    <i class="fas fa-circle-check"></i>
+                    <span>Zero-Incident Safety Record</span>
+                </div>
+                <div class="safety-guarantee-item">
+                    <i class="fas fa-certificate"></i>
+                    <span>5,000+ Avg Pilot Flight Hours</span>
+                </div>
+                <div class="safety-guarantee-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>100% Weather Reschedule Guarantee</span>
+                </div>
+            </div>
+            <div class="safety-cta-btns">
+                <a href="tours.html" class="btn btn-primary btn-xl">
+                    <i class="fas fa-calendar-check"></i> Book with Safety Guarantee
+                </a>
+                <a href="contact.html" class="safety-cta-btn-outline">
+                    <i class="fas fa-user-shield"></i> Speak with Chief Pilot
+                </a>
             </div>
         </div>
     </div>
