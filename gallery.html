@@ -162,10 +162,21 @@
         }
 
         /* Instagram strip */
-        .insta-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+        .insta-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+        }
         .insta-item {
-            aspect-ratio: 1; border-radius: var(--radius-lg); overflow: hidden;
-            cursor: pointer; position: relative;
+            flex: 0 0 calc((100% - 4 * 0.75rem) / 5);
+            max-width: calc((100% - 4 * 0.75rem) / 5);
+            aspect-ratio: 1;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            box-sizing: border-box;
         }
         .insta-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .insta-item:hover img { transform: scale(1.1); }
@@ -179,15 +190,24 @@
         @media (max-width: 1024px) {
             .masonry-gallery { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
             .photo-service-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-            .insta-strip { grid-template-columns: repeat(3, 1fr); }
+            .insta-item {
+                flex: 0 0 calc((100% - 2 * 0.75rem) / 3);
+                max-width: calc((100% - 2 * 0.75rem) / 3);
+            }
         }
         @media (max-width: 768px) {
             .masonry-gallery { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .insta-strip { grid-template-columns: repeat(3, 1fr); }
+            .insta-item {
+                flex: 0 0 calc((100% - 2 * 0.75rem) / 3);
+                max-width: calc((100% - 2 * 0.75rem) / 3);
+            }
         }
         @media (max-width: 580px) {
             .masonry-gallery { grid-template-columns: 1fr; gap: 1rem; }
-            .insta-strip { grid-template-columns: repeat(2, 1fr); }
+            .insta-item {
+                flex: 0 0 calc((100% - 0.75rem) / 2);
+                max-width: calc((100% - 0.75rem) / 2);
+            }
         }
         /* ════════════════════════════════════════════
            GALLERY PAGE CTA: CINEMATIC PHOTO VIEWPORT
@@ -506,11 +526,11 @@
             <h3 style="font-family:var(--font-heading);font-size:1.5rem;font-weight:600;color:var(--text-heading);">@SkyVistaFlights</h3>
         </div>
         <div class="insta-strip animate-on-scroll delay-1">
-            <div class="insta-item"><img src="assets/images/tour-canyon.jpg" alt="Instagram - canyon"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
-            <div class="insta-item"><img src="assets/images/tour-coastal.jpg" alt="Instagram - coastal"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
-            <div class="insta-item"><img src="assets/images/hero-aerial.jpg" alt="Instagram - aerial"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
-            <div class="insta-item"><img src="assets/images/helicopter-city.jpg" alt="Instagram - city"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
-            <div class="insta-item"><img src="assets/images/tour-canyon.jpg" alt="Instagram - canyon2" style="object-position:right;"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
+            <div class="insta-item" onclick="openLightbox('assets/images/insta-lagoon-reef.jpg','Tropical Turquoise Lagoon & Reefs')"><img src="assets/images/insta-lagoon-reef.jpg" alt="Instagram - Tropical Lagoon & Coral Reef"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
+            <div class="insta-item" onclick="openLightbox('assets/images/insta-jungle-waterfall.jpg','Kauai Rainforest Canyon & Waterfalls')"><img src="assets/images/insta-jungle-waterfall.jpg" alt="Instagram - Jungle Waterfall Canyon"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
+            <div class="insta-item" onclick="openLightbox('assets/images/insta-volcano-mist.jpg','Volcanic Caldera & Dramatic Coast')"><img src="assets/images/insta-volcano-mist.jpg" alt="Instagram - Volcanic Coast & Mist"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
+            <div class="insta-item" onclick="openLightbox('assets/images/insta-glacier-summit.jpg','Alaskan Glacier Peak Flyover')"><img src="assets/images/insta-glacier-summit.jpg" alt="Instagram - Alaskan Glacier Summit"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
+            <div class="insta-item" onclick="openLightbox('assets/images/insta-canyon-golden.jpg','Golden Sunlit Desert Canyon')"><img src="assets/images/insta-canyon-golden.jpg" alt="Instagram - Golden Sunlit Desert Canyon"><div class="insta-item-overlay"><i class="fab fa-instagram" style="font-size:1.5rem;color:#fff;"></i></div></div>
         </div>
     </div>
 </section>
