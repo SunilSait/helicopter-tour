@@ -311,26 +311,6 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-        .gallery-cta-btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.9rem 1.85rem;
-            border-radius: var(--radius-full);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff !important;
-            font-weight: 600;
-            font-size: 0.95rem;
-            backdrop-filter: blur(10px);
-            transition: var(--transition-fast);
-        }
-        .gallery-cta-btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.22);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-            color: #ffffff !important;
-        }
         @media (max-width: 768px) {
             .gallery-viewport-cta {
                 padding: 3rem 1.5rem;
@@ -343,8 +323,7 @@
                 flex-direction: column;
                 width: 100%;
             }
-            .gallery-cta-btns .btn,
-            .gallery-cta-btn-ghost {
+            .gallery-cta-btns .btn {
                 width: 100%;
                 justify-content: center;
             }
@@ -565,7 +544,7 @@
                 <a href="tours.html" class="btn btn-primary btn-xl">
                     <i class="fas fa-helicopter"></i> Book a Photo Flight
                 </a>
-                <a href="tours.html" class="gallery-cta-btn-ghost">
+                <a href="tours.html" class="btn btn-ghost btn-xl">
                     <i class="fas fa-compass"></i> Explore All 48 Tours
                 </a>
             </div>

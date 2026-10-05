@@ -50,16 +50,48 @@
         }
 
         .db-logo {
-            display: flex; align-items: center; gap: 0.625rem;
-            text-decoration: none; overflow: hidden; flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            text-decoration: none;
+            overflow: hidden;
+            flex: 1;
         }
         .db-logo-img {
-            width: 36px; height: 36px; object-fit: contain;
-            border-radius: 8px; background: rgba(255,255,255,0.1); padding: 3px; flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: var(--radius-full);
+            background: #ffffff;
+            padding: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+            display: block;
         }
-        .db-logo-text { overflow: hidden; }
-        .db-brand { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; color: #fff; white-space: nowrap; display: block; }
-        .db-brand-sub { font-size: 0.5875rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; display: block; }
+        .db-logo-text {
+            display: flex !important;
+            flex-direction: column;
+            line-height: 1.15;
+            overflow: hidden;
+        }
+        .db-brand {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            display: block;
+        }
+        .db-brand-sub {
+            font-size: 0.625rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            display: block;
+        }
 
         /* Nav items */
         .db-nav {
@@ -764,22 +796,16 @@
         .notif-text { font-size: 0.8125rem; color: var(--text-body); line-height: 1.55; }
         .notif-time { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; display: block; }
 
-        /* Flight Photos Gallery Grid with Centered Last Row */
+        /* Flight Photos Gallery Grid */
         .db-photos-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 0.75rem;
         }
-        .db-photos-grid > div:nth-child(9) {
-            grid-column-start: 2;
-        }
         @media (max-width: 640px) {
             .db-photos-grid {
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 0.5rem;
-            }
-            .db-photos-grid > div:nth-child(9) {
-                grid-column-start: auto;
             }
         }
         @media (max-width: 480px) {
@@ -1114,11 +1140,11 @@
     <aside class="db-sidebar" id="db-sidebar">
         <!-- Sidebar Top -->
         <div class="db-sidebar-top">
-            <a href="index.html" class="db-logo" aria-label="SkyVista Home">
-                <img src="assets/images/logo.jpg" alt="SkyVista Logo" class="db-logo-img">
-                <div class="db-logo-text">
-                    <span class="db-brand">SkyVista</span>
-                    <span class="db-brand-sub">Helicopter Tours</span>
+            <a href="index.html" class="nav-logo db-logo" aria-label="SkyVista Home">
+                <img src="assets/images/logo.jpg" alt="SkyVista Logo" width="40" height="40" class="nav-logo-img db-logo-img" style="width:40px;height:40px;object-fit:contain;display:block;border-radius:50%;background:#ffffff;padding:2px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+                <div class="nav-logo-text db-logo-text">
+                    <span class="brand-name db-brand" style="color:#ffffff;">SkyVista</span>
+                    <span class="brand-tagline db-brand-sub">Helicopter Tours</span>
                 </div>
             </a>
         </div>
@@ -1812,8 +1838,10 @@
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-reef.jpg','Emerald Tropical Reef')"><img src="assets/images/tour-reef.jpg" alt="Tropical reef aerial" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-sunset.jpg','Cockpit Sunset Skyline')"><img src="assets/images/tour-sunset.jpg" alt="Sunset cockpit photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-canyon-flight.jpg','Red Rock Canyon Expedition')"><img src="assets/images/tour-canyon-flight.jpg" alt="Canyon flight photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-alpine-lake.jpg','Alpine Glacial Lake & Peaks')"><img src="assets/images/tour-alpine-lake.jpg" alt="Alpine lake helicopter window photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-volcano.jpg','Volcanic Caldera & Lava Lake')"><img src="assets/images/tour-volcano.jpg" alt="Volcano tour photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                             <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-waterfalls.jpg','Kauai Rainforest Waterfalls')"><img src="assets/images/tour-waterfalls.jpg" alt="Tropical waterfalls photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
+                            <div style="aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onclick="openLightbox('assets/images/tour-coastal-arch.jpg','Emerald Coast & Sea Arch')"><img src="assets/images/tour-coastal-arch.jpg" alt="Coastal sea arch helicopter photo" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'"></div>
                         </div>
                     </div>
                 </div>

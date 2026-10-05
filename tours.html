@@ -101,6 +101,7 @@
             color: var(--text-muted);
         }
         .booking-bar-field select, .booking-bar-field input {
+            width: 100%;
             border: 1.5px solid var(--border-default);
             border-radius: var(--radius-md);
             padding: 0 0.875rem;
@@ -111,7 +112,20 @@
             font-family: var(--font-body);
             cursor: pointer;
             box-sizing: border-box;
+            display: block;
             transition: var(--transition-fast);
+        }
+        .booking-bar-field select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236B7280' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.875rem center;
+            padding-right: 2.25rem;
+        }
+        .booking-bar-field input[type="date"] {
+            padding-right: 0.875rem;
         }
         .booking-bar-field select:focus, .booking-bar-field input:focus {
             border-color: var(--secondary);
@@ -121,6 +135,18 @@
             background: var(--bg-surface);
             color: var(--text-body);
             border-color: var(--border-default);
+        }
+        .dark .booking-bar-field select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2394A3B8' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
+        .dark .booking-bar-field input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.85);
+            cursor: pointer;
+        }
+        [dir="rtl"] .booking-bar-field select {
+            background-position: left 0.875rem center;
+            padding-right: 0.875rem;
+            padding-left: 2.25rem;
         }
         #btn-search-tours {
             height: 44px;
@@ -202,7 +228,7 @@
             gap: 1.25rem;
         }
         .tour-sort-select {
-            padding: 0.6rem 1.15rem;
+            padding: 0.6rem 2.25rem 0.6rem 1.15rem;
             border: 1.5px solid var(--border-default);
             border-radius: var(--radius-full);
             font-size: 0.84375rem;
@@ -210,7 +236,20 @@
             background: var(--bg-card);
             color: var(--text-body);
             cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236B7280' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.875rem center;
             transition: var(--transition-fast);
+        }
+        .dark .tour-sort-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2394A3B8' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        }
+        [dir="rtl"] .tour-sort-select {
+            padding: 0.6rem 1.15rem 0.6rem 2.25rem;
+            background-position: left 0.875rem center;
         }
         .tour-sort-select:focus {
             border-color: var(--secondary);
