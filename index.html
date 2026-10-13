@@ -775,13 +775,44 @@
             .faq-concierge-card { padding: 1.25rem 1rem; flex-direction: column; text-align: center; }
             .faq-concierge-card .btn { width: 100%; justify-content: center; }
         }
+        @media (max-width: 576px) {
+            .fleet-chip {
+                font-size: 0.6875rem;
+                padding: 0.3rem 0.65rem;
+                max-width: calc(100% - 1.5rem);
+                white-space: nowrap;
+            }
+            .fleet-chip-top {
+                top: 0.75rem;
+                left: 0.75rem;
+            }
+            .fleet-chip-bottom {
+                bottom: 3rem;
+                left: 0.75rem;
+            }
+            .fleet-chip-speed {
+                bottom: 0.75rem;
+                right: 0.75rem;
+            }
+            [dir="rtl"] .fleet-chip-top {
+                left: auto;
+                right: 0.75rem;
+            }
+            [dir="rtl"] .fleet-chip-bottom {
+                left: auto;
+                right: 0.75rem;
+            }
+            [dir="rtl"] .fleet-chip-speed {
+                right: auto;
+                left: 0.75rem;
+            }
+        }
         @media (max-width: 480px) {
             .hero-slider-controls { bottom: 1rem; }
             .stats-strip-inner { grid-template-columns: 1fr 1fr; }
             .experience-grid { grid-template-columns: 1fr; }
             .hero-routes { display: none; }
             .fleet-specs-grid { grid-template-columns: 1fr; }
-            .fleet-chip { font-size: 0.6875rem; padding: 0.3rem 0.65rem; }
             .faq-badge { display: none; }
         }
     </style>

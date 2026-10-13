@@ -304,10 +304,14 @@
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236B7280' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.65rem center;
+            background-size: 12px 8px;
             padding-right: 1.85rem;
         }
         .dark .booking-chip-field select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2394A3B8' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.65rem center;
+            background-size: 12px 8px;
         }
 
         /* Luxury marquee strip */
@@ -847,17 +851,20 @@
         .charter-trust {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
             gap: 0.35rem;
             color: rgba(255, 255, 255, 0.68);
             font-size: 0.78125rem;
-            text-align: right;
+            text-align: center;
+            width: 100%;
             max-width: 280px;
         }
         .charter-stars {
             color: var(--secondary);
             font-size: 0.75rem;
-            letter-spacing: 2px;
+            display: inline-flex;
+            justify-content: center;
+            gap: 3px;
         }
 
         @media (max-width: 991px) {
@@ -865,15 +872,44 @@
                 grid-template-columns: 1fr;
                 gap: 2.25rem;
                 padding: 3rem 2rem;
+                text-align: center;
                 background: linear-gradient(180deg, #071322 0%, rgba(8, 22, 42, 0.94) 55%, rgba(9, 25, 48, 0.8) 100%),
                             url('assets/images/hero-aerial.jpg') center / cover no-repeat;
             }
+            .charter-cta-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .charter-badge {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .charter-title {
+                text-align: center;
+            }
+            .charter-desc {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .charter-perks {
+                justify-content: center;
+            }
             .charter-cta-right {
-                align-items: flex-start;
+                align-items: center;
+                width: 100%;
+            }
+            .charter-cta-actions {
+                margin: 0 auto;
+                align-items: center;
+                max-width: 320px;
             }
             .charter-trust {
-                align-items: flex-start;
-                text-align: left;
+                align-items: center;
+                text-align: center;
+                margin: 0 auto;
             }
         }
         @media (max-width: 576px) {
