@@ -114,7 +114,7 @@
         }
         .hero2-eyebrow-text {
             font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.12em; color: var(--secondary);
+            text-transform: uppercase; letter-spacing: 0.12em; color: var(--secondary-text);
         }
         .hero2-title {
             font-family: var(--font-heading); font-weight: 600;
@@ -122,7 +122,7 @@
             color: var(--text-heading); line-height: 1.1; margin-bottom: 1.25rem;
         }
         .dark .hero2-title { color: #fff; }
-        .hero2-title em { font-style: normal; color: var(--secondary); }
+        .hero2-title em { font-style: normal; color: var(--secondary-text); }
         .hero2-subtitle {
             font-size: 1rem; color: var(--text-body);
             line-height: 1.8; margin-bottom: 2.5rem; font-weight: 450; max-width: 480px;
@@ -144,8 +144,8 @@
         .hero2-stat-num {
             font-family: var(--font-heading);
             font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--secondary);
+            font-weight: 700;
+            color: var(--secondary-text);
         }
         .hero2-stat-lbl {
             font-size: 0.8125rem;
@@ -225,12 +225,12 @@
         }
         .hero2-ctrl-btn:hover {
             background: var(--secondary-light);
-            color: var(--secondary);
+            color: var(--secondary-text);
             transform: scale(1.1);
         }
         .dark .hero2-ctrl-btn:hover {
-            background: rgba(201, 151, 58, 0.2);
-            color: var(--secondary);
+            background: var(--secondary-light);
+            color: var(--secondary-text);
         }
         .hero2-indicators {
             display: flex;
@@ -396,28 +396,28 @@
         .package-card.featured::before {
             content: 'Most Popular';
             position: absolute; top: 1rem; right: 1rem;
-            font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 600;
+            font-family: var(--font-heading); font-size: 0.6875rem; font-weight: 700;
             text-transform: uppercase; letter-spacing: 0.06em;
             padding: 0.3rem 0.75rem; border-radius: var(--radius-full);
-            background: var(--secondary); color: #fff; z-index: 2;
+            background: var(--secondary); color: #08121e; z-index: 2;
         }
 
         .package-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
         .package-body { padding: 1.5rem; }
         .package-type {
             font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.08em; color: var(--secondary); margin-bottom: 0.5rem;
+            letter-spacing: 0.08em; color: var(--secondary-text); margin-bottom: 0.5rem;
         }
         .package-name { font-family: var(--font-heading); font-size: 1.1875rem; font-weight: 600; color: var(--text-heading); margin-bottom: 0.5rem; }
         .package-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 450; }
         .package-features { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
         .package-feature { display: flex; align-items: center; gap: 0.625rem; font-size: 0.875rem; color: var(--text-body); }
-        .package-feature i { color: var(--secondary); font-size: 0.75rem; width: 16px; }
+        .package-feature i { color: var(--secondary-text); font-size: 0.75rem; width: 16px; }
         .package-footer {
             display: flex; align-items: center; justify-content: space-between;
             padding-top: 1.25rem; border-top: 1px solid var(--border-light);
         }
-        .package-price-val { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; color: var(--secondary); }
+        .package-price-val { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--secondary-text); }
         .package-price-unit { font-size: 0.75rem; color: var(--text-muted); }
         .btn-outline:hover,
         .dark .btn-outline:hover,
@@ -579,7 +579,7 @@
             transform: scaleX(-1);
         }
         .t-stars {
-            color: var(--secondary);
+            color: var(--secondary-text);
             font-size: 0.9375rem;
             margin-bottom: 1.25rem;
             display: flex;
@@ -646,9 +646,9 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.04em;
-            color: var(--secondary);
-            background: rgba(201, 151, 58, 0.12);
-            border: 1px solid rgba(201, 151, 58, 0.25);
+            color: var(--secondary-text);
+            background: var(--secondary-light);
+            border: 1px solid var(--secondary-glow);
             padding: 0.25rem 0.65rem;
             border-radius: var(--radius-full);
         }
@@ -729,7 +729,7 @@
             align-items: center;
             gap: 3rem;
             background: linear-gradient(105deg, #071322 0%, rgba(8, 22, 42, 0.96) 42%, rgba(9, 25, 48, 0.8) 68%, rgba(9, 25, 48, 0.35) 100%),
-                        url('assets/images/charter-cta-luxury.jpg') right center / cover no-repeat;
+                        url('assets/images/home2-charter-sunset.jpg') right center / cover no-repeat;
             border: 1px solid rgba(201, 151, 58, 0.3);
             box-shadow: 0 25px 60px -15px rgba(2, 8, 16, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
@@ -874,7 +874,7 @@
                 padding: 3rem 2rem;
                 text-align: center;
                 background: linear-gradient(180deg, #071322 0%, rgba(8, 22, 42, 0.94) 55%, rgba(9, 25, 48, 0.8) 100%),
-                            url('assets/images/hero-aerial.jpg') center / cover no-repeat;
+                            url('assets/images/home2-cta-aerial.jpg') center / cover no-repeat;
             }
             .charter-cta-content {
                 display: flex;
@@ -1364,7 +1364,7 @@
     <div class="container">
         <div class="alt-section">
             <div class="alt-img-block animate-on-scroll">
-                <img src="assets/images/story-main-founder.jpg" alt="SkyVista founder and pilot crew at mountain base" class="alt-img-main">
+                <img src="assets/images/home2-story-crew.jpg" alt="SkyVista founder and pilot crew at mountain base" class="alt-img-main">
             </div>
             <div class="animate-on-scroll delay-2">
                 <span class="section-tag"><i class="fas fa-building" style="font-size:0.7rem;"></i> Our Story</span>
@@ -1385,7 +1385,10 @@
                         <span class="check-text"><strong>Weather Guarantee</strong> — Full refund or reschedule if conditions aren't perfect</span>
                     </div>
                 </div>
-                <a href="safety.html" class="btn btn-secondary" style="margin-top:1.75rem;">Meet Our Team <i class="fas fa-arrow-right"></i></a>
+                <div style="display:flex;gap:0.875rem;margin-top:1.75rem;flex-wrap:wrap;">
+                    <a href="about.html" class="btn btn-primary"><i class="fas fa-book-open"></i> Discover Our Story</a>
+                    <a href="safety.html" class="btn btn-secondary">Meet Our Team <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
         </div>
     </div>

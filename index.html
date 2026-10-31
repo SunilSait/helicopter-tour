@@ -223,8 +223,8 @@
         }
         .stat-strip-item:last-child { border-right: none; }
         .stat-strip-val {
-            font-family: var(--font-heading); font-size: 1.875rem; font-weight: 600;
-            color: var(--secondary); display: block; margin-bottom: 0.25rem;
+            font-family: var(--font-heading); font-size: 1.875rem; font-weight: 700;
+            color: var(--secondary-text); display: block; margin-bottom: 0.25rem;
         }
         .stat-strip-lbl { font-size: 0.8125rem; color: var(--text-muted); font-weight: 500; }
 
@@ -318,15 +318,16 @@
         .dark .route-item:hover { background: rgba(232,184,96,0.08); }
         .route-item-icon {
             width: 36px; height: 36px; border-radius: var(--radius-sm);
-            background: var(--secondary-light); color: var(--secondary);
+            background: var(--secondary-light); color: var(--secondary-text);
+            border: 1px solid var(--secondary-glow);
             display: flex; align-items: center; justify-content: center; font-size: 0.875rem;
             flex-shrink: 0;
         }
-        .dark .route-item-icon { background: rgba(232,184,96,0.12); }
+        .dark .route-item-icon { background: var(--secondary-light); color: var(--secondary-text); }
         .route-item-info { flex: 1; }
         .route-item-name { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; color: var(--text-heading); }
         .route-item-dur { font-size: 0.8125rem; color: var(--text-muted); }
-        .route-item-price { font-family: var(--font-heading); font-weight: 600; color: var(--secondary); font-size: 1rem; }
+        .route-item-price { font-family: var(--font-heading); font-weight: 700; color: var(--secondary-text); font-size: 1rem; }
 
         /* Experience section (dark bg) */
         .section-dark {
@@ -354,7 +355,7 @@
             box-shadow: var(--shadow-card); transition: var(--transition-smooth);
         }
         .testimonial-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-3px); }
-        .testimonial-stars { color: var(--secondary); font-size: 0.875rem; margin-bottom: 1rem; }
+        .testimonial-stars { color: var(--secondary-text); font-size: 0.875rem; margin-bottom: 1rem; }
         .testimonial-text {
             font-size: 0.9375rem; color: var(--text-body); line-height: 1.75;
             margin-bottom: 1.5rem; font-style: italic;
@@ -1021,6 +1022,11 @@
                 </div>
             </div>
         </div>
+        <div class="text-center animate-on-scroll" style="margin-top:2.5rem;">
+            <a href="about.html" class="btn btn-outline" style="border-radius:var(--radius-full);padding:0.75rem 1.75rem;font-weight:600;display:inline-flex;align-items:center;gap:0.6rem;">
+                <i class="fas fa-compass" style="color:var(--secondary);"></i> Discover Our 16-Year Story &amp; Values <i class="fas fa-arrow-right" style="font-size:0.85em;"></i>
+            </a>
+        </div>
     </div>
 </section>
 
@@ -1188,7 +1194,7 @@
         <!-- Panel 1: Bell 407 GX -->
         <div class="fleet-panel active" id="fleet-bell407">
             <div class="fleet-img-wrap animate-on-scroll delay-1">
-                <img src="assets/images/tour-canyon-flight.jpg" alt="Bell 407 GX Executive Helicopter">
+                <img src="assets/images/fleet-bell407-executive.jpg" alt="Bell 407 GX Executive Helicopter">
                 <div class="fleet-img-overlay"></div>
                 <div class="fleet-chip fleet-chip-top">
                     <i class="fas fa-certificate" style="color:var(--secondary);"></i> FAA Part 135 Certified
@@ -1233,7 +1239,7 @@
         <!-- Panel 2: Airbus H130 EcoStar -->
         <div class="fleet-panel" id="fleet-h130">
             <div class="fleet-img-wrap">
-                <img src="assets/images/helicopter-city.jpg" alt="Airbus H130 EcoStar Helicopter">
+                <img src="assets/images/fleet-h130-ecostar.jpg" alt="Airbus H130 EcoStar Helicopter">
                 <div class="fleet-img-overlay"></div>
                 <div class="fleet-chip fleet-chip-top">
                     <i class="fas fa-volume-xmark" style="color:#4ADE80;"></i> Quietest Sightseeing Aircraft
@@ -1278,7 +1284,7 @@
         <!-- Panel 3: Robinson R66 Turbine -->
         <div class="fleet-panel" id="fleet-r66">
             <div class="fleet-img-wrap">
-                <img src="assets/images/tour-coastal.jpg" alt="Robinson R66 Turbine Helicopter">
+                <img src="assets/images/fleet-robinson-r66.jpg" alt="Robinson R66 Turbine Helicopter">
                 <div class="fleet-img-overlay"></div>
                 <div class="fleet-chip fleet-chip-top">
                     <i class="fas fa-camera-retro" style="color:var(--secondary);"></i> Open-Lens Photography Specialist

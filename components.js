@@ -77,6 +77,7 @@ function injectNav() {
         { href: 'index.html',    label: 'Home' },
         { href: 'home2.html',    label: 'Home 2' },
         { href: 'tours.html',    label: 'Tours & Packages' },
+        { href: 'about.html',    label: 'About Us' },
         { href: 'safety.html',   label: 'Safety & Pilots' },
         { href: 'gallery.html',  label: 'Gallery' },
         { href: 'contact.html',  label: 'Contact' },
@@ -253,6 +254,7 @@ function injectFooter() {
                     <ul class="footer-links">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="home2.html">Home 2 — Premium</a></li>
+                        <li><a href="about.html">About Us</a></li>
                         <li><a href="tours.html">Tours & Packages</a></li>
                         <li><a href="safety.html">Safety & Pilots</a></li>
                         <li><a href="gallery.html">Gallery</a></li>

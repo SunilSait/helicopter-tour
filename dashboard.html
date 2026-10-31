@@ -163,9 +163,9 @@
         .db-nav-icon { font-size: 0.9375rem; width: 18px; flex-shrink: 0; text-align: center; }
         .db-nav-label { overflow: hidden; text-overflow: ellipsis; }
         .db-nav-badge {
-            margin-left: auto; font-size: 0.6875rem; font-weight: 600;
+            margin-left: auto; font-size: 0.6875rem; font-weight: 700;
             padding: 0.125rem 0.5rem; border-radius: var(--radius-full);
-            background: var(--secondary); color: #fff; flex-shrink: 0;
+            background: var(--secondary); color: #08121e; flex-shrink: 0;
         }
 
         /* Sidebar footer */
@@ -183,9 +183,9 @@
         .db-profile-btn:hover { background: rgba(255,255,255,0.08); }
         .db-avatar {
             width: 36px; height: 36px; border-radius: 50%;
-            background: var(--secondary); color: #fff;
+            background: var(--secondary); color: #08121e;
             display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;
+            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700;
             flex-shrink: 0;
         }
         .db-profile-info { overflow: hidden; }
@@ -258,9 +258,9 @@
 
         .db-topbar-avatar {
             width: 36px; height: 36px; border-radius: 50%;
-            background: var(--secondary); color: #fff;
+            background: var(--secondary); color: #08121e;
             display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 600;
+            font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700;
             cursor: pointer; flex-shrink: 0;
             transition: var(--transition-fast);
         }
@@ -405,7 +405,7 @@
             color: var(--text-heading);
             line-height: 1.45;
         }
-        .db-card-action { font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 600; color: var(--secondary); cursor: pointer; transition: var(--transition-fast); }
+        .db-card-action { font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 700; color: var(--secondary-text); cursor: pointer; transition: var(--transition-fast); }
         .db-card-action:hover { text-decoration: underline; }
 
         /* Table */
@@ -777,7 +777,7 @@
             border: 1px solid var(--border-default); cursor: pointer;
             transition: var(--transition-fast);
         }
-        .quick-action-btn:hover { border-color: var(--secondary); color: var(--secondary); background: var(--secondary-light); }
+        .quick-action-btn:hover { border-color: var(--secondary); color: var(--secondary-text); background: var(--secondary-light); }
         .dark .quick-action-btn:hover { background: rgba(232,184,96,0.1); }
         .quick-action-btn i { font-size: 0.875rem; }
 
@@ -1304,7 +1304,7 @@
                                         </td>
                                         <td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td>
                                         <td>2 people</td>
-                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$698</td>
+                                        <td style="font-family:var(--font-heading);font-weight:700;color:var(--secondary-text);">$698</td>
                                         <td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td>
                                     </tr>
                                     <tr>
@@ -1314,7 +1314,7 @@
                                         </td>
                                         <td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td>
                                         <td>4 people</td>
-                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$996</td>
+                                        <td style="font-family:var(--font-heading);font-weight:700;color:var(--secondary-text);">$996</td>
                                         <td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td>
                                     </tr>
                                     <tr>
@@ -1324,7 +1324,7 @@
                                         </td>
                                         <td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td>
                                         <td>2 people</td>
-                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$598</td>
+                                        <td style="font-family:var(--font-heading);font-weight:700;color:var(--secondary-text);">$598</td>
                                         <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
                                     </tr>
                                     <tr>
@@ -1334,7 +1334,7 @@
                                         </td>
                                         <td>Aug 28, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">6:00 PM</span></td>
                                         <td>3 people</td>
-                                        <td style="font-family:var(--font-heading);font-weight:600;color:var(--secondary);">$1,167</td>
+                                        <td style="font-family:var(--font-heading);font-weight:700;color:var(--secondary-text);">$1,167</td>
                                         <td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td>
                                     </tr>
                                 </tbody>
@@ -1571,9 +1571,9 @@
                     <table class="db-table">
                         <thead><tr><th>Tour</th><th>Date & Time</th><th>Passengers</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead>
                         <tbody>
-                            <tr><td><div class="booking-name">Grand Canyon Explorer</div><div class="booking-loc">Grand Canyon, AZ</div></td><td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td><td>2</td><td style="font-weight:600;color:var(--secondary);">$698</td><td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('View booking details')">Details</button></td></tr>
-                            <tr><td><div class="booking-name">Coastal Cliffs & Coves</div><div class="booking-loc">Kauai, HI</div></td><td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td><td>4</td><td style="font-weight:600;color:var(--secondary);">$996</td><td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('Confirm payment to finalize booking')">Pay Now</button></td></tr>
-                            <tr><td><div class="booking-name">City Lights Night Flight</div><div class="booking-loc">New York, NY</div></td><td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td><td>2</td><td style="font-weight:600;color:var(--secondary);">$598</td><td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td><td><button class="btn btn-outline btn-sm" onclick="showSection('photos',null)">Photos</button></td></tr>
+                            <tr><td><div class="booking-name">Grand Canyon Explorer</div><div class="booking-loc">Grand Canyon, AZ</div></td><td>Oct 3, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">10:00 AM</span></td><td>2</td><td style="font-weight:700;color:var(--secondary-text);">$698</td><td><span class="status-badge confirmed"><i class="fas fa-circle"></i> Confirmed</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('View booking details')">Details</button></td></tr>
+                            <tr><td><div class="booking-name">Coastal Cliffs & Coves</div><div class="booking-loc">Kauai, HI</div></td><td>Oct 17, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">2:00 PM</span></td><td>4</td><td style="font-weight:700;color:var(--secondary-text);">$996</td><td><span class="status-badge pending"><i class="fas fa-circle"></i> Pending</span></td><td><button class="btn btn-outline btn-sm" onclick="alert('Confirm payment to finalize booking')">Pay Now</button></td></tr>
+                            <tr><td><div class="booking-name">City Lights Night Flight</div><div class="booking-loc">New York, NY</div></td><td>Sep 15, 2026<br><span style="font-size:0.75rem;color:var(--text-muted);">7:30 PM</span></td><td>2</td><td style="font-weight:700;color:var(--secondary-text);">$598</td><td><span class="status-badge completed"><i class="fas fa-circle"></i> Completed</span></td><td><button class="btn btn-outline btn-sm" onclick="showSection('photos',null)">Photos</button></td></tr>
                         </tbody>
                     </table>
                     </div>
@@ -1878,9 +1878,9 @@
                     <table class="db-table">
                         <thead><tr><th>Description</th><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
                         <tbody>
-                            <tr><td>Grand Canyon Explorer × 2</td><td>Sep 1, 2026</td><td style="font-weight:600;color:var(--secondary);">$698</td><td><i class="fab fa-cc-visa" style="color:#1a1f71;font-size:1.25rem;"></i> Visa ···4242</td><td><span class="status-badge confirmed">Paid</span></td></tr>
+                            <tr><td>Grand Canyon Explorer × 2</td><td>Sep 1, 2026</td><td style="font-weight:700;color:var(--secondary-text);">$698</td><td><i class="fab fa-cc-visa" style="color:#1a1f71;font-size:1.25rem;"></i> Visa ···4242</td><td><span class="status-badge confirmed">Paid</span></td></tr>
                             <tr><td>Coastal Cliffs × 4</td><td>Sep 10, 2026</td><td style="font-weight:600;color:var(--amber);">$996</td><td><i class="fab fa-cc-mastercard" style="color:#EB001B;font-size:1.25rem;"></i> MC ···8847</td><td><span class="status-badge pending">Pending</span></td></tr>
-                            <tr><td>City Lights Night × 2</td><td>Aug 20, 2026</td><td style="font-weight:600;color:var(--secondary);">$598</td><td><i class="fab fa-cc-visa" style="color:#1a1f71;font-size:1.25rem;"></i> Visa ···4242</td><td><span class="status-badge confirmed">Paid</span></td></tr>
+                            <tr><td>City Lights Night × 2</td><td>Aug 20, 2026</td><td style="font-weight:700;color:var(--secondary-text);">$598</td><td><i class="fab fa-cc-visa" style="color:#1a1f71;font-size:1.25rem;"></i> Visa ···4242</td><td><span class="status-badge confirmed">Paid</span></td></tr>
                         </tbody>
                     </table>
                     </div>
