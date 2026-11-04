@@ -76,8 +76,8 @@ function injectNav() {
     const links = [
         { href: 'index.html',    label: 'Home' },
         { href: 'home2.html',    label: 'Home 2' },
-        { href: 'tours.html',    label: 'Tours & Packages' },
         { href: 'about.html',    label: 'About Us' },
+        { href: 'tours.html',    label: 'Tours & Packages' },
         { href: 'safety.html',   label: 'Safety & Pilots' },
         { href: 'gallery.html',  label: 'Gallery' },
         { href: 'contact.html',  label: 'Contact' },
